@@ -1,0 +1,1880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session I — The Existing Process · WHO-India AI Curriculum</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   DESIGN SYSTEM — WHO-India AI Curriculum
+   Aesthetic: Apollonian restraint. Indian Administrative Service
+   memo meets Oxford monograph. Ivory, terracotta, deep indigo.
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  --ivory:       #f7f3ed;
+  --warm-white:  #faf8f4;
+  --parchment:   #ede7da;
+  --terra:       #b85c38;
+  --terra-deep:  #8a3c22;
+  --terra-pale:  #f0d5c8;
+  --indigo:      #2c3e6b;
+  --indigo-deep: #1a2647;
+  --indigo-pale: #dde3f0;
+  --gold:        #c8943a;
+  --gold-pale:   #f5e8d0;
+  --slate:       #4a5568;
+  --mist:        #9aa3b2;
+  --ink:         #1a1a24;
+  --rule:        #d4c9b8;
+  --rule-light:  #e8e2d8;
+  --mono:        'DM Mono', 'Courier New', monospace;
+  --serif:       'Source Serif 4', Georgia, serif;
+  --display:     'Playfair Display', Georgia, serif;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { font-size: 17px; scroll-behavior: smooth; }
+
+body {
+  background: var(--ivory);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-weight: 300;
+  line-height: 1.8;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── PROGRESS BAR ─────────────────────────────── */
+#progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--terra), var(--gold));
+  z-index: 1000;
+  transition: width 0.1s linear;
+}
+
+/* ── NAVIGATION ───────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: var(--indigo-deep);
+  padding: 0;
+  z-index: 99;
+  border-bottom: 2px solid var(--gold);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: stretch;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.nav-brand {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.7rem 2rem 0.7rem 1.5rem;
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+
+.nav-org {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.nav-title {
+  font-family: var(--display);
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: #fff;
+  letter-spacing: 0.02em;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  gap: 0;
+  flex: 1;
+}
+
+.nav-session {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  padding: 0 1rem;
+  border-right: 1px solid rgba(255,255,255,0.08);
+  line-height: 3.6rem;
+  cursor: pointer;
+  transition: color 0.2s;
+  text-decoration: none;
+}
+
+.nav-session:hover { color: var(--gold); }
+.nav-session.active { color: var(--terra); border-bottom: 2px solid var(--terra); }
+
+.nav-status {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 1.5rem;
+}
+
+.status-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #4ade80;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.status-text {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.35);
+}
+
+/* ── HERO ─────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-left {
+  background: var(--indigo-deep);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8rem 4rem 6rem 6rem;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-left::after {
+  content: '';
+  position: absolute;
+  right: -2px; top: 0; bottom: 0;
+  width: 4px;
+  background: linear-gradient(to bottom, transparent, var(--gold), var(--terra), var(--gold), transparent);
+}
+
+.session-label {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.session-label::before {
+  content: '';
+  display: inline-block;
+  width: 24px; height: 1px;
+  background: var(--gold);
+}
+
+.hero-number {
+  font-family: var(--display);
+  font-size: 8rem;
+  font-weight: 700;
+  line-height: 0.9;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255,255,255,0.15);
+  position: absolute;
+  right: 3rem;
+  bottom: 4rem;
+  user-select: none;
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--terra);
+  margin-bottom: 1.2rem;
+}
+
+.hero-h1 {
+  font-family: var(--display);
+  font-size: 2.8rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: #fff;
+  margin-bottom: 1.8rem;
+}
+
+.hero-h1 em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.hero-desc {
+  font-family: var(--serif);
+  font-size: 0.92rem;
+  font-weight: 300;
+  line-height: 1.75;
+  color: rgba(255,255,255,0.55);
+  max-width: 400px;
+  margin-bottom: 3rem;
+}
+
+.hero-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.hero-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.hero-meta-label {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--mist);
+  width: 70px;
+}
+
+.hero-meta-value {
+  font-family: var(--serif);
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.6);
+}
+
+.hero-right {
+  background: var(--parchment);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8rem 4rem 6rem 5rem;
+  position: relative;
+}
+
+/* Indian decorative pattern — subtle */
+.hero-right::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 20% 20%, rgba(184,92,56,0.04) 0%, transparent 60%),
+    radial-gradient(circle at 80% 80%, rgba(44,62,107,0.05) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.mandate-card {
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--terra);
+  padding: 2rem 2.5rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.mandate-tag {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--terra);
+  margin-bottom: 0.8rem;
+}
+
+.mandate-text {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.7;
+  font-style: italic;
+}
+
+.mandate-source {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  color: var(--mist);
+  margin-top: 0.8rem;
+  letter-spacing: 0.05em;
+}
+
+.level-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--indigo-deep);
+  color: var(--gold);
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.pentad-mini {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.pentad-step {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--rule);
+  background: var(--warm-white);
+  color: var(--slate);
+}
+
+.pentad-step.active-node {
+  background: var(--terra);
+  color: #fff;
+  border-color: var(--terra);
+}
+
+.pentad-arrow-mini {
+  font-size: 0.6rem;
+  color: var(--mist);
+  padding: 0 0.1rem;
+}
+
+/* ── LAYOUT ───────────────────────────────────── */
+.main-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 5rem 3rem 6rem 3rem;
+}
+
+.spine-line {
+  position: fixed;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--indigo-deep) 0%, var(--terra) 50%, var(--gold) 100%);
+  z-index: 50;
+}
+
+/* ── SECTION STRUCTURE ────────────────────────── */
+.section {
+  margin-bottom: 5rem;
+}
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.section-num {
+  font-family: var(--display);
+  font-size: 3.5rem;
+  font-weight: 400;
+  color: var(--rule);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.section-info {
+  flex: 1;
+}
+
+.section-marker {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--terra);
+  margin-bottom: 0.3rem;
+}
+
+.section-title {
+  font-family: var(--display);
+  font-size: 1.7rem;
+  font-weight: 500;
+  color: var(--indigo-deep);
+  line-height: 1.2;
+}
+
+/* ── PROSE ────────────────────────────────────── */
+p {
+  font-size: 1rem;
+  line-height: 1.85;
+  margin-bottom: 1.2rem;
+  color: var(--ink);
+}
+
+p strong { font-weight: 600; color: var(--indigo-deep); }
+p em { font-style: italic; color: var(--terra-deep); }
+
+/* ── PULL QUOTE ───────────────────────────────── */
+.pull-quote {
+  border-left: 4px solid var(--gold);
+  background: var(--gold-pale);
+  padding: 1.5rem 2rem;
+  margin: 2rem 0;
+  font-family: var(--display);
+  font-size: 1.2rem;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--indigo-deep);
+  line-height: 1.5;
+  position: relative;
+}
+
+.pull-quote::before {
+  content: '"';
+  position: absolute;
+  top: -0.5rem;
+  left: 1.5rem;
+  font-size: 4rem;
+  color: var(--gold);
+  opacity: 0.3;
+  font-family: var(--display);
+  line-height: 1;
+}
+
+/* ── SIMULATION BLOCKS ─────────────────────────── */
+.simulation {
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 2.5rem 0;
+  box-shadow: 0 2px 20px rgba(26,38,71,0.06);
+}
+
+.sim-header {
+  background: var(--indigo-deep);
+  padding: 0.8rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sim-label {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.sim-badge {
+  font-family: var(--mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.35);
+  border: 1px solid rgba(255,255,255,0.12);
+  padding: 0.18rem 0.6rem;
+}
+
+.sim-body {
+  background: var(--warm-white);
+  padding: 2rem 2.5rem;
+}
+
+/* ── ACTOR TURNS ──────────────────────────────── */
+.turn {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 0;
+  margin-bottom: 1.8rem;
+  border-bottom: 1px solid var(--rule-light);
+  padding-bottom: 1.8rem;
+}
+
+.turn:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.turn-actor {
+  padding-right: 1.5rem;
+  padding-top: 0.15rem;
+}
+
+.actor-name {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+.actor-role {
+  font-family: var(--mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.06em;
+  color: var(--mist);
+  margin-top: 0.2rem;
+  line-height: 1.4;
+}
+
+.actor-who { color: var(--indigo); }
+.actor-officer { color: var(--terra); }
+.actor-searo { color: var(--gold); }
+.actor-director { color: var(--slate); }
+
+.turn-content {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--ink);
+}
+
+.turn-content strong { font-weight: 600; }
+.turn-content em { font-style: italic; color: var(--terra-deep); }
+
+/* ── PROCESS FLOW ─────────────────────────────── */
+.flow {
+  margin: 2rem 0;
+  position: relative;
+}
+
+.flow-step {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 0;
+  margin-bottom: 0;
+  position: relative;
+}
+
+.flow-step::before {
+  content: '';
+  position: absolute;
+  left: 21px;
+  top: 44px;
+  bottom: -2px;
+  width: 2px;
+  background: var(--rule);
+}
+
+.flow-step:last-child::before { display: none; }
+
+.flow-num {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--indigo-deep);
+  color: #fff;
+  font-family: var(--display);
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  margin-top: 0.2rem;
+}
+
+.flow-num.step-highlight {
+  background: var(--terra);
+}
+
+.flow-body {
+  padding: 0.2rem 0 2.5rem 1.5rem;
+}
+
+.flow-title {
+  font-family: var(--display);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--indigo-deep);
+  margin-bottom: 0.3rem;
+}
+
+.flow-desc {
+  font-size: 0.9rem;
+  color: var(--slate);
+  line-height: 1.7;
+}
+
+.flow-annotation {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  color: var(--terra);
+  margin-top: 0.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.flow-annotation::before {
+  content: '↳';
+}
+
+/* ── DOCUMENT REPLICA ─────────────────────────── */
+.doc-replica {
+  background: #fff;
+  border: 1px solid var(--rule);
+  box-shadow: 0 4px 24px rgba(26,38,71,0.08), 4px 4px 0 rgba(26,38,71,0.04);
+  margin: 2rem 0;
+  position: relative;
+}
+
+.doc-replica::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--indigo-deep), var(--terra), var(--gold));
+}
+
+.doc-header {
+  padding: 2rem 2.5rem 1.5rem;
+  border-bottom: 2px solid var(--indigo-pale);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: 2rem;
+}
+
+.doc-stamp {
+  font-family: var(--mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.08em;
+  color: var(--mist);
+  line-height: 1.8;
+}
+
+.doc-stamp strong {
+  color: var(--indigo);
+  font-weight: 400;
+}
+
+.doc-classification {
+  background: var(--terra-pale);
+  border: 1px solid var(--terra);
+  padding: 0.3rem 0.8rem;
+  font-family: var(--mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--terra-deep);
+  white-space: nowrap;
+}
+
+.doc-title-block {
+  padding: 1.5rem 2.5rem;
+  border-bottom: 1px solid var(--rule-light);
+}
+
+.doc-subject-label {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mist);
+  margin-bottom: 0.3rem;
+}
+
+.doc-subject-text {
+  font-family: var(--display);
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: var(--indigo-deep);
+  line-height: 1.3;
+}
+
+.doc-body {
+  padding: 1.5rem 2.5rem 2rem;
+  font-size: 0.88rem;
+  line-height: 1.75;
+  color: var(--ink);
+}
+
+.doc-body p { margin-bottom: 1rem; font-size: 0.88rem; }
+
+.doc-field {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.85rem;
+}
+
+.doc-field-label {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mist);
+  padding-top: 0.1rem;
+}
+
+.doc-signature {
+  border-top: 1px solid var(--rule);
+  padding: 1.2rem 2.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.doc-sig-block {
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.06em;
+  color: var(--slate);
+  line-height: 1.6;
+}
+
+/* ── TABLE ────────────────────────────────────── */
+.table-wrap { overflow-x: auto; margin: 1.5rem 0; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.87rem;
+}
+
+thead th {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--mist);
+  padding: 0.6rem 1rem 0.6rem 0;
+  border-bottom: 2px solid var(--indigo-deep);
+  text-align: left;
+  font-weight: 400;
+}
+
+tbody td {
+  padding: 0.75rem 1rem 0.75rem 0;
+  border-bottom: 1px solid var(--rule-light);
+  vertical-align: top;
+  color: var(--ink);
+}
+
+tbody td:first-child {
+  font-weight: 600;
+  color: var(--indigo-deep);
+}
+
+tbody tr:last-child td { border-bottom: none; }
+
+/* ── TIMELINE ─────────────────────────────────── */
+.timeline {
+  position: relative;
+  margin: 2rem 0;
+  padding-left: 2rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--indigo-deep), var(--terra));
+}
+
+.timeline-event {
+  position: relative;
+  margin-bottom: 2rem;
+  padding-left: 1.5rem;
+}
+
+.timeline-event::before {
+  content: '';
+  position: absolute;
+  left: -2.45rem;
+  top: 0.35rem;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--terra);
+  border: 2px solid var(--ivory);
+  box-shadow: 0 0 0 2px var(--terra);
+}
+
+.timeline-time {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  color: var(--mist);
+  margin-bottom: 0.2rem;
+}
+
+.timeline-title {
+  font-family: var(--display);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--indigo-deep);
+  margin-bottom: 0.3rem;
+}
+
+.timeline-desc {
+  font-size: 0.9rem;
+  color: var(--slate);
+  line-height: 1.6;
+}
+
+/* ── CRITIQUE BOX ─────────────────────────────── */
+.critique {
+  background: var(--indigo-pale);
+  border: 1px solid var(--indigo);
+  border-left: 4px solid var(--indigo);
+  padding: 1.5rem 2rem;
+  margin: 2rem 0;
+}
+
+.critique-label {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--indigo);
+  margin-bottom: 0.8rem;
+}
+
+.critique-text {
+  font-size: 0.93rem;
+  color: var(--indigo-deep);
+  line-height: 1.7;
+}
+
+/* ── LOSS PANEL ───────────────────────────────── */
+.loss-panel {
+  background: var(--parchment);
+  border: 1px solid var(--rule);
+  padding: 1.5rem 2rem;
+  margin: 2rem 0;
+}
+
+.loss-panel-title {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--terra);
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.loss-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.7rem;
+}
+
+.loss-name {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  color: var(--slate);
+  width: 160px;
+  flex-shrink: 0;
+}
+
+.loss-bar-track {
+  flex: 1;
+  height: 5px;
+  background: var(--rule);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.loss-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--indigo), var(--terra));
+  transition: width 1s ease;
+}
+
+.loss-val {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--terra-deep);
+  width: 2rem;
+  text-align: right;
+}
+
+/* ── KEY INSIGHT BOX ──────────────────────────── */
+.insight {
+  border: 1px solid var(--gold);
+  background: var(--gold-pale);
+  padding: 1.2rem 1.8rem;
+  margin: 2rem 0;
+  position: relative;
+}
+
+.insight::before {
+  content: '◆';
+  position: absolute;
+  top: -0.65rem; left: 1.2rem;
+  background: var(--ivory);
+  padding: 0 0.3rem;
+  color: var(--gold);
+  font-size: 0.6rem;
+}
+
+.insight p { margin-bottom: 0; font-size: 0.93rem; }
+.insight p:not(:last-child) { margin-bottom: 0.5rem; }
+
+/* ── DIVIDERS ─────────────────────────────────── */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 4rem 0 3.5rem;
+}
+
+.divider-line { flex: 1; height: 1px; background: var(--rule); }
+.divider-mark {
+  font-family: var(--display);
+  font-size: 1rem;
+  color: var(--gold);
+  font-weight: 300;
+}
+
+/* ── CHAPTER BREAK ────────────────────────────── */
+.chapter-break {
+  margin: 4rem 0;
+  position: relative;
+  height: 3px;
+  background: linear-gradient(90deg, var(--indigo-deep) 0%, var(--terra) 50%, var(--gold) 100%);
+}
+
+/* ── CURRICULUM MAP ───────────────────────────── */
+.curriculum-map {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  border: 1px solid var(--rule);
+  margin: 2rem 0;
+  overflow: hidden;
+}
+
+.curriculum-session {
+  padding: 1.2rem 1rem;
+  border-right: 1px solid var(--rule);
+  position: relative;
+}
+
+.curriculum-session:last-child { border-right: none; }
+
+.curriculum-session.current {
+  background: var(--indigo-deep);
+}
+
+.curr-num {
+  font-family: var(--display);
+  font-size: 1.8rem;
+  color: var(--rule);
+  font-weight: 400;
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+
+.curriculum-session.current .curr-num { color: rgba(255,255,255,0.3); }
+
+.curr-label {
+  font-family: var(--mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mist);
+  line-height: 1.4;
+}
+
+.curriculum-session.current .curr-label { color: var(--gold); }
+
+.curr-title {
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: var(--slate);
+  margin-top: 0.3rem;
+  line-height: 1.4;
+}
+
+.curriculum-session.current .curr-title { color: #fff; }
+
+/* ── FOOTER ───────────────────────────────────── */
+footer {
+  background: var(--indigo-deep);
+  color: rgba(255,255,255,0.5);
+  padding: 3rem;
+  border-top: 3px solid var(--gold);
+}
+
+.footer-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+  align-items: start;
+}
+
+.footer-brand {
+  font-family: var(--display);
+  font-size: 1.1rem;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+.footer-text {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.08em;
+  line-height: 1.8;
+}
+
+.footer-nav {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.08em;
+  line-height: 2.2;
+  text-align: right;
+}
+
+.footer-nav a {
+  color: rgba(255,255,255,0.4);
+  text-decoration: none;
+  display: block;
+  transition: color 0.2s;
+}
+
+.footer-nav a:hover { color: var(--gold); }
+
+/* ── ANNOTATIONS ──────────────────────────────── */
+.annotation {
+  background: var(--terra-pale);
+  border-left: 3px solid var(--terra);
+  padding: 0.8rem 1.2rem;
+  margin: 1rem 0;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--terra-deep);
+}
+
+.annotation-label {
+  font-family: var(--mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-style: normal;
+  margin-bottom: 0.3rem;
+  opacity: 0.7;
+}
+
+/* ── ANIMATIONS ───────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.main-content > .section {
+  animation: fadeUp 0.5s ease forwards;
+}
+
+/* ── RESPONSIVE ───────────────────────────────── */
+@media (max-width: 768px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-left { padding: 6rem 2rem 3rem; }
+  .hero-right { padding: 3rem 2rem; }
+  .main-content { padding: 3rem 1.5rem; }
+  .turn { grid-template-columns: 80px 1fr; }
+  .curriculum-map { grid-template-columns: 1fr 1fr; }
+  .footer-inner { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+  .hero-h1 { font-size: 2rem; }
+  .doc-header { grid-template-columns: 1fr; }
+}
+
+/* ── SCROLLBAR ────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--ivory); }
+::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--terra); }
+
+</style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div id="progress-bar"></div>
+<div class="spine-line"></div>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <span class="nav-org">WHO-India · AI Curriculum</span>
+      <span class="nav-title">Evidence in the Age of Machines</span>
+    </div>
+    <div class="nav-links">
+      <span class="nav-session active">I · The Process</span>
+      <span class="nav-session">II · The Tools</span>
+      <span class="nav-session">III · The Framework</span>
+      <span class="nav-session">IV · The Protocol</span>
+      <span class="nav-session">V · The Institution</span>
+    </div>
+    <div class="nav-status">
+      <div class="status-dot"></div>
+      <span class="status-text">Level 1 — Foundations</span>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══════════════════════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="session-label">Session One · Level One</div>
+    <div class="hero-eyebrow">The Existing Process</div>
+    <h1 class="hero-h1">How Evidence<br>Becomes <em>Policy</em><br>in WHO-India</h1>
+    <p class="hero-desc">A simulated session. An officer has received a mandate. She begins where all reviews begin — with a Word document, a PubMed login, and forty-seven browser tabs. We watch what happens.</p>
+
+    <div class="hero-meta">
+      <div class="hero-meta-row">
+        <span class="hero-meta-label">Topic</span>
+        <span class="hero-meta-value">Urban Air Pollution & Child Lung Development, India</span>
+      </div>
+      <div class="hero-meta-row">
+        <span class="hero-meta-label">Officer</span>
+        <span class="hero-meta-value">Dr. Priya Nair, Technical Officer, WHO-India SEARO</span>
+      </div>
+      <div class="hero-meta-row">
+        <span class="hero-meta-label">Level</span>
+        <span class="hero-meta-value">I — Foundations (no AI assistance yet)</span>
+      </div>
+      <div class="hero-meta-row">
+        <span class="hero-meta-label">Duration</span>
+        <span class="hero-meta-value">~45 minutes reading time</span>
+      </div>
+    </div>
+
+    <div class="pentad-mini" style="margin-top:2rem">
+      <span class="pentad-step active-node">Language</span>
+      <span class="pentad-arrow-mini">→</span>
+      <span class="pentad-step">Science</span>
+      <span class="pentad-arrow-mini">→</span>
+      <span class="pentad-step">Art</span>
+      <span class="pentad-arrow-mini">→</span>
+      <span class="pentad-step">Life</span>
+      <span class="pentad-arrow-mini">→</span>
+      <span class="pentad-step">Meaning</span>
+    </div>
+
+    <div class="hero-number">I</div>
+  </div>
+
+  <div class="hero-right">
+    <div class="level-badge">▸ Level 1 of 5 · Session 1 of 5</div>
+
+    <div class="mandate-card">
+      <div class="mandate-tag">Received Mandate — Internal Communication</div>
+      <p class="mandate-text">"We need a rapid evidence synthesis on the health burden of air quality on children under five in Tier-1 and Tier-2 Indian cities, with specific attention to intervention options available within ASHA network delivery capacity. Deadline: three weeks from acknowledgment."</p>
+      <div class="mandate-source">— Dr. Ramesh Bhatt, Programme Director, Environmental Health · New Delhi, February 2026</div>
+    </div>
+
+    <div class="mandate-card" style="border-left-color: var(--indigo); margin-bottom:0">
+      <div class="mandate-tag" style="color: var(--indigo)">What You Will Learn This Session</div>
+      <p class="mandate-text" style="font-style:normal; font-size:0.88rem; color: var(--slate)">The anatomy of the WHO literature review process — from mandate receipt through chain of command to final submission. We simulate every step as it currently exists, then annotate where friction lives. This is the baseline before transformation.</p>
+    </div>
+
+    <div style="margin-top:2rem; padding: 1rem 1.5rem; background: var(--indigo-pale); border: 1px solid var(--indigo);">
+      <div class="mandate-tag" style="color: var(--indigo); margin-bottom:0.5rem">Curriculum Overview</div>
+      <div style="font-family: var(--mono); font-size:0.6rem; line-height:2; letter-spacing:0.05em; color: var(--slate);">
+        I · The Existing Process ← you are here<br>
+        II · The AI Tools Available Today<br>
+        III · The Ukubona Framework<br>
+        IV · Building Your Protocol<br>
+        V · Institutionalizing the Workflow
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MAIN CONTENT ════════════════════════════════════════════ -->
+<main class="main-content">
+
+  <!-- ── SECTION 1: Chain of Command ────────────── -->
+  <section class="section" id="chain">
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <div class="section-info">
+        <div class="section-marker">The Architecture of Authority</div>
+        <h2 class="section-title">Chain of Command:<br>Where a Literature Review Begins</h2>
+      </div>
+    </div>
+
+    <p>A literature review does not begin with a researcher opening PubMed. It begins weeks, sometimes months earlier, in a room where no researcher is present — where a disease burden is named, a gap is identified, a political window is sensed. Understanding this is the first discipline of public health evidence work.</p>
+
+    <p>In the WHO-India system, the evidence chain descends through distinct institutional layers before it reaches the officer who will actually conduct the review. Each layer shapes what question gets asked — and, quietly, what answers are permissible.</p>
+
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-num">1</div>
+        <div class="flow-body">
+          <div class="flow-title">WHO Global Headquarters — Geneva</div>
+          <p class="flow-desc">A resolution is passed at the World Health Assembly, or an internal technical advisory group flags a priority area. Global health targets are set — e.g., the SDG 3.9 commitment to reducing deaths from air pollution. This is the frame that will eventually determine what counts as "relevant" evidence six levels below.</p>
+          <div class="flow-annotation">The loss function is being defined here. Not by officers. Not by evidence. By politics and negotiation.</div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-num">2</div>
+        <div class="flow-body">
+          <div class="flow-title">WHO South-East Asia Regional Office (SEARO) — New Delhi</div>
+          <p class="flow-desc">SEARO translates global mandates into regional priorities. The Regional Director's office identifies India's burden — in this case, that 14 of the world's 20 most polluted cities are Indian, and that under-5 respiratory mortality in Delhi, Patna, and Kanpur represents the largest preventable burden in the region.</p>
+          <div class="flow-annotation">The terrain becomes specific. But still no officer is touching a database.</div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-num">3</div>
+        <div class="flow-body">
+          <div class="flow-title">WHO-India Country Office — Technical Cluster</div>
+          <p class="flow-desc">The Programme Director (Environmental Health) receives a tasking from SEARO. She identifies which technical officer has the domain knowledge, bandwidth, and seniority to lead the synthesis. She writes the mandate memo — the document Dr. Priya Nair will receive.</p>
+          <div class="flow-annotation">First time a human being picks a topic. Still above the officer level.</div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-num step-highlight">4</div>
+        <div class="flow-body">
+          <div class="flow-title">Technical Officer — Dr. Priya Nair ← We begin here</div>
+          <p class="flow-desc">Dr. Nair acknowledges the mandate. She has three weeks. She is also managing two other workstreams. The review she will produce will inform a policy brief that will inform SEARO's recommendations that will inform India's national action plan on air quality. She opens her laptop. She opens PubMed.</p>
+          <div class="flow-annotation">This is the moment the gap between the terrain (Indian cities, ASHA workers, Tier-2 hospitals) and the map (English-language PubMed results) begins to open.</div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-num">5</div>
+        <div class="flow-body">
+          <div class="flow-title">Peer Review & Clearance</div>
+          <p class="flow-desc">Dr. Nair's draft goes to an internal technical reviewer, then to the Programme Director, then for legal clearance. Any recommendation touching pharmaceutical intervention goes through an additional SEARO review. Time elapsed: typically 4–8 weeks post-submission.</p>
+          <div class="flow-annotation">The evidence landscape can change significantly during this period. A study published after submission cannot be included.</div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-num">6</div>
+        <div class="flow-body">
+          <div class="flow-title">Policy Brief → National Uptake</div>
+          <p class="flow-desc">The cleared synthesis becomes a WHO-India policy brief. It is shared with the Ministry of Health and Family Welfare, the Central Pollution Control Board, and State Health Departments. Recommendations are absorbed (or quietly set aside) into India's National Clean Air Programme and the National Health Mission.</p>
+          <div class="flow-annotation">The literature review has now become policy. Its limitations have traveled with it, invisible.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <p><strong>The core observation:</strong> By the time an officer opens PubMed, the question has already been substantially shaped by negotiation, political timing, institutional priorities, and the linguistic assumptions of whoever wrote the mandate. The literature review is not step one. It is step four — arriving into a frame it did not choose.</p>
+    </div>
+  </section>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-mark">§</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- ── SECTION 2: The Mandate ──────────────────── -->
+  <section class="section" id="mandate">
+    <div class="section-header">
+      <div class="section-num">02</div>
+      <div class="section-info">
+        <div class="section-marker">Simulated Internal Communication</div>
+        <h2 class="section-title">The Mandate Document<br><em>as Dr. Nair received it</em></h2>
+      </div>
+    </div>
+
+    <p>The following is a simulated WHO-India internal memo — the kind of document that initiates a literature review. Read it carefully. Notice what it specifies and, more importantly, what it leaves unspecified. These silences will shape every search term Dr. Nair types.</p>
+
+    <div class="doc-replica">
+      <div class="doc-header">
+        <div class="doc-stamp">
+          <strong>WORLD HEALTH ORGANIZATION</strong><br>
+          India Country Office · Environmental Health Cluster<br>
+          C/5-B, Safdarjung Development Area · New Delhi 110 016<br>
+          <br>
+          <strong>REF:</strong> WHO/IND/EH/2026/014<br>
+          <strong>DATE:</strong> 3 February 2026<br>
+          <strong>TO:</strong> Dr. Priya Nair, Technical Officer (Environmental Health)<br>
+          <strong>FROM:</strong> Dr. Ramesh Bhatt, Programme Director (Environmental Health)<br>
+          <strong>CC:</strong> Dr. Anand Krishnamurthy, WHO Representative, India
+        </div>
+        <div class="doc-classification">Internal · Routine</div>
+      </div>
+
+      <div class="doc-title-block">
+        <div class="doc-subject-label">Subject</div>
+        <div class="doc-subject-text">Tasking for Rapid Evidence Synthesis: Ambient Air Pollution and Under-5 Respiratory Outcomes in Indian Urban Settings</div>
+      </div>
+
+      <div class="doc-body">
+        <p>Dr. Nair,</p>
+
+        <p>Following the SEARO Environmental Health Technical Advisory Group meeting of 22 January 2026, this office has been tasked with providing an evidence brief on the above subject for inclusion in SEARO's Regional Framework for Air Quality and Health (2026–2030).</p>
+
+        <p>You are requested to lead the preparation of a rapid evidence synthesis addressing the following:</p>
+
+        <div class="doc-field">
+          <div class="doc-field-label">Scope</div>
+          <div>Epidemiological evidence on associations between PM2.5/PM10 exposure and respiratory outcomes in children under five years in Tier-1 and Tier-2 Indian cities (2010–2025)</div>
+        </div>
+
+        <div class="doc-field">
+          <div class="doc-field-label">Interventions</div>
+          <div>Community-level interventions deliverable through existing ASHA/ASHA-facilitator network; household air quality measures; early identification protocols at primary care level</div>
+        </div>
+
+        <div class="doc-field">
+          <div class="doc-field-label">Gaps</div>
+          <div>Identification of evidence gaps for potential prioritization in WHO-India's 2026 research agenda</div>
+        </div>
+
+        <div class="doc-field">
+          <div class="doc-field-label">Format</div>
+          <div>Narrative synthesis with evidence tables; GRADE assessment of key recommendations where feasible; 12–15 pages excluding annexes</div>
+        </div>
+
+        <div class="doc-field">
+          <div class="doc-field-label">Deadline</div>
+          <div><strong>27 February 2026</strong> (first draft for internal review)</div>
+        </div>
+
+        <div class="doc-field">
+          <div class="doc-field-label">Resources</div>
+          <div>WHO Library access; HINARI subscription; institutional PubMed account; existing CPCB datasets on file with EH cluster</div>
+        </div>
+
+        <p style="margin-top:1rem;">Please acknowledge receipt and flag immediately if bandwidth constraints exist. SEARO deadline is not flexible.</p>
+
+        <p>With regards,</p>
+      </div>
+
+      <div class="doc-signature">
+        <div class="doc-sig-block">
+          Dr. Ramesh Bhatt<br>
+          Programme Director, Environmental Health<br>
+          WHO India Country Office<br>
+          <span style="color: var(--mist);">+ 91 11 4600 1000</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="annotation">
+      <div class="annotation-label">Analysis — What the mandate doesn't say</div>
+      Notice what is absent: no mention of vernacular literature (Hindi, Bengali, Telugu health studies), no mention of AYUSH primary care data, no explicit guidance on weighting grey literature (CPCB annual reports, State pollution boards), and critically — no instruction on what to do when the ASHA-deliverable intervention evidence simply does not exist in indexed databases. These silences are not oversight. They are structural.
+    </div>
+  </section>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-mark">§</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- ── SECTION 3: The Officer at Work ─────────── -->
+  <section class="section" id="officer">
+    <div class="section-header">
+      <div class="section-num">03</div>
+      <div class="section-info">
+        <div class="section-marker">Simulated Working Session · 9:15 AM · WHO-India Office, New Delhi</div>
+        <h2 class="section-title">Dr. Nair Begins:<br>The Review as It Is Done Today</h2>
+      </div>
+    </div>
+
+    <p>What follows is a faithful simulation of how a WHO technical officer currently conducts a rapid evidence synthesis. The dialogue includes Dr. Nair's thinking process, her interactions with colleagues, and the decision points where friction accumulates. We play this in real time.</p>
+
+    <div class="simulation">
+      <div class="sim-header">
+        <span class="sim-label">Simulation · Day 1 of 17 · 09:15 hrs</span>
+        <span class="sim-badge">WHO-India · New Delhi Office</span>
+      </div>
+      <div class="sim-body">
+
+        <div class="turn">
+          <div class="turn-actor">
+            <div class="actor-name actor-officer">Dr. Nair</div>
+            <div class="actor-role">Technical Officer<br>Environ. Health</div>
+          </div>
+          <div class="turn-content">
+            <em>[Opens email. Reads mandate. Types acknowledgment. Opens a new Word document. Types the title: "Rapid Evidence Synthesis — Ambient Air Pollution and Under-5 Respiratory Outcomes in Indian Urban Settings." Stares at it for a moment. Opens PubMed.]</em>
+            <br><br>
+            Right. Air pollution, children, India. ASHA delivery. Let me start broad and narrow down. Search one: "PM2.5 children respiratory India." [returns 4,847 results] That's not useful. Let me add date filter — 2015 to 2025. [2,341 results]. Still too many. Add "urban" — [1,102]. Add "intervention" — [287]. That's workable.
+          </div>
+        </div>
+
+        <div class="turn">
+          <div class="turn-actor">
+            <div class="actor-name actor-officer">Dr. Nair</div>
+            <div class="actor-role">Internal monologue</div>
+          </div>
+          <div class="turn-content">
+            <em>[Scanning titles. First page of results: 8 from the US, 3 from China, 2 from Europe, 1 from India — a 2022 study from AIIMS Delhi on traffic-related air pollution in school children. Clicks it. Reads abstract. The study measures PM2.5 at school gates in South Delhi. Sample: middle-class urban children. Intervention: none. Outcome: spirometry measurements.]</em>
+            <br><br>
+            This is relevant for epidemiology but not for interventions. And South Delhi isn't representative of Tier-2 cities. Make a note. [Types a note into Word: "Limited India-specific intervention RCTs — mostly observational epidemiology from Tier-1 cities."]
+          </div>
+        </div>
+
+        <div class="turn">
+          <div class="turn-actor">
+            <div class="actor-name actor-searo">Dr. Mehta</div>
+            <div class="actor-role">Colleague<br>Epidemiology desk</div>
+          </div>
+          <div class="turn-content">
+            <em>[Stops by Dr. Nair's desk]</em>
+            <br><br>
+            Priya, are you doing the air quality review? Did you know there's a Lancet Planetary Health piece from last year — they did a meta-analysis on South Asian cities? It's quite good. I can send you the DOI.
+          </div>
+        </div>
+
+        <div class="turn">
+          <div class="turn-actor">
+            <div class="actor-name actor-officer">Dr. Nair</div>
+            <div class="actor-role">Response</div>
+          </div>
+          <div class="turn-content">
+            Please, yes. [Receives DOI. Opens paper. South Asian meta-analysis — 23 studies, of which 6 are from India. Interventions section: "Further research required." Adds to evidence table. Notes: "No ASHA-deliverable intervention found in this meta-analysis."]
+            <br><br>
+            <em>[Now searches specifically for "ASHA community health worker air pollution intervention India." Returns: 12 results. Of which 3 are relevant. None are randomized trials. All are feasibility assessments from 2017–2019.]</em>
+          </div>
+        </div>
+
+        <div class="turn">
+          <div class="turn-actor">
+            <div class="actor-name actor-officer">Dr. Nair</div>
+            <div class="actor-role">Day 3 · 11:40 hrs</div>
+          </div>
+          <div class="turn-content">
+            <em>[Three days in. The evidence table now has 34 papers. Of these: 26 are epidemiological (exposure-outcome associations), 5 are intervention studies (none ASHA-specific), 3 are systematic reviews. The Tier-2 city evidence is particularly thin — most studies are from Delhi, Mumbai, and Bengaluru. Patna, Kanpur, Varanasi — the cities with highest burden — are nearly absent from the indexed literature.]</em>
+            <br><br>
+            There's a real problem here. CPCB publishes annual air quality data for all these cities. There's a ICMR report from 2021 on respiratory burden in UP and Bihar that's grey literature — not indexed. Do I include it? The mandate says "evidence synthesis" but doesn't define evidence. Technically I should use GRADE criteria. Grey literature would be low GRADE quality. But it's the only data on Patna...
+          </div>
+        </div>
+
+        <div class="turn">
+          <div class="turn-actor">
+            <div class="actor-name actor-director">Dr. Bhatt</div>
+            <div class="actor-role">Programme Director<br>(check-in call)</div>
+          </div>
+          <div class="turn-content">
+            Priya, how are we doing? SEARO is asking for an early update on what we expect to recommend.
+          </div>
+        </div>
+
+        <div class="turn">
+          <div class="turn-actor">
+            <div class="actor-name actor-officer">Dr. Nair</div>
+            <div class="actor-role">Response</div>
+          </div>
+          <div class="turn-content">
+            Sir, the epidemiological evidence is strong — PM2.5 is clearly associated with under-5 lung outcomes. The problem is interventions. There is essentially no high-quality evidence for ASHA-delivered air quality interventions. The best evidence base is from household biomass combustion reduction in rural settings — LPG substitution — but the mandate is asking about urban Tier-2 settings where the exposure source is traffic and industry, not cooking.
+            <br><br>
+            I can recommend surveillance strengthening and a research agenda. I can flag the gap. But I cannot synthesize evidence that doesn't exist in the indexed literature.
+          </div>
+        </div>
+
+        <div class="turn">
+          <div class="turn-actor">
+            <div class="actor-name actor-director">Dr. Bhatt</div>
+            <div class="actor-role">Response</div>
+          </div>
+          <div class="turn-content">
+            I understand. Do your best. SEARO knows the evidence is thin in this area — that's partly why they asked for the review. Write clearly about the gap. The brief can advocate for research funding as its primary output.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="critique">
+      <div class="critique-label">Observer's Note — The Gap Becomes Visible</div>
+      <div class="critique-text">
+        Dr. Nair has now spent three days and produced a technically sound preliminary evidence table. But notice what has already happened: she is working entirely within the English-language PubMed-indexed corpus. The ICMR grey literature, the State pollution board reports, the Patna-specific clinical data from district hospitals — none of this is in the standard retrieval architecture. The gap between what the mandate needs (evidence for ASHA delivery in Tier-2 cities) and what the search engine surfaces (South Delhi spirometry studies and US-funded interventions) is structural, not personal. Dr. Nair is not failing. The system is performing exactly as designed — for a different territory.
+      </div>
+    </div>
+  </section>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-mark">§</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- ── SECTION 4: The Full Timeline ───────────── -->
+  <section class="section" id="timeline">
+    <div class="section-header">
+      <div class="section-num">04</div>
+      <div class="section-info">
+        <div class="section-marker">Process Anatomy</div>
+        <h2 class="section-title">The Seventeen Days:<br>A Timeline of the Review</h2>
+      </div>
+    </div>
+
+    <p>To understand where AI assistance can be transformative, we must first understand exactly where time is spent in the existing process. Below is a faithful reconstruction of Dr. Nair's seventeen working days.</p>
+
+    <div class="timeline">
+      <div class="timeline-event">
+        <div class="timeline-time">Days 1–3</div>
+        <div class="timeline-title">Search Strategy & Initial Retrieval</div>
+        <div class="timeline-desc">Manual iteration through 15+ search string variants across PubMed, Cochrane Library, and WHO IRIS. Deduplication by hand across databases. Initial screening of ~400 titles/abstracts for relevance. Time spent: ~20 hours. Irreplaceable human judgment: ~3 hours.</div>
+      </div>
+
+      <div class="timeline-event">
+        <div class="timeline-time">Days 4–7</div>
+        <div class="timeline-title">Full-Text Retrieval & Data Extraction</div>
+        <div class="timeline-desc">Full-text access for 67 papers. 14 unavailable through HINARI — requested via interlibrary loan, 6 returned within the window. Reading and extracting data into evidence table: sample size, study design, exposure measure, outcome, population demographics, intervention description, effect estimate. Time spent: ~30 hours. Irreplaceable human judgment: ~25 hours.</div>
+      </div>
+
+      <div class="timeline-event">
+        <div class="timeline-time">Days 8–10</div>
+        <div class="timeline-title">GRADE Assessment & Evidence Synthesis</div>
+        <div class="timeline-desc">Quality assessment of 53 included papers using GRADE methodology. Discussion with Dr. Mehta on two contested papers. Drafting narrative synthesis sections. The intervention evidence section takes two full days because the absence of evidence must be written as carefully as the evidence itself. Time spent: ~24 hours.</div>
+      </div>
+
+      <div class="timeline-event">
+        <div class="timeline-time">Days 11–14</div>
+        <div class="timeline-title">Drafting, Revision & Internal Review</div>
+        <div class="timeline-desc">Full draft produced at Day 11. Internal review by Dr. Bhatt returns on Day 13 with 23 comments — mostly requests for clearer framing of the intervention gap and more specific research recommendations. Revision takes two days. Time spent: ~18 hours.</div>
+      </div>
+
+      <div class="timeline-event">
+        <div class="timeline-time">Days 15–17</div>
+        <div class="timeline-title">Clearance, Formatting & Submission</div>
+        <div class="timeline-desc">WHO-India formatting requirements: specific reference style, executive summary format, SEARO cover page, annex structure. Technical review by a second officer. Legal clearance check (no issues). Final submission. Time spent: ~8 hours. Irreplaceable human judgment: ~0 hours.</div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Phase</th>
+            <th>Total Hours</th>
+            <th>Human Judgment Required</th>
+            <th>AI-Automatable</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Search Strategy</td>
+            <td>20 hrs</td>
+            <td>3 hrs (defining scope)</td>
+            <td>~85%</td>
+          </tr>
+          <tr>
+            <td>Data Extraction</td>
+            <td>30 hrs</td>
+            <td>25 hrs (interpretation)</td>
+            <td>~30%</td>
+          </tr>
+          <tr>
+            <td>GRADE & Synthesis</td>
+            <td>24 hrs</td>
+            <td>20 hrs (expert judgment)</td>
+            <td>~15%</td>
+          </tr>
+          <tr>
+            <td>Drafting & Revision</td>
+            <td>18 hrs</td>
+            <td>15 hrs (argumentation)</td>
+            <td>~20%</td>
+          </tr>
+          <tr>
+            <td>Clearance & Format</td>
+            <td>8 hrs</td>
+            <td>0 hrs</td>
+            <td>~95%</td>
+          </tr>
+          <tr style="font-weight:600; background: var(--indigo-pale);">
+            <td>Total</td>
+            <td>100 hrs</td>
+            <td>63 hrs</td>
+            <td>~40% overall</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="insight">
+      <p><strong>The insight this table reveals:</strong> roughly 37 hours of Dr. Nair's 17-day effort are automatable — not because machines can think, but because they can search, deduplicate, extract structured data, and format faster and without fatigue. Those 37 hours recovered are 37 hours she could spend on the 63 hours of irreplaceable expert judgment that currently get compressed and rushed.</p>
+    </div>
+  </section>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-mark">§</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- ── SECTION 5: Where the Process Breaks ──── -->
+  <section class="section" id="failures">
+    <div class="section-header">
+      <div class="section-num">05</div>
+      <div class="section-info">
+        <div class="section-marker">The Loss Landscape of the Existing Process</div>
+        <h2 class="section-title">Where the Evidence<br>Gets Lost</h2>
+      </div>
+    </div>
+
+    <p>Every step in Dr. Nair's process introduced a loss — a distance between the evidence that exists in the world and the evidence that made it into her synthesis. These losses compound. By the time the policy brief reaches SEARO, the evidence has traveled through five filters, none of which are explicitly labeled.</p>
+
+    <div class="loss-panel">
+      <div class="loss-panel-title">▸ Cumulative Evidence Loss — Dr. Nair's Review</div>
+
+      <div class="loss-row">
+        <div class="loss-name">Language filter (English-only)</div>
+        <div class="loss-bar-track"><div class="loss-bar-fill" style="width:70%"></div></div>
+        <div class="loss-val">0.70</div>
+      </div>
+      <div class="loss-row">
+        <div class="loss-name">Database filter (PubMed/Cochrane only)</div>
+        <div class="loss-bar-track"><div class="loss-bar-fill" style="width:55%"></div></div>
+        <div class="loss-val">0.55</div>
+      </div>
+      <div class="loss-row">
+        <div class="loss-name">Geography bias (Tier-1 over Tier-2)</div>
+        <div class="loss-bar-track"><div class="loss-bar-fill" style="width:65%"></div></div>
+        <div class="loss-val">0.65</div>
+      </div>
+      <div class="loss-row">
+        <div class="loss-name">Study design filter (grey literature)</div>
+        <div class="loss-bar-track"><div class="loss-bar-fill" style="width:60%"></div></div>
+        <div class="loss-val">0.60</div>
+      </div>
+      <div class="loss-row">
+        <div class="loss-name">Recency (pre-2015 evidence excluded)</div>
+        <div class="loss-bar-track"><div class="loss-bar-fill" style="width:30%"></div></div>
+        <div class="loss-val">0.30</div>
+      </div>
+      <div class="loss-row" style="margin-top:1rem; padding-top:0.8rem; border-top:1px solid var(--rule)">
+        <div class="loss-name" style="font-weight:600; color: var(--ink)">Overall Evidence Loss</div>
+        <div class="loss-bar-track"><div class="loss-bar-fill" style="width:58%; background: linear-gradient(90deg, var(--terra-deep), var(--terra))"></div></div>
+        <div class="loss-val" style="font-weight:600">0.58</div>
+      </div>
+    </div>
+
+    <p>A loss score of 0.58 means that, by conservative estimate, more than half of the evidence relevant to WHO-India's specific question — ASHA-delivered interventions in Tier-2 Indian cities — did not reach Dr. Nair's synthesis. Not because she did poor work. Because the <em>search infrastructure</em> she had access to was built for a different population, a different language, and a different epistemic tradition.</p>
+
+    <div class="pull-quote">
+      The deepest problem is that the missing evidence is invisible. The policy brief will not say "we could not find evidence for Patna." It will say "evidence is limited." These are not the same statement.
+    </div>
+
+    <p>This is the baseline we carry into Session II. Not as indictment of Dr. Nair or of WHO-India's processes — which are, within their constraints, excellent — but as honest cartography of the terrain. You cannot navigate from a map that does not acknowledge its own blank spaces.</p>
+  </section>
+
+  <div class="chapter-break"></div>
+
+  <!-- ── SECTION 6: What Session II Will Do ─────── -->
+  <section class="section" id="forward">
+    <div class="section-header">
+      <div class="section-num">06</div>
+      <div class="section-info">
+        <div class="section-marker">Looking Forward</div>
+        <h2 class="section-title">What We Now Know<br>— and What Comes Next</h2>
+      </div>
+    </div>
+
+    <p>You have just completed Session I. You now have a precise, operational understanding of the existing literature review process — its chain of command, its decision points, its compounding losses, and the gap between what it needs and what it retrieves.</p>
+
+    <p>This understanding is not merely academic. It is the foundation from which Session II can be genuinely useful, because we now know what we are asking AI tools to solve:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Identified Problem</th>
+            <th>What We Need</th>
+            <th>Session</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>37 hours of automatable work consuming expert time</td>
+            <td>Search automation, deduplication, data extraction tools</td>
+            <td>II</td>
+          </tr>
+          <tr>
+            <td>English-only database bias</td>
+            <td>Multilingual retrieval; vernacular health database access</td>
+            <td>II & III</td>
+          </tr>
+          <tr>
+            <td>Grey literature systematically excluded</td>
+            <td>Structured grey literature protocols; CPCB/ICMR integration</td>
+            <td>III</td>
+          </tr>
+          <tr>
+            <td>Evidence absence misread as evidence of absence</td>
+            <td>Explicit gap-mapping; linguistic loss scoring</td>
+            <td>III</td>
+          </tr>
+          <tr>
+            <td>No externalized epistemic priors</td>
+            <td>Ukubona framework; publicly legible loss function</td>
+            <td>III & IV</td>
+          </tr>
+          <tr>
+            <td>Institutional process doesn't encode learning</td>
+            <td>Protocol that improves with each review cycle</td>
+            <td>IV & V</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="annotation">
+      <div class="annotation-label">Curriculum note</div>
+      Session II will survey the AI tools currently available — Elicit, Consensus, Claude, ASReview, and others — and ask honestly which ones would have helped Dr. Nair and which would not have. We will not oversell any tool. We will test each against the specific failures documented here.
+    </div>
+
+    <!-- Curriculum Map -->
+    <div style="margin-top: 2.5rem;">
+      <div style="font-family: var(--mono); font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--mist); margin-bottom:0.8rem;">Five-Session Curriculum Map</div>
+      <div class="curriculum-map">
+        <div class="curriculum-session current">
+          <div class="curr-num">I</div>
+          <div class="curr-label">Foundations</div>
+          <div class="curr-title">The Existing Process — how reviews are done today</div>
+        </div>
+        <div class="curriculum-session">
+          <div class="curr-num">II</div>
+          <div class="curr-label">Tools</div>
+          <div class="curr-title">The AI landscape — what's available and what it can actually do</div>
+        </div>
+        <div class="curriculum-session">
+          <div class="curr-num">III</div>
+          <div class="curr-label">Framework</div>
+          <div class="curr-title">The Ukubona lens — externalizing your epistemic priors</div>
+        </div>
+        <div class="curriculum-session">
+          <div class="curr-num">IV</div>
+          <div class="curr-label">Protocol</div>
+          <div class="curr-title">Building your WHO-India AI review protocol from first principles</div>
+        </div>
+        <div class="curriculum-session">
+          <div class="curr-num">V</div>
+          <div class="curr-label">Institution</div>
+          <div class="curr-title">Embedding AI fluency in WHO-India's evidence culture</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="insight" style="margin-top:2.5rem">
+      <p><strong>Before you close this session:</strong> Think back to the last literature review you conducted or contributed to. Where in Dr. Nair's seventeen days did you spend the most time? Where did you feel the most friction? Where did you feel you were doing genuinely irreplaceable work, and where did you feel like a very slow search engine?</p>
+      <p>These questions are the entry point for Session II. Write them down. They are your personal loss function — and in Session III, we will learn how to make them public.</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══ FOOTER ═══════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">WHO-India AI Curriculum</div>
+      <div class="footer-text">
+        Evidence in the Age of Machines · Level I · Session I<br>
+        Developed in collaboration with Ukubona LLC · Kampala, Uganda<br>
+        <span style="color: rgba(255,255,255,0.25);">Session rendered February 2026 · For internal use · WHO-India Environmental Health Cluster</span>
+      </div>
+    </div>
+    <div class="footer-nav">
+      <a href="#">Session II →</a>
+      <a href="#">Curriculum Overview</a>
+      <a href="https://ukubona-llc.github.io">Ukubona LLC</a>
+      <a href="#">WHO-India</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── Progress Bar ────────────────────────────────
+window.addEventListener('scroll', () => {
+  const scrollTop = document.documentElement.scrollTop;
+  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = (scrollTop / scrollHeight) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+});
+
+// ── Animate loss bars on scroll ────────────────
+const lossBars = document.querySelectorAll('.loss-bar-fill');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      const targetWidth = el.style.width;
+      el.style.width = '0%';
+      setTimeout(() => { el.style.width = targetWidth; }, 100);
+      observer.unobserve(el);
+    }
+  });
+}, { threshold: 0.3 });
+
+lossBars.forEach(bar => observer.observe(bar));
+
+// ── Stagger section animations ─────────────────
+const sections = document.querySelectorAll('.section');
+const sectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+      sectionObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.05 });
+
+sections.forEach(sec => {
+  sec.style.opacity = '0';
+  sec.style.transform = 'translateY(20px)';
+  sec.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+  sectionObserver.observe(sec);
+});
+
+// ── Nav session link highlighting ──────────────
+document.querySelectorAll('.nav-session').forEach((link, i) => {
+  link.addEventListener('click', function() {
+    document.querySelectorAll('.nav-session').forEach(l => l.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+</script>
+
+</body>
+</html>

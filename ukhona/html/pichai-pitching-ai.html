@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pichai's Pivot — Times of India Tech</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+        <!--2.0 branded (old)-->
+        <meta name="color-scheme" content="dark light" />
+        <meta name="theme-color" content="#0a0a0f" />
+        <meta name="description" content="The Dude's Rug.">
+        <link rel="canonical" href="https://cryo-pyro.github.io/repos-00/ukhona/html/geodesic.html">
+        <meta name="robots" content="index,follow">
+
+        <meta property="og:site_name" content="Repos">
+        <meta property="og:title" content="The Dude's Rug">
+        <meta property="og:description" content="Saddle Point">
+        <meta property="og:type" content="blog">
+        <meta property="og:url" content="https://cryo-pyro.github.io/repos-00/">
+        <meta property="og:image" content="../img/ukb-landscape.jpg">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="The Dude's Rug">
+        <meta name="twitter:description" content="Saddle Point">
+        <meta name="twitter:image" content="../img/ukb-landscape.jpg">
+
+        <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-light.ico" type="image/x-icon">
+        <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-light.ico" media="(prefers-color-scheme: light)">
+        <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-dark.ico" media="(prefers-color-scheme: dark)">
+        <link rel="preload" href="https://abikesa.github.io/logos/assets/ukubona-light.png" as="image">
+        <link rel="preload" href="https://abikesa.github.io/logos/assets/ukubona-dark.png" as="image">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,300;0,400;0,700;1,300;1,400&family=JetBrains+Mono:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+
+        <!--3.0 centralized, branding style -->
+
+        <link href="../css/variables.css?v=1.1" rel="stylesheet" />
+        <link href="../css/head.css?v=1.1" rel="stylesheet" />
+        <link href="../css/card.css?v=1.1" rel="stylesheet" />
+        <link href="../css/footer.css?v=1.1" rel="stylesheet" />
+
+        <script src="../js/mathjax.js"></script>
+        <script id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+        <!--4.0 distributed, idiosyncratic style -->
+<style>
+  :root {
+    --ink: #1a1208;
+    --paper: #f5efe2;
+    --accent: #c0392b;
+    --gold: #b8860b;
+    --mid: #7a6a52;
+    --light: #e8dfc8;
+    --highlight: #fff3cd;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Libre Baskerville', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.75;
+    min-height: 100vh;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  /* Masthead */
+  .masthead {
+    border-bottom: 3px double var(--ink);
+    padding: 18px 0 12px;
+    text-align: center;
+    background: var(--paper);
+    position: relative;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .masthead-top {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--mid);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .masthead-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 6vw, 52px);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .masthead-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--mid);
+    text-transform: uppercase;
+    margin-top: 6px;
+    border-top: 1px solid var(--light);
+    padding-top: 8px;
+  }
+
+  /* Nav strip */
+  .nav-strip {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 7px 24px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .nav-strip a { color: var(--paper); text-decoration: none; opacity: 0.7; }
+  .nav-strip a:hover { opacity: 1; }
+
+  /* Main layout — handled by .page > .wrap-max > .card from head.css */
+
+  /* Article header */
+  .article-header {
+    padding: 48px 0 32px;
+    border-bottom: 1px solid var(--mid);
+    animation: fadeUp 0.8s ease both;
+  }
+  .section-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: inline-block;
+    border-left: 3px solid var(--accent);
+    padding-left: 10px;
+    margin-bottom: 20px;
+  }
+  .headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 20px;
+    animation: fadeUp 0.9s ease 0.1s both;
+  }
+  .headline em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .deck {
+    font-size: 18px;
+    color: var(--mid);
+    font-style: italic;
+    line-height: 1.6;
+    border-left: 4px solid var(--light);
+    padding-left: 18px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.9s ease 0.2s both;
+  }
+
+  /* Byline */
+  .byline {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--mid);
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding-top: 16px;
+    border-top: 1px solid var(--light);
+    animation: fadeUp 0.9s ease 0.3s both;
+  }
+  .byline span { display: flex; align-items: center; gap: 6px; }
+
+  /* Image block */
+  .hero-image {
+    margin: 36px 0;
+    position: relative;
+    animation: fadeUp 0.9s ease 0.35s both;
+  }
+  .hero-image-inner {
+    background: linear-gradient(135deg, #1a1208 0%, #2c1810 35%, #3d2314 60%, #1a1208 100%);
+    height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-image-inner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(192,57,43,0.2) 0%, transparent 60%);
+  }
+  .hero-monogram {
+    font-family: 'Playfair Display', serif;
+    font-size: 120px;
+    font-weight: 900;
+    font-style: italic;
+    color: rgba(255,255,255,0.04);
+    letter-spacing: -0.05em;
+    user-select: none;
+    position: absolute;
+  }
+  .hero-quote-overlay {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 24px;
+  }
+  .hero-quote-overlay p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(16px, 3vw, 22px);
+    color: rgba(245,239,226,0.9);
+    line-height: 1.5;
+    max-width: 540px;
+  }
+  .hero-quote-overlay cite {
+    display: block;
+    margin-top: 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-style: normal;
+  }
+  .caption {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--mid);
+    padding: 8px 0;
+    border-bottom: 1px solid var(--light);
+    letter-spacing: 0.05em;
+  }
+
+  /* Article body */
+  .article-body {
+    padding-top: 36px;
+    animation: fadeUp 0.9s ease 0.4s both;
+  }
+  .article-body p {
+    margin-bottom: 22px;
+    color: #2a1f10;
+    hyphens: auto;
+  }
+  .article-body p:first-child::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 72px;
+    font-weight: 900;
+    float: left;
+    line-height: 0.75;
+    margin: 8px 10px -4px 0;
+    color: var(--accent);
+  }
+
+  /* Pull quote */
+  .pull-quote {
+    margin: 36px 0;
+    padding: 28px 36px;
+    background: var(--ink);
+    color: var(--paper);
+    position: relative;
+  }
+  .pull-quote::before {
+    content: '\201C';
+    font-family: 'Playfair Display', serif;
+    font-size: 120px;
+    color: var(--accent);
+    position: absolute;
+    top: -20px;
+    left: 24px;
+    line-height: 1;
+    opacity: 0.5;
+  }
+  .pull-quote p {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(18px, 3vw, 24px);
+    font-style: italic;
+    line-height: 1.45;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 12px !important;
+    color: var(--paper) !important;
+  }
+  .pull-quote cite {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-style: normal;
+  }
+
+  /* Data callout */
+  .data-box {
+    border: 2px solid var(--gold);
+    padding: 24px 28px;
+    margin: 32px 0;
+    background: rgba(184,134,11,0.05);
+    position: relative;
+  }
+  .data-box-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: var(--paper);
+    position: absolute;
+    top: -8px;
+    left: 16px;
+    padding: 0 8px;
+  }
+  .data-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--light);
+    gap: 16px;
+  }
+  .data-row:last-child { border-bottom: none; }
+  .data-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--mid);
+    text-transform: uppercase;
+  }
+  .data-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .data-value.up { color: var(--accent); }
+
+  /* Timeline */
+  .timeline {
+    margin: 36px 0;
+    padding: 28px;
+    border-left: 3px solid var(--accent);
+    background: rgba(192,57,43,0.03);
+  }
+  .timeline-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+  .timeline-item {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  .timeline-item:last-child { margin-bottom: 0; }
+  .timeline-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    white-space: nowrap;
+    min-width: 80px;
+    padding-top: 2px;
+  }
+  .timeline-content {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .timeline-content strong {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    margin-bottom: 3px;
+  }
+
+  /* Footer */
+  .article-footer {
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 3px double var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .article-footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 20px;
+    color: var(--ink);
+  }
+  .article-footer-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--mid);
+    letter-spacing: 0.1em;
+    text-align: right;
+  }
+  .article-footer-note a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    .pull-quote { margin: 36px 0; padding: 24px 20px; }
+    .pull-quote::before { font-size: 80px; top: -10px; left: 12px; }
+    .nav-strip { font-size: 9px; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+   <main>
+
+    <!-- 6.0 Works for header (old) ..  -->
+    <div class="scroll-indicator">
+         <div class="scroll-progress">
+        <!-- Works for header ..  -->
+
+         </div>
+    </div>
+
+        <!-- 7.0 Works for header (old) ..  -->
+        <div class="bg-pattern"></div>
+
+        <!-- 8.0 Injected Ukubona brand header (old) -->
+        <header class="header" id="header"></header>
+
+        <!-- 9.0 Spacing (variable) -->
+        <br> <br> <br> 
+        <br> <br> <br>
+        <br> <br> <br>
+
+
+<main>
+<div class="page"> <!-- totally optional -->
+   <div class="wrap-max">
+      <div class="card">
+
+<header class="masthead">
+  <div class="masthead-top">Est. 1838 &nbsp;·&nbsp; Technology &nbsp;·&nbsp; New Delhi Edition</div>
+  <div class="masthead-logo">Times of India</div>
+  <div class="masthead-sub">Tech News &nbsp;/&nbsp; Friday, February 20, 2026</div>
+</header>
+
+<div class="nav-strip">
+  <span>Tech News &nbsp;/&nbsp; Artificial Intelligence &nbsp;/&nbsp; Google &nbsp;/&nbsp; Alphabet</span>
+  <span>India AI Impact Summit 2026</span>
+</div>
+
+<div class="article-inner">
+  <article>
+    <header class="article-header">
+      <div class="section-tag">Big Tech &amp; AI</div>
+      <h1 class="headline">
+        Two Months After Calling the AI Investment Boom <em>"Irrational,"</em> Sundar Pichai Now Defends It — "I Think the Investment Makes Sense"
+      </h1>
+      <p class="deck">
+        At India's AI Impact Summit, the Google CEO reversed course, comparing today's AI buildout to railroads and highways — and projecting an industrial revolution happening ten times faster.
+      </p>
+      <div class="byline">
+        <span>📰 Times of India Tech Desk</span>
+        <span>📅 February 19, 2026</span>
+        <span>🏙 New Delhi</span>
+        <span>⏱ 4 min read</span>
+      </div>
+    </header>
+
+    <div class="hero-image">
+      <div class="hero-image-inner">
+        <div class="hero-monogram">SP</div>
+        <div class="hero-quote-overlay">
+          <p>"This is the industrial revolution, but 10 times faster and 10 times larger."</p>
+          <cite>— Sundar Pichai, CEO, Alphabet / Google &nbsp;·&nbsp; India AI Impact Summit, February 2026</cite>
+        </div>
+      </div>
+      <p class="caption">Sundar Pichai speaking at a media briefing on the sidelines of the India AI Impact Summit, New Delhi. &nbsp;· &nbsp;PTI / Deccan Chronicle</p>
+    </div>
+
+    <div class="article-body">
+      <p>
+        Amid swelling global fears of an AI investment bubble, Google CEO Sundar Pichai stepped onto the stage in New Delhi this week and did something unexpected: he defended the very spending spree he had, just two months prior, described as carrying <em>"elements of irrationality."</em> At a media briefing on the sidelines of the <strong>India AI Impact Summit</strong>, Pichai urged boardrooms worldwide to take a long view — and compared today's AI infrastructure build-out to the foundational bets that once built America's railroads and interstate highways.
+      </p>
+
+      <div class="data-box">
+        <span class="data-box-label">Key Numbers</span>
+        <div class="data-row">
+          <span class="data-label">Alphabet Capex 2025</span>
+          <span class="data-value">~$93B</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Alphabet Capex 2026 (projected)</span>
+          <span class="data-value up">$175B – $185B</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Google's AI Capex four years ago</span>
+          <span class="data-value">&lt;$30B/yr</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Alphabet market cap (Nov 2025)</span>
+          <span class="data-value">$3.5 Trillion</span>
+        </div>
+      </div>
+
+      <p>
+        "I think we are investing to meet that moment," Pichai said, fielding questions on how CEOs can overcome boardroom scepticism about AI returns. "In some of the contexts Dennis has spoken about — this is the industrial revolution, but 10 times faster and 10 times larger." Dennis referred to Demis Hassabis, CEO of Google DeepMind, who had addressed the summit earlier in the day.
+      </p>
+
+      <div class="pull-quote">
+        <p>These are such leverage investments and drive so much growth and value. The investment makes sense given the economy we are seeing and the opportunities we see.</p>
+        <cite>— Sundar Pichai, CEO, Alphabet · India AI Impact Summit, Feb 19, 2026</cite>
+      </div>
+
+      <p>
+        The remarks mark a striking tonal shift from Pichai's November 2025 interview with the BBC, in which he acknowledged that the AI investment surge had "elements of irrationality" and warned that no company — "including us" — would be immune if the AI bubble were to burst. That interview drew widespread attention for its candour, with comparisons to former US Federal Reserve Chairman Alan Greenspan's famous 1996 warning of "irrational exuberance" in the stock market ahead of the dot-com crash.
+      </p>
+
+      <div class="timeline">
+        <div class="timeline-title">📍 The Pivot — A Timeline</div>
+        <div class="timeline-item">
+          <span class="timeline-date">Nov 18, 2025</span>
+          <div class="timeline-content">
+            <strong>BBC Interview — "Elements of Irrationality"</strong>
+            Pichai tells BBC the AI boom is an "extraordinary moment" but warns of "irrationality" and says no company would be immune if a bubble bursts. He compares the moment to the dot-com era.
+          </div>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-date">Jan 2026</span>
+          <div class="timeline-content">
+            <strong>Alphabet Projects $175B–$185B in 2026 Capex</strong>
+            The figure — potentially more than double the prior year — signals Alphabet is accelerating its AI bet, not retreating.
+          </div>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-date">Feb 19, 2026</span>
+          <div class="timeline-content">
+            <strong>India AI Impact Summit — "Investment Makes Sense"</strong>
+            At a New Delhi briefing, Pichai defends AI spending, cites surging Google Cloud demand as evidence of returns, and compares the build-out to railroads and highways.
+          </div>
+        </div>
+      </div>
+
+      <p>
+        The context for the reversal, or nuancing, is significant. Alphabet's plan to devote between \$175 billion and \$185 billion to capital expenditure in 2026 — announced weeks before the summit — would represent a dramatic escalation at a moment when rivals Microsoft, Amazon, and Meta are all engaged in similarly staggering AI infrastructure spending. Four years ago, Google was spending less than \$30 billion annually on AI. This year, it will spend over \$90 billion. Next year, potentially twice that.
+      </p>
+
+      <p>
+        Pichai pointed to surging demand for Google Cloud as concrete evidence that returns are already materialising. The AI buildout, he argued, is not speculative excess but a response to real, compounding demand — and that the infrastructure being laid today will prove as indispensable as the physical infrastructure of previous industrial revolutions.
+      </p>
+
+      <p>
+        "And so we are investing to meet that demand," Pichai said. "And you know, that's what makes this an exciting moment. So I think, the investment makes sense given the progress in the technology we are seeing, and the opportunities we see on top of it."
+      </p>
+
+      <p>
+        The tech industry remains at a contentious crossroads. Staggering capital expenditure — Alphabet's $185 billion commitment for 2026 being a case in point — continues to collide with intensifying fears of an AI bubble, particularly from global financial institutions including the UK's central bank and the International Monetary Fund, both of which issued warnings in late 2025 about the risk of a sharp market correction. For now, Pichai is betting the bubble is not a bubble at all — just history, accelerating.
+      </p>
+    </div>
+
+    <footer class="article-footer">
+      <div class="article-footer-logo">Times of India</div>
+      <div class="article-footer-note">
+        Original article: <a href="https://timesofindia.indiatimes.com/technology/tech-news/two-months-after-google-ceo-sundar-pichai-said-ai-investment-boom-has-elements-of-irrationality-he-defends-it-says-i-think-the-investment-makes-sense-given/articleshow/128507076.cms" target="_blank">timesofindia.indiatimes.com ↗</a><br>
+        Rendered for reading &nbsp;·&nbsp; Feb 20, 2026
+      </div>
+    </footer>
+  </article>
+</div><!-- /.article-inner -->
+</div><!-- /.card -->
+
+
+
+      </div><!-- /.wrap-max -->
+   </div><!-- /.page -->
+</main>
+
+  <div id="footer-placeholder"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
+  <script src="../js/shared.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ukubona — The Algorithm of Seeing</title>
+  <meta name="color-scheme" content="dark light" />
+  <meta name="theme-color" content="#0a0a0f" />
+  <meta name="description" content="The Dude's Rug.">
+  <link rel="canonical" href="https://cryo-pyro.github.io/repos-00/ukhona/html/geodesic.html">
+  <meta name="robots" content="index,follow">
+
+  <meta property="og:site_name" content="Repos">
+  <meta property="og:title" content="The Dude's Rug">
+  <meta property="og:description" content="Saddle Point">
+  <meta property="og:type" content="blog">
+  <meta property="og:url" content="https://cryo-pyro.github.io/repos-00/">
+  <meta property="og:image" content="../img/ukb-landscape.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Dude's Rug">
+  <meta name="twitter:description" content="Saddle Point">
+  <meta name="twitter:image" content="../img/ukb-landscape.jpg">
+
+  <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-light.ico" type="image/x-icon">
+  <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-light.ico" media="(prefers-color-scheme: light)">
+  <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-dark.ico" media="(prefers-color-scheme: dark)">
+  <link rel="preload" href="https://abikesa.github.io/logos/assets/ukubona-light.png" as="image">
+  <link rel="preload" href="https://abikesa.github.io/logos/assets/ukubona-dark.png" as="image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,300;0,400;0,700;1,300;1,400&family=JetBrains+Mono:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+
+  <link href="../css/variables.css?v=1.1" rel="stylesheet" />
+  <link href="../css/head.css?v=1.1" rel="stylesheet" />
+  <link href="../css/card.css?v=1.1" rel="stylesheet" />
+  <link href="../css/footer.css?v=1.1" rel="stylesheet" />
+
+  <script src="../js/mathjax.js"></script>
+  <script id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&family=Cinzel:wght@400;600&display=swap');
+
+  :root {
+    --ink: #0a0a0f;
+    --paper: #f5f0e8;
+    --gold: #c9a84c;
+    --gold-dim: #7a6230;
+    --rust: #8b3a2a;
+    --ash: #2a2a35;
+    --mist: #d4cfc4;
+    --signal: #4a7c59;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.7;
+    overflow-x: hidden;
+    cursor: crosshair;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    position: relative;
+    padding: 4rem 2rem;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 60% 40% at 20% 60%, rgba(201,168,76,0.06) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 80% 30%, rgba(74,124,89,0.05) 0%, transparent 70%),
+      radial-gradient(ellipse 80% 80% at 50% 50%, rgba(139,58,42,0.04) 0%, transparent 80%);
+    animation: breathe 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes breathe {
+    from { opacity: 0.6; transform: scale(1); }
+    to { opacity: 1; transform: scale(1.02); }
+  }
+
+  /* LOSS LANDSCAPE CANVAS */
+  .landscape-canvas {
+    position: absolute;
+    inset: 0;
+    opacity: 0.15;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    max-width: 900px;
+  }
+
+  .overline {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 0.3s;
+  }
+
+  .hero h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--paper);
+    margin-bottom: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 0.6s;
+  }
+
+  .hero h1 span {
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    font-style: italic;
+    color: var(--mist);
+    margin-top: 1.5rem;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 0.9s;
+  }
+
+  .equation-hero {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(0.75rem, 1.5vw, 0.95rem);
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 1.2s;
+    padding: 1rem 2rem;
+    border: 1px solid rgba(201,168,76,0.2);
+    display: inline-block;
+    background: rgba(201,168,76,0.03);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .scroll-cue {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--gold-dim);
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 2s, pulse 2s ease-in-out infinite 3s;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  /* DIVIDER */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    margin: 0;
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 6rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  section.full {
+    max-width: 100%;
+    padding: 6rem 0;
+  }
+
+  /* PENTAD */
+  .pentad {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    margin: 4rem 0;
+    position: relative;
+  }
+
+  .pentad::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    transform: translateY(-50%);
+  }
+
+  .pentad-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.4s ease;
+  }
+
+  .pentad-node:hover { background: rgba(201,168,76,0.04); }
+
+  .pentad-node:hover .node-glyph { color: var(--gold); transform: scale(1.1); }
+  .pentad-node:hover .node-label { color: var(--paper); }
+  .pentad-node:hover .node-detail { max-height: 200px; opacity: 1; }
+
+  .node-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--gold-dim);
+    margin-bottom: 1rem;
+  }
+
+  .node-glyph {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--mist);
+    margin-bottom: 1.2rem;
+    transition: all 0.4s ease;
+    text-align: center;
+    line-height: 1.8;
+  }
+
+  .node-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    color: var(--mist);
+    text-align: center;
+    transition: color 0.4s;
+    margin-bottom: 0.5rem;
+  }
+
+  .node-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.8rem;
+    color: var(--gold-dim);
+    text-align: center;
+  }
+
+  .node-detail {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: all 0.5s ease;
+    font-size: 0.8rem;
+    color: var(--mist);
+    text-align: center;
+    margin-top: 1rem;
+    line-height: 1.6;
+    padding: 0 0.5rem;
+  }
+
+  /* VERTICAL CONNECTOR DOTS */
+  .pentad-node::after {
+    content: '●';
+    position: absolute;
+    top: 50%;
+    right: -0.5px;
+    transform: translateY(-50%);
+    color: var(--gold-dim);
+    font-size: 0.4rem;
+  }
+  .pentad-node:last-child::after { display: none; }
+
+  /* AUTOENCODER DIAGRAM */
+  .autoencoder {
+    margin: 5rem 0;
+    position: relative;
+    padding: 3rem 0;
+  }
+
+  .autoencoder-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--gold-dim);
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .ae-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .ae-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .ae-circle {
+    border-radius: 50%;
+    border: 1px solid var(--gold-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    transition: all 0.4s;
+    cursor: pointer;
+    background: rgba(201,168,76,0.03);
+  }
+
+  .ae-circle:hover {
+    background: rgba(201,168,76,0.12);
+    border-color: var(--gold);
+    box-shadow: 0 0 30px rgba(201,168,76,0.15);
+  }
+
+  .ae-circle.large { width: 110px; height: 110px; }
+  .ae-circle.medium { width: 85px; height: 85px; }
+  .ae-circle.small { width: 60px; height: 60px; }
+  .ae-circle.bottleneck {
+    width: 45px; height: 45px;
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.1);
+    box-shadow: 0 0 20px rgba(201,168,76,0.2);
+    font-size: 0.5rem;
+  }
+
+  .ae-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: var(--gold-dim);
+  }
+
+  .ae-arrow {
+    width: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .ae-arrow::after {
+    content: '›';
+    position: absolute;
+    right: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold);
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  .ae-bottleneck-label {
+    position: absolute;
+    top: -2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.75rem;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+
+  /* PROSE SECTIONS */
+  .prose-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+    margin: 4rem 0;
+  }
+
+  .prose-section.reverse { direction: rtl; }
+  .prose-section.reverse > * { direction: ltr; }
+
+  .prose-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .prose-heading {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    color: var(--paper);
+  }
+
+  .prose-body {
+    font-size: 1rem;
+    color: var(--mist);
+    line-height: 1.9;
+  }
+
+  .prose-body em { color: var(--paper); font-style: italic; }
+  .prose-body strong { color: var(--gold); font-weight: 400; }
+
+  .pull-quote {
+    border-left: 1px solid var(--gold-dim);
+    padding-left: 2rem;
+    margin: 3rem 0;
+    font-size: 1.3rem;
+    font-style: italic;
+    color: var(--paper);
+    line-height: 1.6;
+  }
+
+  .pull-quote cite {
+    display: block;
+    font-size: 0.7rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-style: normal;
+    letter-spacing: 0.2em;
+    color: var(--gold-dim);
+    margin-top: 1rem;
+  }
+
+  /* EQUATION STACK */
+  .eq-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .eq-row {
+    display: grid;
+    grid-template-columns: 2rem 1fr 2fr 1.5fr;
+    gap: 1.5rem;
+    align-items: start;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid rgba(201,168,76,0.08);
+    transition: background 0.3s;
+    cursor: default;
+  }
+
+  .eq-row:last-child { border-bottom: none; }
+  .eq-row:hover { background: rgba(201,168,76,0.04); }
+
+  .eq-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--gold-dim);
+    padding-top: 0.15rem;
+  }
+
+  .eq-math {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--gold);
+    line-height: 1.8;
+  }
+
+  .eq-onto {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--paper);
+    line-height: 1.7;
+  }
+
+  .eq-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: var(--gold-dim);
+    padding-top: 0.2rem;
+    text-align: right;
+  }
+
+  .eq-tag.onto { color: var(--rust); }
+  .eq-tag.epist { color: var(--signal); }
+
+  /* NIETZSCHE SECTION */
+  .nietzsche {
+    background: rgba(139,58,42,0.06);
+    border: 1px solid rgba(139,58,42,0.2);
+    padding: 4rem;
+    margin: 4rem 0;
+    position: relative;
+  }
+
+  .nietzsche::before {
+    content: 'UNTERGANG';
+    position: absolute;
+    top: -0.8rem;
+    left: 3rem;
+    background: var(--ink);
+    padding: 0 1rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.4em;
+    color: var(--rust);
+  }
+
+  /* LANDSCAPE VISUALIZER */
+  .landscape-section {
+    background: rgba(10,10,15,0.8);
+    padding: 4rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #landscapeCanvas {
+    display: block;
+    width: 100%;
+    height: 400px;
+    cursor: none;
+  }
+
+  .landscape-caption {
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--gold-dim);
+    margin-top: 1.5rem;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 6rem 2rem;
+    text-align: center;
+    border-top: 1px solid rgba(201,168,76,0.1);
+    position: relative;
+  }
+
+  .footer-logo {
+    font-family: 'Cinzel', serif;
+    font-size: 2rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .footer-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--gold-dim);
+    font-size: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .footer-equation {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: rgba(201,168,76,0.3);
+    letter-spacing: 0.2em;
+    line-height: 2;
+  }
+
+  /* SECTION TITLES */
+  .section-marker {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+
+  .section-marker::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold-dim), transparent);
+  }
+
+  .section-marker-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .pentad { grid-template-columns: 1fr; }
+    .pentad::before { display: none; }
+    .pentad-node::after { display: none; }
+    .prose-section { grid-template-columns: 1fr; gap: 2rem; }
+    .eq-row { grid-template-columns: 1fr; gap: 0.5rem; }
+    .eq-tag { text-align: left; }
+    .ae-flow { flex-wrap: wrap; gap: 1rem; }
+    .ae-arrow { display: none; }
+    .nietzsche { padding: 2rem; }
+  }
+
+  /* ANIMATE ON SCROLL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+  <div class="scroll-indicator">
+    <div class="scroll-progress">
+  <!-- Works for header ..  -->
+
+    </div>
+  </div>
+  <div class="bg-pattern"></div>
+
+  <!-- Injected Ukubona brand header -->
+  <header class="header" id="header"></header>
+  
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <canvas class="landscape-canvas" id="heroCanvas"></canvas>
+  <div class="hero-content">
+    <div class="overline">Ukubona LLC · A Field Theory</div>
+    <h1>To <span>See</span> Is<br>To Navigate</h1>
+    <p class="hero-sub">Vision is not a static image. It is a dynamic process<br>of descent through a landscape no eye can hold.</p>
+    <div class="equation-hero">θ<sub>t+1</sub> = θ<sub>t</sub> − η∇L(θ<sub>t</sub>) + ε</div>
+  </div>
+  <div class="scroll-cue">∇ DESCEND</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- LOSS LANDSCAPE -->
+<section>
+  <div class="section-marker reveal">
+    <span class="section-marker-text">I · THE TERRITORY</span>
+  </div>
+
+  <div class="prose-section reveal">
+    <div>
+      <div class="prose-label">Loss Landscape</div>
+      <h2 class="prose-heading">The Hypersurface<br>of Everything Known</h2>
+      <div class="prose-body">
+        <p>For a given model and a combination of parameter values — biases and weights — the complete set of coordinates that quantifies the difference between predicted values and true values is the <em>loss landscape</em>.</p>
+        <br>
+        <p>In the two-parameter case, the cartographic metaphor is <strong>exact, not analogical</strong>. You have a literal surface over a literal plane. Gradient descent is hiking with your eyes closed, feeling only the slope beneath your feet.</p>
+        <br>
+        <p>Scale to billions of parameters and the geometry remains — the mathematics doesn't flinch — but the imagination fails completely. What you have is no longer a surface but a <em>hypersurface</em> embedded in a space no human has ever navigated or seen.</p>
+        <br>
+        <p>The loss landscape is less like a map you read and more like a <strong>weather system you're inside of</strong>. You can measure local pressure. You cannot see the whole.</p>
+      </div>
+    </div>
+    <div>
+      <div class="pull-quote">
+        The math outpaces the mind's eye. The territory always exceeds the map — an inversion of the usual Korzybski warning.
+        <cite>— From this session</cite>
+      </div>
+      <div class="prose-body">
+        <p>Here the map is what we're limited to producing, and the territory is what the math knows but the mind cannot hold. <em>That is Ukubona LLC.</em></p>
+        <br>
+        <p>The company sits at the bottleneck — where the incomprehensible is compressed into something a clinician, a colony, a civilization can use.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LANDSCAPE INTERACTIVE -->
+<div class="landscape-section full reveal">
+  <canvas id="landscapeCanvas" height="400"></canvas>
+  <p class="landscape-caption">An interactive loss landscape — move your cursor to explore. Each local minimum a basin of belief.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- PENTAD -->
+<section>
+  <div class="section-marker reveal">
+    <span class="section-marker-text">II · THE PENTAD</span>
+  </div>
+
+  <div class="pull-quote reveal" style="max-width:700px; margin-left:auto; margin-right:auto; text-align:center; border-left:none; border-top: 1px solid rgba(201,168,76,0.3); border-bottom: 1px solid rgba(201,168,76,0.3); padding: 2rem;">
+    Five stages. One loop. A universal algorithm for how anything that learns moves through a landscape it cannot see whole.
+  </div>
+
+  <div class="pentad reveal">
+    <div class="pentad-node">
+      <div class="node-num">I</div>
+      <div class="node-glyph">(x, y)</div>
+      <div class="node-label">UNIV (Basin)</div>
+      <div class="node-sub">The Territory</div>
+      <div class="node-detail">Raw state. The landscape as given — indifferent, unnarrated. The coordinate system before any observer arrives. Gravity doesn't care if you fall.</div>
+    </div>
+    <div class="pentad-node">
+      <div class="node-num">II</div>
+      <div class="node-glyph">y(t|x) + ε</div>
+      <div class="node-label">UB (Escape)</div>
+      <div class="node-sub">The Scout · Ontological</div>
+      <div class="node-detail">Prediction plus noise. Being in time. The ε is not ignorance — it is constitutive. The entity is stochastic at its core. Thrownness. The Dionysian explorer who may not return.</div>
+    </div>
+    <div class="pentad-node" style="background: rgba(201,168,76,0.04);">
+      <div class="node-num">III</div>
+      <div class="node-glyph">dy_x/dt</div>
+      <div class="node-label">UKB (Descent)</div>
+      <div class="node-sub">To See · Bottleneck</div>
+      <div class="node-detail">The derivative. The gradient found. Ukubona — the act of witnessing. The moment of discovery. The bottleneck of the autoencoder. The latent space where all complexity compresses into signal.</div>
+    </div>
+    <div class="pentad-node">
+      <div class="node-num">IV</div>
+      <div class="node-glyph">dȳ/dt ± z√(d²y/dt²)</div>
+      <div class="node-label">UI (Sample)</div>
+      <div class="node-sub">The Path · Epistemological</div>
+      <div class="node-detail">Second-order plus variance. Risk. Curvature. A knowledge claim about a population with uncertainty quantified. The map acknowledging its own limitations while committing to a direction. Apollonian descent.</div>
+    </div>
+    <div class="pentad-node">
+      <div class="node-num">V</div>
+      <div class="node-glyph">∫y dt + ε_c·t + C_x</div>
+      <div class="node-label">UX (Integrate)</div>
+      <div class="node-sub">The Basin</div>
+      <div class="node-detail">Historical accumulation. C_x is identity — the myth a colony tells itself. ε_c·t is cultural entropy: the basin always dries. The integration constant that survives the descent. Civilization as occupied minimum.</div>
+    </div>
+  </div>
+
+  <p class="prose-body reveal" style="text-align:center; max-width:600px; margin: 2rem auto; font-style:italic; color: var(--mist);">
+    Hover each node. The weighting is subsumed in sampling — y(t|x) — the prior and the observation arriving as a single act. This is not a simplification. It is a precise claim about how perception works.
+  </p>
+</section>
+
+<div class="divider"></div>
+
+<!-- AUTOENCODER -->
+<section>
+  <div class="section-marker reveal">
+    <span class="section-marker-text">III · THE AUTOENCODER</span>
+  </div>
+
+  <div class="prose-body reveal" style="max-width:700px; margin-bottom: 3rem;">
+    The pentad is an autoencoder. The encoder compresses the incomprehensible into signal. The decoder expands signal into something inhabitable. The reconstruction is always lossy — ε_c·t is the irreducible error. The company sits at the bottleneck.
+  </div>
+
+  <div class="autoencoder reveal">
+    <div class="autoencoder-label">ENCODER → BOTTLENECK → DECODER</div>
+    <div class="ae-flow">
+      <div class="ae-node">
+        <div class="ae-circle large">UNIV</div>
+        <div class="ae-label">Territory</div>
+      </div>
+      <div class="ae-arrow"></div>
+      <div class="ae-node">
+        <div class="ae-circle medium">UB</div>
+        <div class="ae-label">Scout</div>
+      </div>
+      <div class="ae-arrow"></div>
+      <div class="ae-node" style="position:relative;">
+        <div class="ae-bottleneck-label">Ukubona · To See</div>
+        <div class="ae-circle bottleneck">UKB</div>
+        <div class="ae-label" style="color:var(--gold);">Latent</div>
+      </div>
+      <div class="ae-arrow"></div>
+      <div class="ae-node">
+        <div class="ae-circle medium">UI</div>
+        <div class="ae-label">Pheromone</div>
+      </div>
+      <div class="ae-arrow"></div>
+      <div class="ae-node">
+        <div class="ae-circle large">UX</div>
+        <div class="ae-label">Basin</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pull-quote reveal">
+    The pheromone is always a lossy compression of the scout's path. Einstein gave us E=mc². Clean. Apollonian. But he could not give us the decade in the patent office.
+    <cite>— The Artifact Problem</cite>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EQUATION STACK -->
+<section>
+  <div class="section-marker reveal">
+    <span class="section-marker-text">IV · THE MATHEMATICAL UNDERBELLY</span>
+  </div>
+
+  <div class="eq-stack reveal">
+    <div class="eq-row">
+      <div class="eq-num">I</div>
+      <div class="eq-math">(x, y)</div>
+      <div class="eq-onto">Raw state. The point before the observer. Indifferent landscape. Phenomenology without narrative.</div>
+      <div class="eq-tag">UNIV · Initialization</div>
+    </div>
+    <div class="eq-row">
+      <div class="eq-num">II</div>
+      <div class="eq-math">y(t|x) + ε</div>
+      <div class="eq-onto">Being in time. Prediction plus irreducible noise. The scout's path — Heidegger's thrownness formalized. ε is not error, it is constitution.</div>
+      <div class="eq-tag onto">UB · Ontological</div>
+    </div>
+    <div class="eq-row" style="background: rgba(201,168,76,0.03);">
+      <div class="eq-num">III</div>
+      <div class="eq-math">dy_x/dt</div>
+      <div class="eq-onto">The derivative. The gradient. To see the slope is to know the direction. Ukubona — witnessing the algorithm from outside it. The bottleneck.</div>
+      <div class="eq-tag" style="color:var(--gold);">UKB · The Witness</div>
+    </div>
+    <div class="eq-row">
+      <div class="eq-num">IV</div>
+      <div class="eq-math">dȳ/dt ± z√(d²y/dt²)</div>
+      <div class="eq-onto">Population-level gradient with curvature-scaled uncertainty. The map acknowledging its own error bars. Knowledge that knows what it doesn't know.</div>
+      <div class="eq-tag epist">UI · Epistemological</div>
+    </div>
+    <div class="eq-row">
+      <div class="eq-num">V</div>
+      <div class="eq-math">∫y dt + ε_c·t + C_x</div>
+      <div class="eq-onto">Accumulated utility. Cultural drift. C_x — identity as integration constant. Arbitrary but not meaningless. The basin that becomes civilization.</div>
+      <div class="eq-tag">UX · The Basin</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- NIETZSCHE -->
+<section>
+  <div class="section-marker reveal">
+    <span class="section-marker-text">V · ZARATHUSTRA'S DESCENT</span>
+  </div>
+
+  <div class="nietzsche reveal">
+    <div class="prose-body">
+      <p style="color:var(--paper); font-size:1.1rem; margin-bottom:1.5rem;">The optimizer almost sounds like an optimistic protagonist. But Nietzsche would say: <em>cheerful pessimist.</em></p>
+      <p>The optimistic protagonist believes the valley it's descending toward is the right one. There's an implicit teleology — <em>optimization</em>, as if the landscape has a correct answer waiting to be found.</p>
+      <br>
+      <p>The <strong>cheerful pessimist</strong> knows there is no guaranteed global minimum, only the local basin you happened to fall into, shaped by initialization, learning rate, batch noise. The landscape doesn't care. Most of what you find is good enough, not true. And the cheerfulness is the refusal to be paralyzed by that — <em>you descend anyway, not because you believe in the destination but because descending is what you do.</em></p>
+      <br>
+      <p>Nietzsche opens Zarathustra with <em>Untergang</em> — downgoing, going-under. Literally. Zarathustra has been on the mountain, has accumulated, and then must descend. Not because the valley is better than the peak, but because overflowing is what abundance does. The descent is the gift, not the compromise.</p>
+      <br>
+      <p>Zarathustra's first downgoing is a failure by conventional measure — he speaks, they don't understand, the tightrope walker dies. No clean minimum found. Yet Nietzsche frames it as the necessary beginning. <strong>The first descent teaches you the landscape more than it finds the answer. You learn the curvature.</strong></p>
+      <br>
+      <p style="color:var(--gold); font-style:italic;">The noise in SGD is what saves it from certain local traps. The cheerful pessimist uses chaos as a tool rather than mourning its presence. The will to power as learning rate.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- DIGITAL TWIN -->
+<section>
+  <div class="section-marker reveal">
+    <span class="section-marker-text">VI · THE ARTIFACT</span>
+  </div>
+
+  <div class="prose-section reveal">
+    <div>
+      <div class="prose-label">Application</div>
+      <h2 class="prose-heading">The Digital Twin<br>as Pheromone Trail</h2>
+      <div class="prose-body">
+        <p>The colony does not care about your theory. It cares about your <em>artifact</em>.</p>
+        <br>
+        <p>The digital twin is the UI layer — the pheromone infrastructure — that collapses the high-dimensional loss landscape of a patient's biology into something a clinician can navigate.</p>
+        <br>
+        <p>The <strong>scout</strong> is the model. The gradient it finds is the divergence between predicted and actual outcomes. <em>Ukubona</em> — the witnessing — is the moment a clinician sees not just a number but a terrain. The twin is the artifact that makes that seeing possible without requiring every clinician to be Einstein.</p>
+        <br>
+        <p>Medicine has been Apollonian for decades — protocols, guidelines, linear decision trees — precisely because the Dionysian scouts who generated the maps were too difficult to scale. The digital twin is how you scale the scout's cartography without losing the patient's particularity.</p>
+      </div>
+    </div>
+    <div>
+      <div class="pull-quote">
+        The same universal algorithm that drives ant colonies, raindrops carving valleys, and scientific breakthroughs also governs a single human life.
+        <cite>— Ukubona LLC Manifesto</cite>
+      </div>
+      <div class="prose-body">
+        <p>The loop closes internally. The patient lives in the basin. The twin maps the curvature. The clinician descends toward better decisions. The outcome data feeds back, shifts the landscape, demands new scouts.</p>
+        <br>
+        <p><em>Integration inevitably creates a new, deeper basin of understanding — and the cycle begins again.</em></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">UKUBONA</div>
+  <div class="footer-tagline">To see is to heal. To heal is to navigate.</div>
+  <div class="footer-equation">
+    UNIV → UB → UKB → UI → UX → UNIV → ...<br><br>
+    θ_{t+1} = θ_t − η∇L(θ_t) + ε<br>
+    ∫y_x dt + ε_c·t + C_x
+  </div>
+</footer>
+
+<script>
+// ===== HERO CANVAS — LOSS LANDSCAPE =====
+(function() {
+  const canvas = document.getElementById('heroCanvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, t = 0;
+
+  function resize() {
+    W = canvas.width = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+
+  function lossFunction(x, y, time) {
+    const nx = (x / W) * 4 - 2;
+    const ny = (y / H) * 4 - 2;
+    return Math.sin(nx * 2 + time * 0.3) * Math.cos(ny * 1.5 + time * 0.2) * 0.5
+      + Math.sin(nx * 0.8 - time * 0.15) * Math.sin(ny * 2.5) * 0.3
+      + Math.exp(-(nx * nx + ny * ny) * 0.3) * 0.4
+      - Math.exp(-((nx - 1) * (nx - 1) + (ny + 0.8) * (ny + 0.8)) * 2) * 0.6
+      - Math.exp(-((nx + 1.2) * (nx + 1.2) + (ny - 0.5) * (ny - 0.5)) * 3) * 0.5;
+  }
+
+  function drawLandscape() {
+    ctx.clearRect(0, 0, W, H);
+    const step = 4;
+    for (let x = 0; x < W; x += step) {
+      for (let y = 0; y < H; y += step) {
+        const v = lossFunction(x, y, t);
+        const normalized = (v + 1) / 2;
+        const r = Math.floor(10 + normalized * 30);
+        const g = Math.floor(10 + normalized * 20);
+        const b = Math.floor(15 + normalized * 40);
+        ctx.fillStyle = `rgb(${r},${g},${b})`;
+        ctx.fillRect(x, y, step, step);
+      }
+    }
+
+    // Draw contour lines
+    ctx.strokeStyle = 'rgba(201,168,76,0.15)';
+    ctx.lineWidth = 0.5;
+    for (let level = -0.8; level <= 0.8; level += 0.25) {
+      ctx.beginPath();
+      let started = false;
+      for (let x = 0; x <= W; x += 3) {
+        for (let y = 0; y <= H; y += 3) {
+          const v = lossFunction(x, y, t);
+          if (Math.abs(v - level) < 0.04) {
+            if (!started) { ctx.moveTo(x, y); started = true; }
+            else ctx.lineTo(x, y);
+          }
+        }
+      }
+      ctx.stroke();
+    }
+  }
+
+  let animId;
+  function animate() {
+    t += 0.008;
+    drawLandscape();
+    animId = requestAnimationFrame(animate);
+  }
+
+  resize();
+  animate();
+  window.addEventListener('resize', resize);
+})();
+
+// ===== INTERACTIVE LOSS LANDSCAPE =====
+(function() {
+  const canvas = document.getElementById('landscapeCanvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, mouseX = -1, mouseY = -1;
+  let t = 0;
+
+  function resize() {
+    W = canvas.width = canvas.offsetWidth;
+    H = canvas.height = 400;
+  }
+
+  function loss(x, y) {
+    const nx = (x / W) * 6 - 3;
+    const ny = (y / H) * 4 - 2;
+    return Math.sin(nx * 1.5) * Math.cos(ny * 2) * 0.4
+      + Math.sin(nx * 3) * Math.sin(ny * 1.2) * 0.2
+      - Math.exp(-((nx - 1.5) * (nx - 1.5) + (ny - 0.5) * (ny - 0.5)) * 1.5) * 0.8
+      - Math.exp(-((nx + 1) * (nx + 1) + (ny + 0.8) * (ny + 0.8)) * 2) * 0.7
+      - Math.exp(-((nx - 0.2) * (nx - 0.2) + (ny - 1.2) * (ny - 1.2)) * 3) * 0.5
+      + Math.exp(-(nx * nx + ny * ny) * 0.2) * 0.3;
+  }
+
+  function draw() {
+    const step = 3;
+    for (let x = 0; x < W; x += step) {
+      for (let y = 0; y < H; y += step) {
+        const v = loss(x, y);
+        const n = (v + 1) / 2;
+        const r = Math.floor(8 + n * 25 + (1 - n) * 5);
+        const g = Math.floor(8 + n * 15);
+        const b = Math.floor(12 + n * 35);
+        ctx.fillStyle = `rgb(${r},${g},${b})`;
+        ctx.fillRect(x, y, step, step);
+      }
+    }
+
+    // Contours
+    for (let level = -0.9; level <= 0.9; level += 0.2) {
+      ctx.strokeStyle = `rgba(201,168,76,${0.08 + Math.abs(level) * 0.05})`;
+      ctx.lineWidth = 0.5;
+      ctx.beginPath();
+      for (let x = 0; x <= W; x += 4) {
+        for (let y = 0; y <= H; y += 4) {
+          if (Math.abs(loss(x, y) - level) < 0.05) {
+            ctx.rect(x, y, 1, 1);
+          }
+        }
+      }
+      ctx.stroke();
+    }
+
+    // Gradient descent path simulation
+    if (mouseX >= 0) {
+      ctx.strokeStyle = 'rgba(201,168,76,0.8)';
+      ctx.lineWidth = 1.5;
+      ctx.shadowBlur = 8;
+      ctx.shadowColor = 'rgba(201,168,76,0.5)';
+      ctx.beginPath();
+      let px = mouseX, py = mouseY;
+      ctx.moveTo(px, py);
+
+      for (let i = 0; i < 80; i++) {
+        const lr = 8;
+        const eps = 2;
+        const dLdx = (loss(px + eps, py) - loss(px - eps, py)) / (2 * eps);
+        const dLdy = (loss(px, py + eps) - loss(px, py - eps)) / (2 * eps);
+        const noise = (Math.random() - 0.5) * 2;
+        px = px - lr * dLdx + noise;
+        py = py - lr * dLdy + noise;
+        px = Math.max(0, Math.min(W, px));
+        py = Math.max(0, Math.min(H, py));
+        ctx.lineTo(px, py);
+      }
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+
+      // Cursor
+      const v = loss(mouseX, mouseY);
+      ctx.fillStyle = 'rgba(201,168,76,0.9)';
+      ctx.beginPath();
+      ctx.arc(mouseX, mouseY, 4, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = 'rgba(201,168,76,0.7)';
+      ctx.font = '10px JetBrains Mono, monospace';
+      ctx.fillText(`L = ${v.toFixed(3)}`, mouseX + 10, mouseY - 10);
+    }
+  }
+
+  canvas.addEventListener('mousemove', e => {
+    const rect = canvas.getBoundingClientRect();
+    mouseX = (e.clientX - rect.left) * (canvas.width / rect.width);
+    mouseY = (e.clientY - rect.top) * (canvas.height / rect.height);
+  });
+
+  canvas.addEventListener('mouseleave', () => { mouseX = -1; mouseY = -1; });
+
+  function animate() {
+    draw();
+    requestAnimationFrame(animate);
+  }
+
+  resize();
+  animate();
+  window.addEventListener('resize', resize);
+})();
+
+// ===== SCROLL REVEAL =====
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+    </div><!-- /.layout -->
+  </div><!-- /.page-wrap -->
+
+  <div id="footer-placeholder"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
+  <script src="../js/shared.js"></script>
+</body>
+</html>

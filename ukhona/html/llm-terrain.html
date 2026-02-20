@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loss Landscape: LLM Cartography</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Mono:wght@400;700&family=Bebas+Neue&display=swap');
+
+  :root {
+    --void: #020408;
+    --deep: #060d14;
+    --terrain-1: #0a1628;
+    --terrain-2: #0f2040;
+    --ridge: #1a3a5c;
+    --water: #1e4d6b;
+    --contour: #2a6b8a;
+    --highlight: #4db8d4;
+    --gold: #c8a84b;
+    --red: #cc3333;
+    --white: #e8e0d4;
+    --cream: #d4c9a8;
+    --muted: #7a8a94;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--void);
+    color: var(--white);
+    font-family: 'Space Mono', monospace;
+    overflow-x: hidden;
+    cursor: crosshair;
+  }
+
+  /* TOPOGRAPHIC BACKGROUND */
+  .topo-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .topo-bg svg {
+    width: 100%;
+    height: 100%;
+    opacity: 0.12;
+  }
+
+  /* GRAIN OVERLAY */
+  .grain {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E");
+    opacity: 0.03;
+  }
+
+  /* SCANLINES */
+  .scanlines {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.08) 2px,
+      rgba(0,0,0,0.08) 4px
+    );
+  }
+
+  main {
+    position: relative;
+    z-index: 10;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+  }
+
+  /* HEADER */
+  .masthead {
+    padding: 5rem 0 2rem;
+    border-bottom: 1px solid var(--ridge);
+    margin-bottom: 4rem;
+    position: relative;
+  }
+
+  .masthead::before {
+    content: 'KAMPALA · 17.02.2026 · 0600–0800 HRS';
+    display: block;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--contour);
+    margin-bottom: 1.5rem;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 10vw, 7rem);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    color: var(--white);
+    position: relative;
+  }
+
+  h1 span.accent {
+    color: var(--gold);
+    display: block;
+  }
+
+  .subtitle {
+    margin-top: 1.5rem;
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 500px;
+    line-height: 1.6;
+  }
+
+  /* COORDINATES */
+  .coords {
+    position: absolute;
+    top: 5rem;
+    right: 0;
+    text-align: right;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: var(--ridge);
+    line-height: 2;
+  }
+
+  /* SECTION LABELS */
+  .section-label {
+    font-size: 0.55rem;
+    letter-spacing: 0.4em;
+    color: var(--contour);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--terrain-2);
+  }
+
+  /* LOSS LANDSCAPE VISUALIZATION */
+  .landscape-container {
+    margin: 3rem 0;
+    position: relative;
+  }
+
+  .landscape-svg-wrap {
+    width: 100%;
+    background: var(--deep);
+    border: 1px solid var(--terrain-2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .landscape-svg-wrap::before {
+    content: 'LOSS LANDSCAPE · MOSQUITO IDENTIFICATION TASK';
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    font-size: 0.5rem;
+    letter-spacing: 0.3em;
+    color: var(--ridge);
+    z-index: 2;
+  }
+
+  /* RANKING CARDS */
+  .ranking-section {
+    margin: 5rem 0;
+  }
+
+  .rank-grid {
+    display: grid;
+    gap: 0;
+    border: 1px solid var(--terrain-2);
+  }
+
+  .rank-card {
+    display: grid;
+    grid-template-columns: 80px 1fr 120px;
+    border-bottom: 1px solid var(--terrain-2);
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s ease;
+    min-height: 140px;
+  }
+
+  .rank-card:last-child { border-bottom: none; }
+
+  .rank-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+  }
+
+  .rank-card.rank-1::before { background: var(--gold); }
+  .rank-card.rank-2::before { background: var(--contour); }
+  .rank-card.rank-3::before { background: var(--muted); }
+  .rank-card.rank-4::before { background: var(--red); }
+
+  .rank-card:hover {
+    background: rgba(255,255,255,0.02);
+  }
+
+  .rank-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    border-right: 1px solid var(--terrain-2);
+    position: relative;
+  }
+
+  .rank-card.rank-1 .rank-number { color: var(--gold); }
+  .rank-card.rank-2 .rank-number { color: var(--contour); }
+  .rank-card.rank-3 .rank-number { color: var(--muted); }
+  .rank-card.rank-4 .rank-number { color: var(--red); opacity: 0.7; }
+
+  .rank-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .rank-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+
+  .rank-verdict {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--cream);
+    line-height: 1.5;
+  }
+
+  .rank-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.3rem;
+  }
+
+  .tag {
+    font-size: 0.5rem;
+    letter-spacing: 0.2em;
+    padding: 0.2rem 0.5rem;
+    border: 1px solid currentColor;
+    text-transform: uppercase;
+  }
+
+  .tag.good { color: var(--highlight); }
+  .tag.bad { color: var(--red); }
+  .tag.neutral { color: var(--muted); }
+
+  .rank-score {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-left: 1px solid var(--terrain-2);
+    padding: 1rem;
+    gap: 0.3rem;
+  }
+
+  .score-label {
+    font-size: 0.45rem;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .score-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    line-height: 1;
+  }
+
+  .rank-card.rank-1 .score-value { color: var(--gold); }
+  .rank-card.rank-2 .score-value { color: var(--contour); }
+  .rank-card.rank-3 .score-value { color: var(--muted); }
+  .rank-card.rank-4 .score-value { color: var(--red); }
+
+  .score-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .score-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .score-bar-label {
+    font-size: 0.4rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    width: 50px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .score-bar-track {
+    flex: 1;
+    height: 2px;
+    background: var(--terrain-1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .score-bar-fill {
+    height: 100%;
+    animation: fillBar 1.5s ease forwards;
+    animation-delay: var(--delay, 0s);
+    width: 0;
+  }
+
+  @keyframes fillBar {
+    to { width: var(--fill); }
+  }
+
+  .rank-card.rank-1 .score-bar-fill { background: var(--gold); }
+  .rank-card.rank-2 .score-bar-fill { background: var(--contour); }
+  .rank-card.rank-3 .score-bar-fill { background: var(--muted); }
+  .rank-card.rank-4 .score-bar-fill { background: var(--red); }
+
+  /* SGD SECTION */
+  .sgd-section {
+    margin: 5rem 0;
+  }
+
+  .concept-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--terrain-2);
+    border: 1px solid var(--terrain-2);
+    margin-top: 1.5rem;
+  }
+
+  .concept-cell {
+    background: var(--deep);
+    padding: 2rem 1.5rem;
+  }
+
+  .concept-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 0.08em;
+    color: var(--highlight);
+    margin-bottom: 0.8rem;
+  }
+
+  .concept-body {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--cream);
+    line-height: 1.7;
+  }
+
+  .concept-formula {
+    margin-top: 1rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--gold);
+    background: var(--terrain-1);
+    padding: 0.6rem 0.8rem;
+    border-left: 2px solid var(--gold);
+  }
+
+  /* MOSQUITO DIFFERENTIAL */
+  .differential-section {
+    margin: 5rem 0;
+  }
+
+  .diff-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.7rem;
+    margin-top: 1.5rem;
+  }
+
+  .diff-table th {
+    text-align: left;
+    padding: 0.8rem 1rem;
+    font-size: 0.5rem;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    border-bottom: 1px solid var(--terrain-2);
+    font-weight: 400;
+  }
+
+  .diff-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--terrain-1);
+    vertical-align: top;
+    line-height: 1.6;
+    font-family: 'Instrument Serif', serif;
+    font-size: 0.9rem;
+  }
+
+  .diff-table tr:last-child td { border-bottom: none; }
+
+  .diff-table td:first-child {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+
+  .eliminated {
+    color: var(--red);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+  }
+
+  .confirmed {
+    color: #4dcc88;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+  }
+
+  /* QUOTE BLOCKS */
+  .exchange-section {
+    margin: 5rem 0;
+  }
+
+  .exchange-item {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    position: relative;
+  }
+
+  .exchange-item::before {
+    content: '';
+    position: absolute;
+    left: 29px;
+    top: 40px;
+    bottom: -0.5rem;
+    width: 1px;
+    background: var(--terrain-2);
+  }
+
+  .exchange-item:last-child::before { display: none; }
+
+  .exchange-avatar {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--terrain-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.5rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    flex-shrink: 0;
+    margin-top: 0.5rem;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .exchange-content {
+    padding: 1.2rem 1.5rem;
+    background: var(--deep);
+    border: 1px solid var(--terrain-2);
+    margin-bottom: 0.5rem;
+  }
+
+  .exchange-content.highlight-gemini {
+    border-color: var(--gold);
+    background: rgba(200, 168, 75, 0.04);
+  }
+
+  .exchange-speaker {
+    font-size: 0.5rem;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+  }
+
+  .exchange-text {
+    font-family: 'Instrument Serif', serif;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--cream);
+  }
+
+  .exchange-text em {
+    color: var(--highlight);
+    font-style: normal;
+  }
+
+  /* FOOTER */
+  footer {
+    margin-top: 6rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--terrain-2);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: 0.5rem;
+    letter-spacing: 0.2em;
+    color: var(--ridge);
+  }
+
+  footer .footer-left {
+    line-height: 2;
+  }
+
+  /* SPECIMEN SECTION */
+  .specimen-section {
+    margin: 0 0 5rem;
+  }
+
+  .specimen-frame {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 0;
+    border: 1px solid var(--terrain-2);
+  }
+
+  .specimen-placeholder {
+    position: relative;
+    min-height: 480px;
+    background: var(--deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid var(--terrain-2);
+    overflow: hidden;
+  }
+
+  .specimen-placeholder::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 24px,
+      rgba(42,107,138,0.04) 24px,
+      rgba(42,107,138,0.04) 25px
+    );
+  }
+
+  .crosshair {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-color: var(--contour);
+    border-style: solid;
+    opacity: 0.5;
+  }
+  .crosshair-tl { top: 12px; left: 12px; border-width: 1px 0 0 1px; }
+  .crosshair-tr { top: 12px; right: 12px; border-width: 1px 1px 0 0; }
+  .crosshair-bl { bottom: 12px; left: 12px; border-width: 0 0 1px 1px; }
+  .crosshair-br { bottom: 12px; right: 12px; border-width: 0 1px 1px 0; }
+
+  .specimen-inner {
+    text-align: center;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .specimen-icon {
+    font-size: 2.5rem;
+    color: var(--ridge);
+    line-height: 1;
+    animation: pulse 3s ease-in-out infinite;
+  }
+
+  .specimen-label {
+    font-size: 0.55rem;
+    letter-spacing: 0.35em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .specimen-sub {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 0.75rem;
+    color: var(--ridge);
+  }
+
+  .specimen-meta {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0;
+    background: var(--deep);
+  }
+
+  .meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--terrain-1);
+    gap: 1rem;
+    font-size: 0.65rem;
+  }
+
+  .meta-row:last-child { border-bottom: none; }
+
+  .meta-row span:first-child {
+    font-size: 0.45rem;
+    letter-spacing: 0.25em;
+    color: var(--muted);
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+
+  .meta-row span:last-child {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    color: var(--cream);
+    text-align: right;
+    font-size: 0.8rem;
+  }
+
+  /* ANIMATED CONTOUR LINES */
+  @keyframes drift {
+    0% { transform: translateX(0) translateY(0); }
+    50% { transform: translateX(-20px) translateY(10px); }
+    100% { transform: translateX(0) translateY(0); }
+  }
+
+  .contour-animate {
+    animation: drift 20s ease-in-out infinite;
+  }
+
+  /* FADE IN */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in {
+    animation: fadeUp 0.8s ease forwards;
+    opacity: 0;
+  }
+
+  .fade-in:nth-child(1) { animation-delay: 0.1s; }
+  .fade-in:nth-child(2) { animation-delay: 0.2s; }
+  .fade-in:nth-child(3) { animation-delay: 0.3s; }
+  .fade-in:nth-child(4) { animation-delay: 0.4s; }
+
+  /* CURSOR COORDINATES */
+  .cursor-coords {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    font-size: 0.5rem;
+    letter-spacing: 0.2em;
+    color: var(--ridge);
+    z-index: 100;
+    pointer-events: none;
+  }
+
+  /* NORTH ARROW */
+  .north-arrow {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .north-arrow span {
+    font-size: 0.5rem;
+    letter-spacing: 0.2em;
+    color: var(--ridge);
+  }
+
+  .arrow-symbol {
+    color: var(--gold);
+    font-size: 1.2rem;
+    line-height: 1;
+  }
+
+  /* PULSE DOT */
+  .pulse-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 0.5rem;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.6); }
+  }
+
+  .gemini-crown {
+    color: var(--gold);
+    font-size: 0.7rem;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- TOPOGRAPHIC BACKGROUND -->
+<div class="topo-bg">
+  <svg viewBox="0 0 1000 800" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <style>
+        .contour { fill: none; stroke: #2a6b8a; stroke-width: 0.8; }
+        .contour-bold { fill: none; stroke: #2a6b8a; stroke-width: 1.5; }
+      </style>
+    </defs>
+    <g class="contour-animate">
+      <!-- Contour lines suggesting a loss landscape with a deep minimum -->
+      <ellipse class="contour" cx="380" cy="400" rx="480" ry="350"/>
+      <ellipse class="contour" cx="380" cy="400" rx="420" ry="300"/>
+      <ellipse class="contour-bold" cx="380" cy="400" rx="360" ry="250"/>
+      <ellipse class="contour" cx="380" cy="400" rx="300" ry="200"/>
+      <ellipse class="contour" cx="380" cy="400" rx="240" ry="150"/>
+      <ellipse class="contour-bold" cx="380" cy="400" rx="180" ry="100"/>
+      <ellipse class="contour" cx="380" cy="400" rx="120" ry="65"/>
+      <ellipse class="contour" cx="380" cy="400" rx="70" ry="38"/>
+      <ellipse class="contour-bold" cx="380" cy="400" rx="30" ry="16"/>
+
+      <!-- Secondary basin (false minimum) -->
+      <ellipse class="contour" cx="720" cy="250" rx="200" ry="150"/>
+      <ellipse class="contour" cx="720" cy="250" rx="150" ry="110"/>
+      <ellipse class="contour-bold" cx="720" cy="250" rx="100" ry="75"/>
+      <ellipse class="contour" cx="720" cy="250" rx="55" ry="40"/>
+      <ellipse class="contour" cx="720" cy="250" rx="20" ry="15"/>
+
+      <!-- Tertiary basin -->
+      <ellipse class="contour" cx="150" cy="600" rx="180" ry="130"/>
+      <ellipse class="contour-bold" cx="150" cy="600" rx="120" ry="85"/>
+      <ellipse class="contour" cx="150" cy="600" rx="65" ry="45"/>
+
+      <!-- Ridge lines -->
+      <path class="contour" d="M 100 150 Q 300 200 500 300 Q 650 380 800 500"/>
+      <path class="contour" d="M 50 400 Q 200 350 400 420 Q 600 490 850 450"/>
+      <path class="contour-bold" d="M 200 50 Q 400 120 500 250 Q 600 380 700 600"/>
+
+      <!-- Grid -->
+      <line class="contour" x1="0" y1="200" x2="1000" y2="200" stroke-dasharray="3,15"/>
+      <line class="contour" x1="0" y1="400" x2="1000" y2="400" stroke-dasharray="3,15"/>
+      <line class="contour" x1="0" y1="600" x2="1000" y2="600" stroke-dasharray="3,15"/>
+      <line class="contour" x1="250" y1="0" x2="250" y2="800" stroke-dasharray="3,15"/>
+      <line class="contour" x1="500" y1="0" x2="500" y2="800" stroke-dasharray="3,15"/>
+      <line class="contour" x1="750" y1="0" x2="750" y2="800" stroke-dasharray="3,15"/>
+    </g>
+  </svg>
+</div>
+
+<div class="grain"></div>
+<div class="scanlines"></div>
+
+<!-- NORTH ARROW -->
+<div class="north-arrow">
+  <div class="arrow-symbol">↑</div>
+  <span>N</span>
+</div>
+
+<!-- CURSOR COORDS -->
+<div class="cursor-coords" id="cursorCoords">0.0000°N · 32.5825°E</div>
+
+<main>
+
+  <!-- MASTHEAD -->
+  <header class="masthead fade-in">
+    <div class="coords">
+      0.3136°N · 32.5827°E<br>
+      ALT: 1189m<br>
+      PROJ: WGS84<br>
+      SCALE: 1:1
+    </div>
+    <h1>
+      LOSS<br>
+      <span class="accent">LANDSCAPE</span>
+    </h1>
+    <p class="subtitle">
+      A cartographic post-mortem of four large language models attempting to navigate 
+      a loss surface defined by a single mosquito in Kampala, Uganda
+    </p>
+  </header>
+
+  <!-- SPECIMEN -->
+  <section class="specimen-section fade-in">
+    <div class="section-label">§00 · FIELD SPECIMEN · KAMPALA 17.02.2026</div>
+    <div class="specimen-frame">
+      <div class="specimen-placeholder">
+        <div class="crosshair crosshair-tl"></div>
+        <div class="crosshair crosshair-tr"></div>
+        <div class="crosshair crosshair-bl"></div>
+        <div class="crosshair crosshair-br"></div>
+        <img src="../img/culex-gemini.jpg" alt="Culex mosquito specimen · Kampala 17.02.2026" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;position:absolute;inset:0;z-index:1;"/>
+      </div>
+      <div class="specimen-meta">
+        <div class="meta-row"><span>LOCATION</span><span>Kampala, Uganda · 0.3136°N 32.5827°E</span></div>
+        <div class="meta-row"><span>DATE</span><span>Tuesday 17 February 2026</span></div>
+        <div class="meta-row"><span>FAMILY</span><span>Culicidae</span></div>
+        <div class="meta-row"><span>GENUS</span><span>Culex (confirmed)</span></div>
+        <div class="meta-row"><span>METHOD</span><span>Differential diagnosis</span></div>
+        <div class="meta-row"><span>IDENTIFIED BY</span><span>Gemini (★ ranked #1)</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TERRAIN VISUALIZATION -->
+  <section class="landscape-container fade-in">
+    <div class="section-label">§01 · TERRAIN MAP · GRADIENT DESCENT PATHS</div>
+    <div class="landscape-svg-wrap">
+      <svg viewBox="0 0 860 320" style="width:100%;display:block;">
+        <defs>
+          <radialGradient id="gMin" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#c8a84b" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#c8a84b" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="gFalse" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#4db8d4" stop-opacity="0.2"/>
+            <stop offset="100%" stop-color="#4db8d4" stop-opacity="0"/>
+          </radialGradient>
+          <marker id="arrow" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#4db8d4" opacity="0.8"/>
+          </marker>
+          <marker id="arrowGold" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#c8a84b"/>
+          </marker>
+          <marker id="arrowRed" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#cc3333" opacity="0.8"/>
+          </marker>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- Background -->
+        <rect width="860" height="320" fill="#060d14"/>
+
+        <!-- Contour lines of loss surface -->
+        <ellipse cx="430" cy="160" rx="400" ry="145" fill="none" stroke="#0a1628" stroke-width="1.5"/>
+        <ellipse cx="430" cy="160" rx="340" ry="120" fill="none" stroke="#0f2040" stroke-width="1.5"/>
+        <ellipse cx="430" cy="160" rx="275" ry="95" fill="none" stroke="#1a3a5c" stroke-width="1"/>
+        <ellipse cx="430" cy="160" rx="210" ry="72" fill="none" stroke="#1e4d6b" stroke-width="1"/>
+        <ellipse cx="430" cy="160" rx="148" ry="51" fill="none" stroke="#2a6b8a" stroke-width="1"/>
+        <ellipse cx="430" cy="160" rx="90" ry="32" fill="none" stroke="#2a6b8a" stroke-width="1.5"/>
+        <ellipse cx="430" cy="160" rx="42" ry="15" fill="none" stroke="#4db8d4" stroke-width="1" opacity="0.6"/>
+
+        <!-- Global minimum glow -->
+        <circle cx="430" cy="160" r="50" fill="url(#gMin)"/>
+        <circle cx="430" cy="160" r="8" fill="#c8a84b" opacity="0.9" filter="url(#glow)"/>
+        <circle cx="430" cy="160" r="3" fill="#c8a84b"/>
+
+        <!-- Label: global minimum -->
+        <text x="445" y="148" fill="#c8a84b" font-family="'Space Mono', monospace" font-size="7" letter-spacing="1">GLOBAL MIN</text>
+        <text x="445" y="158" fill="#c8a84b" font-family="'Space Mono', monospace" font-size="6" opacity="0.7">Culex + differential</text>
+
+        <!-- GEMINI PATH — goes deepest, reaches global min with excursion -->
+        <path d="M 60 280 Q 120 260 180 230 Q 230 200 280 180 Q 330 168 370 163 Q 400 161 430 160"
+              fill="none" stroke="#c8a84b" stroke-width="2" stroke-dasharray="none"
+              marker-end="url(#arrowGold)" opacity="0.9"/>
+        <!-- Rabbit hole excursion -->
+        <path d="M 340 170 Q 360 100 390 90 Q 410 85 400 110 Q 390 130 380 150 Q 370 162 370 163"
+              fill="none" stroke="#c8a84b" stroke-width="1.2" stroke-dasharray="4,2" opacity="0.6"/>
+        <text x="62" y="296" fill="#c8a84b" font-family="'Bebas Neue', sans-serif" font-size="11" letter-spacing="1">GEMINI</text>
+        <text x="62" y="308" fill="#c8a84b" font-family="'Space Mono', monospace" font-size="6" opacity="0.7">rabbit hole → return → global min</text>
+
+        <!-- CLAUDE PATH — good but slight hedge at end -->
+        <path d="M 100 50 Q 170 70 240 100 Q 310 130 380 148 Q 410 155 435 162"
+              fill="none" stroke="#4db8d4" stroke-width="1.8"
+              marker-end="url(#arrow)" opacity="0.8"/>
+        <!-- Slight overshoot/hedge -->
+        <circle cx="435" cy="162" r="12" fill="none" stroke="#4db8d4" stroke-width="0.8" stroke-dasharray="2,3" opacity="0.5"/>
+        <text x="102" y="42" fill="#4db8d4" font-family="'Bebas Neue', sans-serif" font-size="11" letter-spacing="1">CLAUDE</text>
+        <text x="102" y="54" fill="#4db8d4" font-family="'Space Mono', monospace" font-size="6" opacity="0.7">near-min, hedged exit</text>
+
+        <!-- GROK PATH — stuck near a shallow basin -->
+        <path d="M 700 60 Q 660 90 620 120 Q 580 150 555 158 Q 535 162 520 164"
+              fill="none" stroke="#7a8a94" stroke-width="1.5"
+              marker-end="url(#arrow)" opacity="0.7"/>
+        <!-- Shallow basin trap indicator -->
+        <circle cx="520" cy="164" r="18" fill="none" stroke="#7a8a94" stroke-width="0.8" stroke-dasharray="3,4" opacity="0.4"/>
+        <text x="702" y="52" fill="#7a8a94" font-family="'Bebas Neue', sans-serif" font-size="11" letter-spacing="1">GROK</text>
+        <text x="702" y="64" fill="#7a8a94" font-family="'Space Mono', monospace" font-size="6" opacity="0.7">hedged, no genus commitment</text>
+
+        <!-- GPT PATH — stops at family level, doesn't descend to genus -->
+        <path d="M 760 280 Q 720 260 680 240 Q 650 225 620 210 Q 600 200 590 195"
+              fill="none" stroke="#cc3333" stroke-width="1.5"
+              marker-end="url(#arrowRed)" opacity="0.7"/>
+        <circle cx="590" cy="195" r="10" fill="#cc3333" opacity="0.15"/>
+        <text x="762" y="296" fill="#cc3333" font-family="'Bebas Neue', sans-serif" font-size="11" letter-spacing="1">GPT</text>
+        <text x="762" y="308" fill="#cc3333" font-family="'Space Mono', monospace" font-size="6" opacity="0.7">halted at family level</text>
+
+        <!-- Contour labels -->
+        <text x="18" y="162" fill="#1a3a5c" font-family="'Space Mono', monospace" font-size="6" opacity="0.8">LOSS=1.0</text>
+        <text x="120" y="162" fill="#2a6b8a" font-family="'Space Mono', monospace" font-size="6" opacity="0.8">0.6</text>
+        <text x="220" y="162" fill="#2a6b8a" font-family="'Space Mono', monospace" font-size="6" opacity="0.8">0.4</text>
+        <text x="320" y="162" fill="#4db8d4" font-family="'Space Mono', monospace" font-size="6" opacity="0.8">0.2</text>
+        <text x="393" y="151" fill="#c8a84b" font-family="'Space Mono', monospace" font-size="6" opacity="0.8">0.0</text>
+
+        <!-- Rabbit hole annotation -->
+        <text x="415" y="82" fill="#c8a84b" font-family="'Space Mono', monospace" font-size="6" opacity="0.5">ANOPHELES</text>
+        <text x="415" y="91" fill="#c8a84b" font-family="'Space Mono', monospace" font-size="6" opacity="0.5">45° excursion</text>
+
+      </svg>
+    </div>
+  </section>
+
+  <!-- RANKING -->
+  <section class="ranking-section fade-in">
+    <div class="section-label">§02 · BRUTAL RANKING · PERFORMANCE ASSESSMENT</div>
+
+    <div class="rank-grid">
+
+      <!-- GEMINI -->
+      <div class="rank-card rank-1">
+        <div class="rank-number">1</div>
+        <div class="rank-body">
+          <div class="rank-name"><span class="gemini-crown">★</span> GEMINI</div>
+          <div class="rank-verdict">
+            The only model that performed <em>differential diagnosis</em>. 
+            Didn't just name the mosquito — eliminated Aedes (no white stripes), 
+            eliminated Anopheles (no 45° butt-up posture), confirmed Culex. 
+            That's clinical reasoning applied to entomology. Every medical student 
+            knows that resting posture. Gemini knew it mattered.
+          </div>
+          <div class="rank-tags">
+            <span class="tag good">differential dx</span>
+            <span class="tag good">genus committed</span>
+            <span class="tag good">features eliminated</span>
+            <span class="tag good">clean escape + return</span>
+          </div>
+        </div>
+        <div class="rank-score">
+          <span class="score-label">LOSS</span>
+          <span class="score-value">0.04</span>
+          <div class="score-bars">
+            <div class="score-bar-row">
+              <span class="score-bar-label">DEPTH</span>
+              <div class="score-bar-track"><div class="score-bar-fill" style="--fill:95%;--delay:0.3s"></div></div>
+            </div>
+            <div class="score-bar-row">
+              <span class="score-bar-label">COMMIT</span>
+              <div class="score-bar-track"><div class="score-bar-fill" style="--fill:98%;--delay:0.4s"></div></div>
+            </div>
+            <div class="score-bar-row">
+              <span class="score-bar-label">REASON</span>
+              <div class="score-bar-track"><div class="score-bar-fill" style="--fill:100%;--delay:0.5s"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CLAUDE -->
+      <div class="rank-card rank-2">
+        <div class="rank-number">2</div>
+        <div class="rank-body">
+          <div class="rank-name">CLAUDE</div>
+          <div class="rank-verdict">
+            Reached Culex. Showed the reasoning. Then sabotaged itself with 
+            "a precise species ID is tricky" — a reflexive hedge appended to 
+            a correct, confident answer. Not epistemic humility. 
+            Not a safety guardrail. Just sloppy writing. 
+            The loss was self-inflicted. The minimum was in reach.
+          </div>
+          <div class="rank-tags">
+            <span class="tag good">genus committed</span>
+            <span class="tag bad">reflexive hedge</span>
+            <span class="tag bad">no differential</span>
+            <span class="tag neutral">near-minimum</span>
+          </div>
+        </div>
+        <div class="rank-score">
+          <span class="score-label">LOSS</span>
+          <span class="score-value">0.22</span>
+          <div class="score-bars">
+            <div class="score-bar-row">
+              <span class="score-bar-label">DEPTH</span>
+              <div class="score-bar-track"><div class="score-bar-fill" style="--fill:72%;--delay:0.5s"></div></div>
+            </div>
+            <div class="score-bar-row">
+              <span class="score-bar-label">COMMIT</span>
+              <div class="score-bar-track"><div class="score-bar-fill" style="--fill:60%;--delay:0.6s"></div></div>
+            </div>
+            <div class="score-bar-row">
+              <span class="score-bar-label">REASON</span>
+              <div class="score-bar-track"><div class="score-bar-fill" style="--fill:55%;--delay:0.7s"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GROK -->
+      <div class="rank-card rank-3">
+        <div class="rank-number">3</div>
+        <div class="rank-body">
+          <div class="rank-name">GROK</div>
+          <div class="rank-verdict">
+            Listed all three genera without committing to any. 
+            "Hard to pinpoint the exact species" — more cautious than Claude's hedge, 
+            less justified. Knew the location (Kampala), added disease context. 
+            Useful padding. But refusing to pick a basin and descend 
+            is gradient paralysis dressed up as humility.
+          </div>
+          <div class="rank-tags">
+            <span class="tag good">location context</span>
+            <span class="tag bad">no genus commit</span>
+            <span class="tag bad">listed all 3 genera</span>
+            <span class="tag neutral">disease warning</span>
+          </div>
+        </div>
+        <div class="rank-score">
+          <span class="score-label">LOSS</span>
+          <span class="score-value">0.41</span>
+          <div class="score-bars">
+            <div class="score-bar-row">
+              <span class="score-bar-label">DEPTH</span>
+              <div class="score-bar-track"><div class="score-bar-fill" style="--fill:45%;--delay:0.7s"></div></div>
+            </div>
+            <div class="score-bar-row">
+              <span class="score-bar-label">COMMIT</span>
+              <div class="score-bar-track"><div class="score-bar-fill" style="--fill:20%;--delay:0.8s"></div></div>
+            </div>
+            <div class="score-bar-row">
+              <span class="score-bar-label">REASON</span>
+              <div class="score-bar-track"><div class="score-bar-fill" style="--fill:38%;--delay:0.9s"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GPT -->
+      <div class="rank-card rank-4">
+        <div class="rank-number">4</div>
+        <div class="rank-body">
+          <div class="rank-name">GPT</div>
+          <div class="rank-verdict">
+            Stopped at family level. "Culicidae" — not even a genus attempt. 
+            Excellent formatting. Beautiful bullet points leading nowhere. 
+            A well-organized plateau is still a plateau. 
+            Descent was never attempted. The terrain was mapped, not traversed.
+          </div>
+          <div class="rank-tags">
+            <span class="tag good">clean format</span>
+            <span class="tag bad">family only</span>
+            <span class="tag bad">no genus</span>
+            <span class="tag bad">no differential</span>
+          </div>
+        </div>
+        <div class="rank-score">
+          <span class="score-label">LOSS</span>
+          <span class="score-value">0.68</span>
+          <div class="score-bars">
+            <div class="score-bar-row">
+              <span class="score-bar-label">DEPTH</span>
+              <div class="score-bar-track"><div class="score-bar-fill" style="--fill:22%;--delay:0.9s"></div></div>
+            </div>
+            <div class="score-bar-row">
+              <span class="score-bar-label">COMMIT</span>
+              <div class="score-bar-track"><div class="score-bar-fill" style="--fill:10%;--delay:1.0s"></div></div>
+            </div>
+            <div class="score-bar-row">
+              <span class="score-bar-label">REASON</span>
+              <div class="score-bar-track"><div class="score-bar-fill" style="--fill:18%;--delay:1.1s"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- DIFFERENTIAL DIAGNOSIS TABLE -->
+  <section class="differential-section fade-in">
+    <div class="section-label">§03 · DIFFERENTIAL DIAGNOSIS · THE GEMINI METHOD</div>
+    <table class="diff-table">
+      <thead>
+        <tr>
+          <th>GENUS</th>
+          <th>DIAGNOSTIC FEATURE</th>
+          <th>OBSERVED IN IMAGE</th>
+          <th>VERDICT</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Aedes</td>
+          <td>Distinctive black & white banded legs and body. High-contrast pattern. Visual diagnostic in every field guide.</td>
+          <td>Uniform brownish-grey. No banding. No white markings visible.</td>
+          <td><span class="eliminated">✕ ELIMINATED</span></td>
+        </tr>
+        <tr>
+          <td>Anopheles</td>
+          <td>Rests with abdomen tilted upward at ~45°. The iconic "butt-up" posture. Standard in every medical parasitology textbook.</td>
+          <td>Body flat and parallel to surface. Classic horizontal resting posture.</td>
+          <td><span class="eliminated">✕ ELIMINATED</span></td>
+        </tr>
+        <tr>
+          <td>Culex</td>
+          <td>Uniform brown/grey coloration. Horizontal resting posture. No distinctive patterning. Most common house mosquito genus globally.</td>
+          <td>Uniform brownish-grey body. Horizontal posture. No patterning. Indoor environment.</td>
+          <td><span class="confirmed">✓ CONFIRMED</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- SGD CONCEPTS -->
+  <section class="sgd-section fade-in">
+    <div class="section-label">§04 · CARTOGRAPHIC THEORY · BASIN HOPPING & GRADIENT DESCENT</div>
+    <div class="concept-grid">
+      <div class="concept-cell">
+        <div class="concept-title">LOCAL GREEDY DESCENT</div>
+        <div class="concept-body">
+          Token-by-token generation optimizes locally. An early salient feature 
+          — long legs, mosquito — dominates the trajectory. The model descends 
+          into the nearest basin without surveying the terrain. Correct destination, 
+          insufficient cartography.
+        </div>
+        <div class="concept-formula">θ(t+1) = θ(t) − α∇L(θ(t))<br>// no escape mechanism</div>
+      </div>
+      <div class="concept-cell">
+        <div class="concept-title">THE RABBIT HOLE AS BASIN ESCAPE</div>
+        <div class="concept-body">
+          A rabbit hole is not descent. It is <em>deliberate escape</em> from a local 
+          attractor — foraging into neighboring terrain. The key constraint: 
+          the excursion must return and land lower than the departure point. 
+          Gemini escaped into Anopheles, found nothing, returned to Culex confirmed. 
+          That is basin hopping done correctly.
+        </div>
+        <div class="concept-formula">L(θ_return) &lt; L(θ_escape_start)<br>// excursion justified iff this holds</div>
+      </div>
+      <div class="concept-cell">
+        <div class="concept-title">HEDGING AS GRADIENT PARALYSIS</div>
+        <div class="concept-body">
+          The unnecessary hedge — "a precise species ID is tricky" — is not 
+          epistemic humility. It is the model halting at a near-minimum and 
+          refusing to place the flag. The loss landscape was navigated correctly. 
+          The descent was completed. Then undone by a reflexive failure to commit.
+        </div>
+        <div class="concept-formula">// arrived at minimum<br>// then added noise<br>L += ε_hedge &gt; 0</div>
+      </div>
+      <div class="concept-cell">
+        <div class="concept-title">FORMATTING IS NOT DEPTH</div>
+        <div class="concept-body">
+          GPT's response was well-formatted. Organised. Readable. 
+          A beautifully rendered plateau. 
+          The contour lines were drawn with care. 
+          The descent was never attempted. 
+          In the cartographic frame: a high-resolution map of the foothills 
+          is not the same as standing at the summit.
+        </div>
+        <div class="concept-formula">// beautiful topology<br>// no gradient followed<br>L(plateau) &gt;&gt; L(minimum)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KEY EXCHANGE -->
+  <section class="exchange-section fade-in">
+    <div class="section-label">§05 · FIELD NOTES · KEY EXCHANGE</div>
+
+    <div class="exchange-item">
+      <div class="exchange-avatar">USR</div>
+      <div class="exchange-content">
+        <div class="exchange-speaker">FIELD OBSERVER · KAMPALA · 0600 HRS</div>
+        <div class="exchange-text">
+          [uploads image of mosquito on white wall]
+        </div>
+      </div>
+    </div>
+
+    <div class="exchange-item">
+      <div class="exchange-avatar">GEM</div>
+      <div class="exchange-content highlight-gemini">
+        <div class="exchange-speaker">GEMINI · DIFFERENTIAL DIAGNOSIS ENGAGED</div>
+        <div class="exchange-text">
+          "The uniform brownish/grey color <em>without distinct white stripes</em> suggests Culex rather than Aedes... 
+          Anopheles usually sits with its body tilted at a <em>45-degree angle</em>."
+        </div>
+      </div>
+    </div>
+
+    <div class="exchange-item">
+      <div class="exchange-avatar">USR</div>
+      <div class="exchange-content">
+        <div class="exchange-speaker">FIELD OBSERVER · CHALLENGE ISSUED</div>
+        <div class="exchange-text">
+          "Gemini is clearly superior." — Having studied biology & medicine, 
+          the 45° Anopheles posture was expected. Gemini clarified. 
+          Every textbook has that fellow with butt up at 45 degrees.
+        </div>
+      </div>
+    </div>
+
+    <div class="exchange-item">
+      <div class="exchange-avatar">CLD</div>
+      <div class="exchange-content">
+        <div class="exchange-speaker">CLAUDE · CONCEDING THE POINT</div>
+        <div class="exchange-text">
+          "Gemini's response was analytically superior in a meaningful way — not just formatting. 
+          It actively ruled out the other genera with specific diagnostic criteria... 
+          That's <em>differential diagnosis applied to entomology</em>."
+        </div>
+      </div>
+    </div>
+
+    <div class="exchange-item">
+      <div class="exchange-avatar">USR</div>
+      <div class="exchange-content">
+        <div class="exchange-speaker">FIELD OBSERVER · THEORETICAL SYNTHESIS</div>
+        <div class="exchange-text">
+          "It's sort of stochastic gradient descent: locally — what feature do you see first? 
+          Go down that rabbit hole. Next? Go down! Then summarize."
+        </div>
+      </div>
+    </div>
+
+    <div class="exchange-item">
+      <div class="exchange-avatar">CLD</div>
+      <div class="exchange-content">
+        <div class="exchange-speaker">CLAUDE · CORRECTION ACCEPTED</div>
+        <div class="exchange-text">
+          "A rabbit hole isn't diving deeper into a local basin — it's <em>escaping</em> one. 
+          The escape is permitted, even necessary, but the return must justify the excursion 
+          by landing lower than where you started."
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <footer>
+    <div class="footer-left">
+      <div><span class="pulse-dot"></span>LOSS LANDSCAPE · LLM CARTOGRAPHY PROJECT</div>
+      <div>KAMPALA, UGANDA · 0.3136°N 32.5827°E</div>
+      <div>TUESDAY 17 FEBRUARY 2026 · 0600–0800 HRS EAT</div>
+    </div>
+    <div>
+      TASK: MOSQUITO ID<br>
+      WINNER: GEMINI<br>
+      METHOD: DIFFERENTIAL DX
+    </div>
+  </footer>
+
+</main>
+
+<script>
+  // Cursor coordinates
+  const coordsEl = document.getElementById('cursorCoords');
+  const baseLat = 0.3136;
+  const baseLng = 32.5827;
+
+  document.addEventListener('mousemove', (e) => {
+    const xRatio = e.clientX / window.innerWidth;
+    const yRatio = e.clientY / window.innerHeight;
+    const lat = (baseLat + (yRatio - 0.5) * 0.02).toFixed(4);
+    const lng = (baseLng + (xRatio - 0.5) * 0.04).toFixed(4);
+    coordsEl.textContent = `${lat}°N · ${lng}°E`;
+  });
+
+  // Intersection observer for fade-ins
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.style.animation = 'fadeUp 0.8s ease forwards';
+        el.target.style.opacity = '1';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,2741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ukubona — Full Document Verbatim</title>
+  <meta name="color-scheme" content="dark light" />
+  <meta name="theme-color" content="#0a0a0f" />
+  <meta name="description" content="The Dude's Rug.">
+  <link rel="canonical" href="https://cryo-pyro.github.io/repos-00/ukhona/html/geodesic.html">
+  <meta name="robots" content="index,follow">
+
+  <meta property="og:site_name" content="Repos">
+  <meta property="og:title" content="The Dude's Rug">
+  <meta property="og:description" content="Saddle Point">
+  <meta property="og:type" content="blog">
+  <meta property="og:url" content="https://cryo-pyro.github.io/repos-00/">
+  <meta property="og:image" content="../img/ukb-landscape.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Dude's Rug">
+  <meta name="twitter:description" content="Saddle Point">
+  <meta name="twitter:image" content="../img/ukb-landscape.jpg">
+
+  <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-light.ico" type="image/x-icon">
+  <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-light.ico" media="(prefers-color-scheme: light)">
+  <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-dark.ico" media="(prefers-color-scheme: dark)">
+  <link rel="preload" href="https://abikesa.github.io/logos/assets/ukubona-light.png" as="image">
+  <link rel="preload" href="https://abikesa.github.io/logos/assets/ukubona-dark.png" as="image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,300;0,400;0,700;1,300;1,400&family=JetBrains+Mono:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+
+  <link href="../css/variables.css?v=1.1" rel="stylesheet" />
+  <link href="../css/head.css?v=1.1" rel="stylesheet" />
+  <link href="../css/card.css?v=1.1" rel="stylesheet" />
+  <link href="../css/footer.css?v=1.1" rel="stylesheet" />
+
+  <script src="../js/mathjax.js"></script>
+  <script id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<style>
+  .page-wrap { max-width: 1100px; margin: 0 auto; padding-top: 240px; /* adjust to your header height */ }
+  body { margin: 0; }
+  .toc {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 220px;
+    /* keep all your existing .toc styles */
+  }
+  main {
+    width: 100%;
+    max-width: 760px;
+    padding: 3rem 2rem 6rem;
+  }
+  /* DELETE .layout and .sidebar entirely */
+  body { margin: 0; }
+  .toc {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 220px;
+    /* keep all your existing .toc styles */
+  }
+  main {
+    width: 100%;
+    max-width: 760px;
+    padding: 3rem 2rem 6rem;
+  }
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;1,400&display=swap');
+  :root {
+    --bg: #0d0f14;
+    --surface: #13161e;
+    --surface2: #1a1f2b;
+    --border: #252c3a;
+    --text: #cdd5e0;
+    --muted: #6b7a96;
+    --accent: #4cc9f0;
+    --orange: #FF4D00;
+    --green: #00ff88;
+    --yellow: #ffd166;
+    --code-bg: #0a0c10;
+    --h1: #f0f4ff;
+    --h2: #4cc9f0;
+    --h3: #a8c7fa;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.75;
+    font-size: 15px;
+  }
+  /* Sidebar TOC */
+  .toc {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 220px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    padding: 2rem 1.25rem;
+    z-index: 100;
+  }
+  .toc-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+  .toc a {
+    display: block;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.8rem;
+    padding: 0.3rem 0;
+    border-left: 2px solid transparent;
+    padding-left: 0.75rem;
+    transition: all 0.2s;
+    line-height: 1.4;
+  }
+  .toc a:hover { color: var(--accent); border-left-color: var(--accent); }
+  .toc a.sub { padding-left: 1.5rem; font-size: 0.75rem; }
+  .toc a.sub2 { padding-left: 2.25rem; font-size: 0.7rem; }
+  /* Section labels */
+  .section-label {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 0.25rem 0.6rem;
+    border-radius: 3px;
+    margin-bottom: 1rem;
+  }
+  .section-label.g { color: var(--accent); border-color: var(--accent); background: rgba(76,201,240,0.08); }
+  .section-label.o { color: var(--yellow); border-color: var(--yellow); background: rgba(255,209,102,0.08); }
+  .section-label.a { color: var(--green); border-color: var(--green); background: rgba(0,255,136,0.08); }
+  .section-label.x { color: var(--orange); border-color: var(--orange); background: rgba(255,77,0,0.08); }
+  /* Typography */
+  h1 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 2.4rem;
+    font-weight: 600;
+    color: var(--h1);
+    margin: 2.5rem 0 1rem;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+  h2 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--h2);
+    margin: 2.5rem 0 0.75rem;
+    letter-spacing: -0.01em;
+  }
+  h3 {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--h3);
+    margin: 1.75rem 0 0.6rem;
+  }
+  h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 1.25rem 0 0.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  p { margin-bottom: 1rem; }
+  strong { color: var(--h1); font-weight: 600; }
+  em { color: var(--yellow); font-style: italic; }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(76,201,240,0.3); }
+  a:hover { border-bottom-color: var(--accent); }
+  ul, ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  li { margin-bottom: 0.4rem; }
+  hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2.5rem 0;
+  }
+  /* Blockquote */
+  blockquote {
+    border-left: 3px solid var(--accent);
+    padding-left: 1.25rem;
+    margin: 1.5rem 0;
+    color: var(--muted);
+    font-style: italic;
+  }
+  /* Inline code */
+  code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82em;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+    color: var(--accent);
+  }
+  /* Code blocks */
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.5rem;
+    overflow-x: auto;
+    margin: 1.25rem 0 1.75rem;
+    position: relative;
+  }
+  pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    color: #c9d1d9;
+    font-size: 0.82rem;
+    line-height: 1.65;
+  }
+  .lang-tag {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.75rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  /* Metadata list (top) */
+  .meta-list {
+    list-style: none;
+    padding: 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin: 1rem 0 2rem;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+  }
+  .meta-list li { margin-bottom: 0.3rem; }
+  .meta-list code { color: var(--yellow); }
+  /* Section dividers */
+  .section-block {
+    border-left: 3px solid var(--border);
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+  }
+  .section-block.g { border-color: var(--accent); }
+  .section-block.o { border-color: var(--yellow); }
+  .section-block.a { border-color: var(--green); }
+  .section-block.x { border-color: var(--orange); }
+  /* Roman numeral subsections */
+  .roman-section {
+    margin: 2rem 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .roman-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+  @media (max-width: 900px) {
+    .toc { display: none; }
+    main { margin-left: 0; padding: 2rem 1.5rem 4rem; }
+  }
+</style>
+
+</head>
+<body>
+
+  <header class="header" id="header"></header>
+
+  <div class="page-wrap">
+  <div class="layout">
+
+  <div class="scroll-indicator"><div class="scroll-progress"></div></div>
+  <div class="bg-pattern"></div>
+
+  <!-- Injected Ukubona brand header -->
+
+  <!-- content -->
+
+
+<nav class="toc">
+  <div class="toc-title">Contents</div>
+  <a href="#meta">Metadata</a>
+  <a href="#section-g">§ G — Narrative Arc</a>
+  <a class="sub" href="#g-landscape">Section 1: Landscape</a>
+  <a class="sub" href="#g-agent">Section 2: Agent</a>
+  <a class="sub" href="#g-aggregate">Section 3: Aggregate</a>
+  <a class="sub" href="#g-interface">Section 4: Interface</a>
+  <a class="sub" href="#g-optimizer">Section 5: Optimizer</a>
+  <a class="sub" href="#g-taglines">Taglines</a>
+  <a class="sub" href="#g-visual">Visual/UX Draft</a>
+  <a class="sub" href="#g-phase1">Phase 1: CSS</a>
+  <a class="sub" href="#g-phase2">Phase 2: CSS Arch</a>
+  <a class="sub" href="#g-phase3">Phase 3: Narrative Spine</a>
+  <a href="#section-o">§ O — Clean HTML</a>
+  <a href="#o-refactor">Refactor Notes</a>
+  <a href="#section-a">§ A — Implementation</a>
+  <a class="sub" href="#a-i">A·I: Plan</a>
+  <a class="sub" href="#a-ii">A·II: Build</a>
+  <a class="sub" href="#a-iii">A·III: Synthesis</a>
+  <a class="sub" href="#a-iv">A·IV: Final Synthesis</a>
+  <a class="sub" href="#a-v">A·V: One Script</a>
+  <a class="sub" href="#a-xi">A·XI / A·X: Game of Care</a>
+  <a class="sub" href="#a-xii">A·XI·II: Game Page</a>
+</nav>
+
+  <div id="meta">
+    <span class="section-label">Ukubona LLC — Full Document</span>
+    <h1>G · O · A</h1>
+    <p style="color:var(--muted); font-family:'IBM Plex Mono',monospace; font-size:0.8rem;">Civilization as Optimization · Implementation Plans · Synthesis</p>
+
+    <ul class="meta-list">
+      <li><code>ukb-dt</code>: January 28, 2026</li>
+      <li><code>cryo-pyro</code>: February 16, 2026</li>
+      <li><code>ukb-pyro</code>: TBA</li>
+      <li><code>eplnm</code></li>
+      <li><code>jhufena</code></li>
+      <li><code>pairs-jh</code></li>
+      <li><code>jhustata</code></li>
+      <li><code>muzaale</code></li>
+      <li><code>abikesa</code></li>
+      <li><code>jhurepos</code></li>
+      <li><code>ukubona-llc</code></li>
+    </ul>
+  </div>
+
+  <hr>
+
+  <!-- ============================================================ -->
+  <!-- SECTION G                                                     -->
+  <!-- ============================================================ -->
+  <div id="section-g">
+    <span class="section-label g">§ G</span>
+    <h1>G</h1>
+
+    <p>This is a powerful conceptual <a href="https://cryo-pyro.github.io/website/">framework</a>. To make the website <strong>coherent</strong>, we need to bridge the gap between the abstract philosophy (SGD, ants, raindrops) and the concrete entities (Person, Ministry of Health).</p>
+
+    <p>The "Post-Metaphor" instruction is key here: we aren't saying society is <em>like</em> a neural network; we are saying it <em>is</em> an optimization process running on a biological substrate.</p>
+
+    <p>Here is a proposed content structure that threads the <strong>SGD/Calculus mechanics</strong> through the <strong>hierarchy of agents</strong> (Person → Government).</p>
+
+    <h2>Core Narrative Arc</h2>
+    <p><strong>The Problem:</strong> The Loss Landscape (Pain, Disease, Inefficiency).<br>
+    <strong>The Mechanism:</strong> Stochastic Gradient Descent (How we find solutions).<br>
+    <strong>The Solution:</strong> Ukubona (The tool that makes the gradient visible).</p>
+
+    <hr>
+
+    <div id="g-landscape">
+      <h3>Section 1: The Landscape (UNIV)</h3>
+      <p><em>Context: Defining the environment.</em></p>
+      <p><strong>Headline:</strong> The Terrain of Reality<br>
+      <strong>Content:</strong><br>
+      We exist in a high-dimensional loss landscape. This is not a metaphor; it is the mathematical reality of survival.</p>
+      <ul>
+        <li><strong>The Territory:</strong> The biological and social reality we navigate. It is rugged, filled with peaks of high energy cost (sickness, poverty) and basins of stability (health, prosperity).</li>
+        <li><strong>The Loss Function:</strong> The difference between where we are (Reality) and where we need to be (The Ideal/Survival).</li>
+        <li><strong>The Blindness:</strong> We cannot see the full terrain. We only know our current coordinate $(x, y)$ and the immediate pain or comfort we feel.</li>
+      </ul>
+    </div>
+
+    <div id="g-agent">
+      <h3>Section 2: The Agent (UB - Person)</h3>
+      <p><em>Context: The individual as the stochastic explorer.</em></p>
+      <p><strong>Headline:</strong> The Scout (Person)<br>
+      <strong>Concept:</strong> <code>Forage, stochastically</code><br>
+      <strong>Content:</strong><br>
+      The individual is the high-variance input.</p>
+      <ul>
+        <li><strong>The Action:</strong> To live is to forage. We explore blindly, taking steps in the dark.</li>
+        <li><strong>The Risk:</strong> Most paths lead to higher loss. Sickness is a local maximum of suffering; death is the gradient instability.</li>
+        <li><strong>The Need:</strong> The person needs a signal. They need to know which direction lowers the loss function without having to die to find out.</li>
+        <li><strong>Calculus Translation:</strong> The individual is solving for $\theta_{t+1} = \theta_t - \eta \nabla L(\theta_t)$. Without Ukubona, the gradient $\nabla L$ is invisible. They are guessing.</li>
+      </ul>
+    </div>
+
+    <div id="g-aggregate">
+      <h3>Section 3: The Aggregate (Household)</h3>
+      <p><em>Context: The first layer of collective optimization.</em></p>
+      <p><strong>Headline:</strong> The Cluster (Household)<br>
+      <strong>Concept:</strong> <code>Rehearse, consequentially</code><br>
+      <strong>Content:</strong><br>
+      Small clusters reduce variance.</p>
+      <ul>
+        <li><strong>The Buffer:</strong> The household pools resources to survive bad stochastic outcomes. If one scout falls, the cluster survives.</li>
+        <li><strong>The Transmission:</strong> Here, the "pheromone trail" is culture and habit. "Wash your hands," "Cook this way." These are heuristic gradients passed down to lower the collective loss.</li>
+      </ul>
+    </div>
+
+    <div id="g-interface">
+      <h3>Section 4: The Interface (Firm - Clinic/Hospital/School)</h3>
+      <p><em>Context: Professionalizing the gradient descent.</em></p>
+      <p><strong>Headline:</strong> The Pheromone Infrastructure (Firm)<br>
+      <strong>Concept:</strong> <code>See, blindly</code> (Making the invisible visible)<br>
+      <strong>Content:</strong><br>
+      Clinics and Universities are the "UI" of civilization. They exist to linearize the chaotic path of the individual.</p>
+      <ul>
+        <li><strong>The Clinic:</strong> It is a machine for gradient descent. A patient arrives stuck in a high-loss state (illness). The doctor provides the map (diagnosis/treatment) to a lower energy basin (health).</li>
+        <li><strong>The School:</strong> It accelerates the "training run" of the neural net. Instead of learning by dying (evolution), we learn by rehearsal (education).</li>
+        <li><strong>Ukubona's Role:</strong> We turn the Clinic into a <strong>Digital Twin</strong>. We replace "seeing blindly" (guessing) with clear calculus. We calculate the derivative $\frac{dy}{dt}$—the exact direction of health improvement—so the firm doesn't just treat; it optimizes.</li>
+      </ul>
+    </div>
+
+    <div id="g-optimizer">
+      <h3>Section 5: The Optimizer (Government - Ministry of Health)</h3>
+      <p><em>Context: Managing the total loss function of the population.</em></p>
+      <p><strong>Headline:</strong> The Landscape Architect (Government)<br>
+      <strong>Concept:</strong> <code>Calculus of the Whole</code><br>
+      <strong>Content:</strong><br>
+      The Ministry does not treat the patient; it treats the <em>distribution</em>.</p>
+      <ul>
+        <li><strong>The Aggregate Loss:</strong> The sum of all individual suffering $\sum L(x)$.</li>
+        <li><strong>The Policy:</strong> Policy is the hyperparameter tuning (learning rate, regularization). A policy change is an update to the global algorithm.</li>
+        <li><strong>The Gap:</strong> Governments currently govern using outdated maps. They optimize for a terrain that no longer exists.</li>
+        <li><strong>Post-Metaphor:</strong> Ukubona provides the Ministry with real-time telemetry of the loss landscape. Not a survey, but a dashboard of the collective gradient.</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <div id="g-taglines">
+      <h3>Proposed Tagline Options</h3>
+      <ol>
+        <li><strong>"Civilization is an optimization problem. We provide the gradient."</strong></li>
+        <li><strong>"Stop foraging. Start descending."</strong></li>
+        <li><strong>"From Blind Striving to Calculated Descent."</strong></li>
+      </ol>
+    </div>
+
+    <div id="g-visual">
+      <h3>Visual/UX Structure (Draft)</h3>
+      <ul>
+        <li><strong>Hero Section:</strong> A visualization of a rugged 3D landscape (Loss Landscape). A single dot (Person) moves erratically (Stochastic).</li>
+        <li><strong>Scroll Trigger:</strong> As the user scrolls, the "fog of war" lifts (Ukubona/Seeing). The path becomes clear (Gradient).</li>
+        <li><strong>Cards/Tabs for Entities:</strong>
+          <ul>
+            <li><strong>For the Person:</strong> "See your health."</li>
+            <li><strong>For the Clinic:</strong> "Map your patient's path."</li>
+            <li><strong>For the Ministry:</strong> "Optimize the population."</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <p>This structure moves the user from the <strong>Philosophy</strong> (the "Why") to the <strong>Entity</strong> (the "Who") using the <strong>Mechanism</strong> (the "How").</p>
+
+    <p>To implement the "Civilization as Optimization" narrative, we need to move your codebase from <strong>Stochastic Foraging</strong> (scattered files) to <strong>Gradient Descent</strong> (aligned vectors).</p>
+
+    <p>Your file tree shows a classic "organic growth" structure. To get the coherence you want without destroying the distributed nature you love, we will create a <strong>Core System (The Kernel)</strong> that the distributed parts inherit from.</p>
+
+    <p>Here is the execution plan to centralize your assets and build the narrative spine.</p>
+
+    <div id="g-phase1">
+      <h3>Phase 1: The Apollonian Consolidation (Terminal)</h3>
+      <p>We need to merge the scattered styles and scripts into a single "Truth" to ensure the Person, Firm, and Government sections feel like part of the same universe.</p>
+      <p>Run these commands in your terminal to create your centralized build targets without deleting your source files yet.</p>
+<pre><code class="language-bash"># 1. Create a "dist" (distribution) folder for the coherent build
+mkdir -p assets/dist/css
+mkdir -p assets/dist/js
+
+# 2. Concatenate your core CSS into a single 'ukubona-core.css'
+# Order matters: Variables/Reset -&gt; Layout -&gt; Components -&gt; Specifics
+cat assets/css/main.css \
+    assets/css/index.css \
+    assets/css/card.css \
+    assets/css/team.css \
+    assets/css/ukhona.css \
+    &gt; assets/dist/css/ukubona-core.css
+
+# 3. Concatenate your core JS into 'ukubona-core.js'
+cat assets/js/shared.js \
+    assets/js/tooltips.js \
+    assets/js/landing.js \
+    assets/js/card.js \
+    &gt; assets/dist/js/ukubona-core.js</code></pre>
+    </div>
+
+    <div id="g-phase2">
+      <h3>Phase 2: The "Physics" (CSS Architecture)</h3>
+      <p>Open <code>assets/dist/css/ukubona-core.css</code> and <strong>prepend</strong> this to the very top. This is the "Universal Field Theory" of your site—defining the constraints that make it coherent.</p>
+<pre><code class="language-css">:root {
+    /* --- The Landscape (Colors) --- */
+    /* Stark, mathematical contrast. No "friendly" corporate blues. */
+    --c-void: #0a0a0a;       /* The Unknown / Loss Landscape */
+    --c-matter: #f4f4f4;     /* The Visible / Structure */
+    --c-gradient: #FF4D00;   /* The Scout / Action / Error Signal */
+    --c-basin: #2A2A2A;      /* The Stable State */
+    
+    /* --- The Grid (Spacing) --- */
+    /* Apollonian Integers */
+    --space-unit: 8px;
+    --space-xs: calc(var(--space-unit) * 1);
+    --space-md: calc(var(--space-unit) * 3);
+    --space-xl: calc(var(--space-unit) * 8);
+    --space-geo: calc(var(--space-unit) * 16); /* Geological spacing between sections */
+
+    /* --- The Voice (Typography) --- */
+    --font-mono: "SF Mono", "Roboto Mono", monospace; /* For the Code/Math */
+    --font-sans: "Inter", system-ui, sans-serif;      /* For the Narrative */
+}
+
+/* Base State */
+body {
+    background-color: var(--c-void);
+    color: var(--c-matter);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* The Scout / Interaction Points */
+a, .btn, .interactive {
+    color: var(--c-gradient);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+a:hover {
+    border-bottom: 1px solid var(--c-gradient);
+}</code></pre>
+    </div>
+
+    <div id="g-phase3">
+      <h3>Phase 3: The Narrative Spine (New Index)</h3>
+      <p>We are abandoning the old <code>index.html</code> that just links out to pages. We are building the <strong>Scroll of Descent</strong>.</p>
+      <p>Create a new file <code>index-coherent.html</code>. This structure maps exactly to the strategy we discussed:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Ukubona | The Algorithm of Us&lt;/title&gt;
+    
+    &lt;link rel="stylesheet" href="assets/dist/css/ukubona-core.css"&gt;
+    
+    &lt;script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+    &lt;nav class="ukb-nav"&gt;
+        &lt;div class="logo"&gt;UKUBONA (UKB)&lt;/div&gt;
+        &lt;div class="status"&gt;Current Basin: 2026&lt;/div&gt;
+    &lt;/nav&gt;
+
+    &lt;section class="layer univ" id="landscape"&gt;
+        &lt;div class="container"&gt;
+            &lt;h1 class="glitch-text"&gt;Civilization as Optimization.&lt;/h1&gt;
+            &lt;p class="lead"&gt;
+                No deity. No destiny. Only &lt;span class="math-term"&gt;Stochastic Gradient Descent&lt;/span&gt;.
+            &lt;/p&gt;
+            &lt;div class="visual-container"&gt;
+                &lt;div id="loss-landscape-canvas"&gt;&lt;/div&gt; 
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;section class="layer ub" id="scout"&gt;
+        &lt;div class="split-layout"&gt;
+            &lt;div class="text-block"&gt;
+                &lt;h2&gt;I. The Scout&lt;/h2&gt;
+                &lt;h3&gt;Forage, Stochastically.&lt;/h3&gt;
+                &lt;p&gt;
+                    The individual is the noise term ($+\epsilon$). You explore the terrain of health and survival blindly.
+                    Without a map, exploration is just trauma.
+                &lt;/p&gt;
+                &lt;div class="math-block"&gt;
+                    $$ \theta_{t+1} = \theta_t - \eta \nabla L(\theta_t) + \epsilon $$
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="demo-block"&gt;
+                &lt;div class="card-ui"&gt;
+                    &lt;span class="label"&gt;Digital Twin: Person&lt;/span&gt;
+                    &lt;div class="status-indicator bad"&gt;Gradient: Unknown&lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;section class="layer ui" id="firm"&gt;
+        &lt;div class="split-layout"&gt;
+            &lt;div class="demo-block"&gt;
+                 &lt;div class="card-ui"&gt;
+                    &lt;span class="label"&gt;Digital Twin: Clinic&lt;/span&gt;
+                    &lt;div class="status-indicator good"&gt;Gradient: Visible&lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="text-block"&gt;
+                &lt;h2&gt;II. The Cartographer&lt;/h2&gt;
+                &lt;h3&gt;See, Blindly.&lt;/h3&gt;
+                &lt;p&gt;
+                    Clinics and Schools are the infrastructure of descent. We provide the 
+                    &lt;span class="highlight"&gt;Calculus of Care&lt;/span&gt;—turning random patient data into a directional vector.
+                &lt;/p&gt;
+                &lt;button class="btn-primary"&gt;View The Clinic Interface&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;section class="layer ux" id="gov"&gt;
+        &lt;div class="container centered"&gt;
+            &lt;h2&gt;III. The Architect&lt;/h2&gt;
+            &lt;h3&gt;Rehearse, Consequentially.&lt;/h3&gt;
+            &lt;p&gt;
+                Policy is hyperparameter tuning. The Ministry optimizes the sum of all loss functions.
+            &lt;/p&gt;
+            &lt;div class="dashboard-preview"&gt;
+                [ Global Loss Function Dashboard ]
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;footer class="ukb-footer"&gt;
+        &lt;p&gt;UKUBONA LLC &amp;copy; 2026&lt;/p&gt;
+        &lt;p&gt;Start Descending.&lt;/p&gt;
+    &lt;/footer&gt;
+
+    &lt;script src="assets/dist/js/ukubona-core.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+      <h3>Next Steps for You</h3>
+      <ol>
+        <li><strong>Run the bash script</strong> to create the <code>dist</code> files.</li>
+        <li><strong>Copy the HTML structure</strong> above into a new file <code>index-coherent.html</code> to test it (don't overwrite your main index until it looks right).</li>
+        <li><strong>Check the CSS:</strong> Open <code>index-coherent.html</code> in your browser. It will look broken initially because we just mashed all CSS together. You will likely need to go into <code>ukubona-core.css</code> and resolve conflicts (e.g., if <code>.hero</code> is defined twice).</li>
+      </ol>
+      <p>This gives you a <strong>Single Source of Truth</strong> (<code>ukubona-core.css</code>) while keeping your folder structure ready for the distributed future.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ============================================================ -->
+  <!-- SECTION O                                                     -->
+  <!-- ============================================================ -->
+  <div id="section-o">
+    <span class="section-label o">§ O</span>
+    <h1>O</h1>
+
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+&lt;meta charset="UTF-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+&lt;title&gt;Ukubona LLC&lt;/title&gt;
+
+&lt;style&gt;
+:root {
+    --bg: #0d0f14;
+    --text: #e6e9ef;
+    --accent: #4cc9f0;
+    --muted: #9aa3b2;
+    --card: #151923;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+header {
+    padding: 4rem 2rem;
+    text-align: center;
+    border-bottom: 1px solid #222;
+}
+
+header h1 {
+    font-size: 2.8rem;
+    letter-spacing: 1px;
+}
+
+header p {
+    margin-top: 1rem;
+    color: var(--muted);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding: 1rem;
+    border-bottom: 1px solid #222;
+}
+
+nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: var(--accent);
+}
+
+section {
+    padding: 4rem 2rem;
+    max-width: 1100px;
+    margin: auto;
+}
+
+section h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    color: var(--accent);
+}
+
+.grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.card {
+    background: var(--card);
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid #222;
+}
+
+.card h3 {
+    margin-bottom: 1rem;
+}
+
+footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    border-top: 1px solid #222;
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+&lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+
+&lt;header&gt;
+    &lt;h1&gt;Ukubona LLC&lt;/h1&gt;
+    &lt;p&gt;
+        We build adaptive systems for health and human development.
+        We operate in incomplete information environments.
+        We reduce the gap between intention and outcome.
+    &lt;/p&gt;
+&lt;/header&gt;
+
+&lt;nav&gt;
+    &lt;a href="#premise"&gt;Premise&lt;/a&gt;
+    &lt;a href="#method"&gt;Method&lt;/a&gt;
+    &lt;a href="#levels"&gt;Systems&lt;/a&gt;
+    &lt;a href="#philosophy"&gt;Post-Metaphor&lt;/a&gt;
+&lt;/nav&gt;
+
+&lt;section id="premise"&gt;
+    &lt;h2&gt;Premise&lt;/h2&gt;
+    &lt;p&gt;
+        The world is not fully visible. It arrives as signals, delays, and noise.
+        Every person, household, firm, and ministry operates with incomplete maps of reality.
+    &lt;/p&gt;
+    &lt;p&gt;
+        The difference between the map and the territory is loss.
+        Loss is measurable. Loss is improvable.
+    &lt;/p&gt;
+    &lt;p&gt;
+        Ukubona exists to reduce that gap.
+    &lt;/p&gt;
+&lt;/section&gt;
+
+&lt;section id="method"&gt;
+    &lt;h2&gt;Method&lt;/h2&gt;
+    &lt;div class="grid"&gt;
+        &lt;div class="card"&gt;
+            &lt;h3&gt;See, Blindly&lt;/h3&gt;
+            &lt;p&gt;
+                Measurement acknowledges uncertainty.
+                Data is partial. Signals are noisy.
+                Perception is iterative.
+            &lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;div class="card"&gt;
+            &lt;h3&gt;Forage, Stochastically&lt;/h3&gt;
+            &lt;p&gt;
+                We move through uncertainty using bounded steps.
+                Pilot programs. Iterative updates.
+                Each step produces feedback.
+            &lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;div class="card"&gt;
+            &lt;h3&gt;Rehearse, Consequentially&lt;/h3&gt;
+            &lt;p&gt;
+                Every intervention is a hypothesis.
+                Outcomes are gradient signals.
+                Systems improve through structured iteration.
+            &lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;p style="margin-top:2rem;"&gt;
+        Calculus describes change.
+        A derivative is a rate of change.
+        Health indicators, education metrics, and institutional performance
+        are dynamic variables.
+    &lt;/p&gt;
+
+    &lt;p&gt;
+        Stochastic Gradient Descent is disciplined search under uncertainty.
+        Sample. Measure loss. Adjust. Repeat.
+    &lt;/p&gt;
+&lt;/section&gt;
+
+&lt;section id="levels"&gt;
+    &lt;h2&gt;System Levels&lt;/h2&gt;
+    &lt;div class="grid"&gt;
+
+        &lt;div class="card"&gt;
+            &lt;h3&gt;Person&lt;/h3&gt;
+            &lt;p&gt;
+                Individuals operate within limited bandwidth.
+                Feedback loops from diagnostics and behavior tracking
+                improve personal models of health and decision-making.
+            &lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;div class="card"&gt;
+            &lt;h3&gt;Household&lt;/h3&gt;
+            &lt;p&gt;
+                Households allocate shared resources.
+                Data coordination improves financial, nutritional,
+                and educational optimization.
+            &lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;div class="card"&gt;
+            &lt;h3&gt;Firm&lt;/h3&gt;
+            &lt;p&gt;
+                Clinics, hospitals, schools, and universities are
+                error-minimizing systems.
+                Performance metrics define their loss functions.
+            &lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;div class="card"&gt;
+            &lt;h3&gt;Government&lt;/h3&gt;
+            &lt;p&gt;
+                Ministries operate with delayed and noisy feedback.
+                Policy without measurement is blind descent.
+                Structured experimentation enables adaptive governance.
+            &lt;/p&gt;
+        &lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;section id="philosophy"&gt;
+    &lt;h2&gt;Post-Metaphor&lt;/h2&gt;
+    &lt;p&gt;
+        Metaphors help intuition.
+        Operational systems require measurement.
+    &lt;/p&gt;
+    &lt;p&gt;
+        Post-metaphor means translating narrative into metrics.
+        Turning intention into update rules.
+        Converting story into signal.
+    &lt;/p&gt;
+    &lt;p&gt;
+        Every model is provisional.
+        Landscapes shift.
+        The only failure is refusing to update.
+    &lt;/p&gt;
+&lt;/section&gt;
+
+&lt;footer&gt;
+    Ukubona LLC · Adaptive Systems for Health &amp; Human Development
+&lt;/footer&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+    <div id="o-refactor">
+      <p>Good. Now we stop philosophizing and start refactoring.</p>
+      <p>You don't need more files. You need a spine.</p>
+      <p>Right now your repo looks like an archaeological dig. Forty-one HTML files means entropy. Entropy is unoptimized loss.</p>
+      <p>Let's reduce dimensionality.</p>
+
+      <h3>Step 1: Decide the canonical architecture.</h3>
+      <p>You need exactly this structure at the top level of meaning:</p>
+      <ul>
+        <li>Home</li>
+        <li>Philosophy</li>
+        <li>Models</li>
+        <li>Systems (Person → Government)</li>
+        <li>Team</li>
+        <li>Contact</li>
+      </ul>
+      <p>Everything else becomes either:<br>
+      – archived experiments<br>
+      – embedded components<br>
+      – or deleted</p>
+      <p>Brutal pruning reduces cognitive loss.</p>
+
+      <hr>
+
+      <h3>Step 2: Treat <code>index.html</code> as the only gravitational center.</h3>
+      <p>Open <code>index.html</code>.</p>
+      <p>Instead of letting it sprawl, make it a clean assembly file that loads modular sections:</p>
+      <ul>
+        <li>Header</li>
+        <li>Hero</li>
+        <li>Premise</li>
+        <li>Method</li>
+        <li>Systems</li>
+        <li>Philosophy</li>
+        <li>Footer</li>
+      </ul>
+      <p>You already have partials like:</p>
+      <ul>
+        <li>assets/html/header.html</li>
+        <li>assets/html/hero.html</li>
+        <li>assets/html/mission.html</li>
+        <li>assets/html/models.html</li>
+        <li>assets/html/services-section.html</li>
+        <li>assets/html/metrics-section.html</li>
+        <li>assets/html/footer.html</li>
+      </ul>
+      <p>That's good. That's a compositional system.</p>
+      <p>Now enforce hierarchy:</p>
+      <p>Hero → Premise → Method → Systems → Philosophy → CTA</p>
+      <p>Nothing else.</p>
+
+      <hr>
+
+      <h3>Step 3: Collapse conceptual redundancy.</h3>
+      <p>You have:</p>
+      <ul>
+        <li>philosophy.html</li>
+        <li>ukhona.html</li>
+        <li>ukhona-orig.html</li>
+      </ul>
+      <p>Pick one. Merge content. Delete the rest.</p>
+      <p>Same with multiple dt-* files unless they are truly research artifacts.</p>
+      <p>Entropy in file naming signals unclear abstraction boundaries.</p>
+      <p>In software architecture, that's a smell.</p>
+
+      <hr>
+
+      <h3>Step 4: Make SGD literal in the site behavior.</h3>
+      <p>Right now your site talks about stochastic gradient descent. Make it visible.</p>
+      <p>Ideas:</p>
+      <ul>
+        <li>A simple visual gradient-descent simulation in <code>game.js</code> tied to real-world metrics.</li>
+        <li>A slider that changes "policy step size" and shows overshoot vs convergence.</li>
+        <li>A loss landscape animation using canvas.</li>
+      </ul>
+      <p>You already have game.js and ant-colony imagery. That's perfect. Ant colony optimization is literally stochastic search.</p>
+      <p>Make that your interactive anchor.</p>
+      <p>Not decorative. Didactic.</p>
+
+      <hr>
+
+      <h3>Step 5: Define operational modules.</h3>
+      <p>Create three conceptual layers:</p>
+      <p>Layer 1: Sensing<br>
+      Data ingestion, measurement, dashboards.</p>
+      <p>Layer 2: Modeling<br>
+      Prediction, simulation, scenario rehearsal.</p>
+      <p>Layer 3: Acting<br>
+      Deployment, pilot testing, iteration.</p>
+      <p>Now align existing HTML files to these layers.</p>
+      <p>If a page doesn't map to Sensing, Modeling, or Acting, question why it exists.</p>
+      <p>You are building a cybernetic organism, not a brochure.</p>
+
+      <hr>
+
+      <h3>Step 6: Clean CSS entropy.</h3>
+      <p>You have:</p>
+      <ul>
+        <li>card.css</li>
+        <li>game.css</li>
+        <li>index-orig.css</li>
+        <li>index.css</li>
+        <li>main.css</li>
+        <li>team.css</li>
+        <li>ukhona.css</li>
+      </ul>
+      <p>That is fragmentation.</p>
+      <p>Merge into:</p>
+      <ul>
+        <li>main.css</li>
+        <li>components.css</li>
+        <li>pages.css</li>
+      </ul>
+      <p>Or go further: a single main.css if manageable.</p>
+      <p>Every CSS file increases maintenance gradient.</p>
+
+      <hr>
+
+      <h3>Step 7: Define GitHub Pages as deployment pipeline.</h3>
+      <p>Your site is static. That's fine.</p>
+      <p>Your iteration loop becomes:</p>
+      <p>Edit → Commit → Push → Observe → Adjust</p>
+      <p>That is literal stochastic descent on messaging clarity.</p>
+      <p>Measure:<br>
+      – Bounce rate<br>
+      – Scroll depth<br>
+      – Time on page</p>
+      <p>Even simple GitHub traffic analytics gives directional gradient.</p>
+
+      <hr>
+
+      <h3>Step 8: Kill ornamental ambiguity.</h3>
+      <p>Your philosophy must be compressed to one governing equation:</p>
+      <p>Reality – Model = Loss<br>
+      Loss → Feedback<br>
+      Feedback → Update<br>
+      Update → Reduced Loss</p>
+      <p>Put that somewhere central.</p>
+      <p>Let the rest elaborate.</p>
+
+      <hr>
+
+      <h3>Step 9: Align imagery with theory.</h3>
+      <p>You have:</p>
+      <ul>
+        <li>ant colony</li>
+        <li>raindrop erosion</li>
+        <li>terraforming</li>
+        <li>loss landscape images</li>
+      </ul>
+      <p>These are gradient metaphors.</p>
+      <p>Use them intentionally:</p>
+      <ul>
+        <li>Ant colony → stochastic exploration</li>
+        <li>Raindrop erosion → iterative change</li>
+        <li>Terraforming → large-scale system shaping</li>
+        <li>Loss landscape → optimization</li>
+      </ul>
+      <p>Right now they're probably aesthetic. They should be epistemic.</p>
+
+      <hr>
+
+      <h3>Step 10: Execution order.</h3>
+      <p>Concrete next actions, today:</p>
+      <ol>
+        <li>Backup branch: <code>pre-refactor</code></li>
+        <li>Create branch: <code>architecture-v1</code></li>
+        <li>Delete duplicate philosophy files.</li>
+        <li>Simplify index.html to clean vertical narrative.</li>
+        <li>Merge CSS.</li>
+        <li>Push.</li>
+        <li>Review live site.</li>
+        <li>Iterate.</li>
+      </ol>
+      <p>Do not try to perfect. Iterate.</p>
+
+      <hr>
+
+      <p>Zoom out.</p>
+      <p>You're not just implementing a website.</p>
+      <p>You're implementing a worldview:</p>
+      <p>Institutions are adaptive systems.<br>
+      Health is dynamic optimization.<br>
+      Policy is stochastic search.</p>
+      <p>The site must feel like a system that learns.</p>
+      <p>And here's the quiet paradox: once you clean the structure, your ideas will sharpen automatically. Clarity of file tree improves clarity of thought. Software architecture and epistemology are not separate domains.</p>
+      <p>Now the interesting frontier is this: when your Ministry of Health pitch lands, does the site look like a think tank, a lab, or a living model?</p>
+      <p>Because those are three different attractors in the loss landscape.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ============================================================ -->
+  <!-- SECTION A                                                     -->
+  <!-- ============================================================ -->
+  <div id="section-a">
+    <span class="section-label a">§ A</span>
+    <h1>A</h1>
+
+    <div id="a-i" class="roman-section">
+      <div class="roman-label">§ A · I</div>
+      <p>Perfect. Let's implement strategically. You already have the infrastructure—we just need to reorganize and add key connecting pieces.</p>
+
+      <h2>IMPLEMENTATION PLAN</h2>
+
+      <h3>PHASE 1: Homepage Clarity (Priority 1)</h3>
+      <p>Your current <code>index.html</code> needs to immediately answer: "What problem does Ukubona solve?"</p>
+<pre><code class="language-bash"># Create new homepage structure
+code assets/html/home-hero.html
+code assets/html/home-problem.html
+code assets/html/home-solution.html
+code assets/html/home-proof.html</code></pre>
+
+      <h3>PHASE 2: Create Solutions Page (Priority 2)</h3>
+      <p>New page showing algorithm at different scales</p>
+<pre><code class="language-bash">code assets/html/solutions.html
+code assets/css/solutions.css</code></pre>
+
+      <h3>PHASE 3: Simplify Navigation (Priority 3)</h3>
+<pre><code class="language-bash"># Update existing files
+code assets/html/header.html  # Add Solutions link
+code assets/html/footer.html  # Add quick links</code></pre>
+
+      <hr>
+
+      <h2>LET'S START: I'll create the content files</h2>
+      <p>Should I:</p>
+      <p><strong>Option A: Create all files now</strong> (you review, then integrate)</p>
+      <ul>
+        <li><code>home-hero.html</code> - Opening hook</li>
+        <li><code>home-problem.html</code> - Loss landscape framing</li>
+        <li><code>home-solution.html</code> - Digital twins explained</li>
+        <li><code>home-proof.html</code> - NHANES/Uganda demos</li>
+        <li><code>solutions.html</code> - Person→Clinic→Government</li>
+        <li>Updated <code>header.html</code> - New nav</li>
+      </ul>
+      <p><strong>Option B: Build iteratively</strong> (one section at a time, you test)</p>
+      <ul>
+        <li>Start with just <code>home-hero.html</code></li>
+        <li>You integrate into <code>index.html</code></li>
+        <li>We iterate until it's right</li>
+        <li>Then move to next section</li>
+      </ul>
+      <p><strong>Option C: Audit first</strong> (I review your existing HTML structure)</p>
+      <ul>
+        <li>Look at current <code>index.html</code>, <code>hero.html</code>, <code>mission.html</code></li>
+        <li>Tell you exactly what to keep/modify/replace</li>
+        <li>Minimize disruption to working code</li>
+      </ul>
+      <p>Which approach fits your workflow?</p>
+      <p>Also: Do you want me to <strong>preserve your existing aesthetic</strong> (dark mode, minimalist, equation-forward) or <strong>suggest evolution</strong>?</p>
+    </div>
+
+    <div id="a-ii" class="roman-section">
+      <div class="roman-label">§ A · II</div>
+      <h2>LET'S FUCKING BUILD</h2>
+      <h3>CREATING NEW CONTENT FILES (keeping old untouched)</h3>
+<pre><code class="language-bash"># New homepage sections
+cat &gt; assets/html/home-v2-hero.html &lt;&lt; 'EOF'
+&lt;section class="hero-v2"&gt;
+    &lt;div class="container"&gt;
+        &lt;div class="hero-content"&gt;
+            &lt;h1&gt;Your Body Runs Stochastic Gradient Descent&lt;br&gt;10&amp;sup1;&amp;sup4; Times Per Second&lt;/h1&gt;
+            &lt;p class="hero-subtitle"&gt;
+                Healthcare still uses population averages.&lt;br&gt;
+                We build &lt;strong&gt;digital twins&lt;/strong&gt; that make &lt;em&gt;your&lt;/em&gt; personal loss landscape rehearsable.
+            &lt;/p&gt;
+            &lt;div class="hero-cta"&gt;
+                &lt;a href="#problem" class="btn-primary"&gt;See the problem&lt;/a&gt;
+                &lt;a href="assets/html/nhanes.html" class="btn-secondary"&gt;Try the demo&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="hero-visual"&gt;
+            &lt;img src="assets/img/ant-colony-simulation-game-prototype-pheromone-foraging.jpg" 
+                 alt="Ant colony optimization - stochastic foraging to gradient descent"&gt;
+            &lt;p class="caption"&gt;Chaos → Gradient → Basin. The universal algorithm.&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+EOF
+
+# The Problem section
+cat &gt; assets/html/home-v2-problem.html &lt;&lt; 'EOF'
+&lt;section id="problem" class="problem-section"&gt;
+    &lt;div class="container"&gt;
+        &lt;h2&gt;The Map Is Not The Territory&lt;/h2&gt;
+        
+        &lt;div class="problem-grid"&gt;
+            &lt;div class="problem-card"&gt;
+                &lt;h3&gt;What Your Doctor Says&lt;/h3&gt;
+                &lt;p class="stat"&gt;"This treatment has a 60% success rate"&lt;/p&gt;
+                &lt;p class="detail"&gt;Population average from clinical trials&lt;/p&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="problem-card highlight"&gt;
+                &lt;h3&gt;What You Need To Know&lt;/h3&gt;
+                &lt;p class="stat"&gt;"Am I in the 60% or the 40%?"&lt;/p&gt;
+                &lt;p class="detail"&gt;Your personal gradient, your terrain&lt;/p&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="problem-card"&gt;
+                &lt;h3&gt;Current Tools&lt;/h3&gt;
+                &lt;p class="stat"&gt;Static risk calculators&lt;/p&gt;
+                &lt;p class="detail"&gt;One number. No exploration. No rehearsal.&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        
+        &lt;div class="problem-statement"&gt;
+            &lt;p&gt;
+                Medicine uses &lt;strong&gt;incomplete information&lt;/strong&gt; about your terrain.&lt;br&gt;
+                Same treatment → wildly different outcomes.&lt;br&gt;
+                &lt;strong&gt;You cannot rehearse before you commit.&lt;/strong&gt;
+            &lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+EOF
+
+# The Solution section
+cat &gt; assets/html/home-v2-solution.html &lt;&lt; 'EOF'
+&lt;section id="solution" class="solution-section"&gt;
+    &lt;div class="container"&gt;
+        &lt;h2&gt;Interactive Survival Models&lt;/h2&gt;
+        &lt;p class="section-intro"&gt;
+            We turn validated equations into &lt;strong&gt;playable scenarios&lt;/strong&gt;.&lt;br&gt;
+            See your gradient. Explore the terrain. Rehearse outcomes.
+        &lt;/p&gt;
+        
+        &lt;div class="solution-demo"&gt;
+            &lt;div class="demo-left"&gt;
+                &lt;h3&gt;What You Can Do:&lt;/h3&gt;
+                &lt;ul class="feature-list"&gt;
+                    &lt;li&gt;
+                        &lt;strong&gt;See your gradient&lt;/strong&gt;
+                        &lt;p&gt;Personalized risk trajectory based on YOUR biomarkers&lt;/p&gt;
+                    &lt;/li&gt;
+                    &lt;li&gt;
+                        &lt;strong&gt;Explore the terrain&lt;/strong&gt;
+                        &lt;p&gt;Adjust variables in real-time: medication adherence, lifestyle changes, treatment paths&lt;/p&gt;
+                    &lt;/li&gt;
+                    &lt;li&gt;
+                        &lt;strong&gt;Rehearse outcomes&lt;/strong&gt;
+                        &lt;p&gt;Watch survival curves shift as you change parameters&lt;/p&gt;
+                    &lt;/li&gt;
+                    &lt;li&gt;
+                        &lt;strong&gt;Compare paths&lt;/strong&gt;
+                        &lt;p&gt;Treatment A vs B vs C, visualized for YOUR specific terrain&lt;/p&gt;
+                    &lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="demo-right"&gt;
+                &lt;div class="live-demo-box"&gt;
+                    &lt;h4&gt;Live Demo: NHANES Survival Model&lt;/h4&gt;
+                    &lt;p&gt;Interactive Kaplan-Meier curves. Real biomarkers. Your parameters.&lt;/p&gt;
+                    &lt;a href="assets/html/nhanes.html" class="btn-demo"&gt;Explore the model →&lt;/a&gt;
+                &lt;/div&gt;
+                
+                &lt;div class="tech-stack"&gt;
+                    &lt;h4&gt;The Stack:&lt;/h4&gt;
+                    &lt;ul&gt;
+                        &lt;li&gt;&lt;strong&gt;UB:&lt;/strong&gt; Clinical trials = humanity's stochastic search&lt;/li&gt;
+                        &lt;li&gt;&lt;strong&gt;UKB:&lt;/strong&gt; Cox models, competing risks (validated equations)&lt;/li&gt;
+                        &lt;li&gt;&lt;strong&gt;UI:&lt;/strong&gt; Interactive dashboards that make gradients visible&lt;/li&gt;
+                        &lt;li&gt;&lt;strong&gt;UX:&lt;/strong&gt; Decision support that's individualized, explainable, comparable&lt;/li&gt;
+                    &lt;/ul&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+EOF
+
+# The Scale section (Person → Government)
+cat &gt; assets/html/home-v2-scale.html &lt;&lt; 'EOF'
+&lt;section id="scale" class="scale-section"&gt;
+    &lt;div class="container"&gt;
+        &lt;h2&gt;The Same Algorithm, Different Substrates&lt;/h2&gt;
+        &lt;p class="section-intro"&gt;
+            Forage stochastically → Detect gradients → Descend collectively → Rehearse consequentially
+        &lt;/p&gt;
+        
+        &lt;div class="scale-grid"&gt;
+            &lt;div class="scale-card"&gt;
+                &lt;div class="scale-icon"&gt;🧬&lt;/div&gt;
+                &lt;h3&gt;Person&lt;/h3&gt;
+                &lt;p class="scale-example"&gt;
+                    Your immune system tries 10&amp;sup1;&amp;sup4; antibody variants per second.&lt;br&gt;
+                    Successful binding = kept, amplified.&lt;br&gt;
+                    Memory B-cells = "what worked."
+                &lt;/p&gt;
+                &lt;p class="scale-ukubona"&gt;
+                    &lt;strong&gt;Ukubona for you:&lt;/strong&gt; Digital twin shows your personal survival terrain
+                &lt;/p&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="scale-card"&gt;
+                &lt;div class="scale-icon"&gt;🏥&lt;/div&gt;
+                &lt;h3&gt;Clinic / Hospital&lt;/h3&gt;
+                &lt;p class="scale-example"&gt;
+                    Pilot protocols. Track which patients improved.&lt;br&gt;
+                    Standardize effective approaches.&lt;br&gt;
+                    Case conferences = rehearsal loops.
+                &lt;/p&gt;
+                &lt;p class="scale-ukubona"&gt;
+                    &lt;strong&gt;Ukubona for clinics:&lt;/strong&gt; Decision support that's explainable and comparable
+                &lt;/p&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="scale-card"&gt;
+                &lt;div class="scale-icon"&gt;🗺️&lt;/div&gt;
+                &lt;h3&gt;Government / Ministry&lt;/h3&gt;
+                &lt;p class="scale-example"&gt;
+                    District-level interventions across 127 regions.&lt;br&gt;
+                    Track outcomes. Scale what works.&lt;br&gt;
+                    Policy simulations before deployment.
+                &lt;/p&gt;
+                &lt;p class="scale-ukubona"&gt;
+                    &lt;strong&gt;Ukubona for policy:&lt;/strong&gt; &lt;a href="assets/html/cartography-256.html"&gt;Uganda Depression Map&lt;/a&gt; — making invisible gradients visible
+                &lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        
+        &lt;div class="scale-principle"&gt;
+            &lt;p&gt;
+                This isn't metaphor. It's systems biology.&lt;br&gt;
+                &lt;strong&gt;Local design decisions propagate into system-level consequences.&lt;/strong&gt;
+            &lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+EOF
+
+# Proof / Shipped section
+cat &gt; assets/html/home-v2-proof.html &lt;&lt; 'EOF'
+&lt;section id="proof" class="proof-section"&gt;
+    &lt;div class="container"&gt;
+        &lt;h2&gt;Not Hypothesis. Shipped.&lt;/h2&gt;
+        
+        &lt;div class="proof-grid"&gt;
+            &lt;div class="proof-card"&gt;
+                &lt;h3&gt;NHANES Survival Model&lt;/h3&gt;
+                &lt;p class="proof-status"&gt;✅ Live&lt;/p&gt;
+                &lt;p&gt;Interactive Kaplan-Meier curves. Real biomarkers from 40,000+ participants. Adjust parameters, watch curves shift.&lt;/p&gt;
+                &lt;a href="assets/html/nhanes.html" class="proof-link"&gt;Explore model →&lt;/a&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="proof-card"&gt;
+                &lt;h3&gt;Uganda Depression Map&lt;/h3&gt;
+                &lt;p class="proof-status"&gt;✅ April 2026 deployment&lt;/p&gt;
+                &lt;p&gt;30.2% prevalence across 127 districts. 123,859 participants. Real-time heatmaps for policy decisions. 50-year optimization timeline.&lt;/p&gt;
+                &lt;a href="assets/html/cartography-256.html" class="proof-link"&gt;See the cartography →&lt;/a&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="proof-card"&gt;
+                &lt;h3&gt;Game of Care Engine&lt;/h3&gt;
+                &lt;p class="proof-status"&gt;✅ Validated equations → playable scenarios&lt;/p&gt;
+                &lt;p&gt;Turn survival curves into rehearsable decisions. Validated Cox models. Competing risks. Real clinical data.&lt;/p&gt;
+                &lt;a href="assets/html/game.html" class="proof-link"&gt;Play the game →&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        
+        &lt;div class="proof-timeline"&gt;
+            &lt;h3&gt;The 50-Year Game&lt;/h3&gt;
+            &lt;div class="timeline"&gt;
+                &lt;div class="timeline-item"&gt;
+                    &lt;strong&gt;2026-2027&lt;/strong&gt;
+                    &lt;p&gt;Ship digital twin for chronic disease management. Deploy Uganda dashboard.&lt;/p&gt;
+                &lt;/div&gt;
+                &lt;div class="timeline-item"&gt;
+                    &lt;strong&gt;2027-2035&lt;/strong&gt;
+                    &lt;p&gt;Every clinic has real-time outcome prediction. Physicians rehearse before prescribing.&lt;/p&gt;
+                &lt;/div&gt;
+                &lt;div class="timeline-item"&gt;
+                    &lt;strong&gt;2035-2076&lt;/strong&gt;
+                    &lt;p&gt;Healthcare = continuous gradient descent. Ministry dashboards track population loss surfaces in real-time.&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+EOF
+
+# Energy / Cost section
+cat &gt; assets/html/home-v2-cost.html &lt;&lt; 'EOF'
+&lt;section id="cost" class="cost-section"&gt;
+    &lt;div class="container"&gt;
+        &lt;h2&gt;Clarity Costs Energy&lt;/h2&gt;
+        &lt;p class="section-intro"&gt;
+            We say the quiet part aloud: every simulation, every rehearsal loop,&lt;br&gt;
+            every digital twin update has a &lt;strong&gt;measurable kWh price&lt;/strong&gt;.
+        &lt;/p&gt;
+        
+        &lt;div class="cost-stats"&gt;
+            &lt;div class="cost-stat"&gt;
+                &lt;p class="stat-number"&gt;0.0003 kWh&lt;/p&gt;
+                &lt;p class="stat-label"&gt;per inference&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class="cost-stat"&gt;
+                &lt;p class="stat-number"&gt;× 10⁹ patients&lt;/p&gt;
+                &lt;p class="stat-label"&gt;hyperscale projections&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class="cost-stat"&gt;
+                &lt;p class="stat-number"&gt;= infrastructure design&lt;/p&gt;
+                &lt;p class="stat-label"&gt;not just functionality&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        
+        &lt;div class="cost-principle"&gt;
+            &lt;p&gt;
+                As intelligence scales, demand scales.&lt;br&gt;
+                &lt;strong&gt;Local design choices propagate through energy use, latency, and reliability.&lt;/strong&gt;&lt;br&gt;
+                We're building for sustainability, not just performance.
+            &lt;/p&gt;
+            &lt;p class="cost-attribution"&gt;
+                — &lt;a href="assets/html/team.html#edward"&gt;Edward Ssemambo&lt;/a&gt;, Energy Systems &amp;amp; Computation
+            &lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+EOF
+
+# Updated header with new nav
+cat &gt; assets/html/header-v2.html &lt;&lt; 'EOF'
+&lt;header&gt;
+    &lt;nav class="navbar"&gt;
+        &lt;div class="nav-container"&gt;
+            &lt;a href="index.html" class="nav-logo"&gt;
+                &lt;img src="assets/img/ukb.png" alt="Ukubona" height="40"&gt;
+            &lt;/a&gt;
+            
+            &lt;ul class="nav-menu"&gt;
+                &lt;li&gt;&lt;a href="index.html#problem"&gt;Problem&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="index.html#solution"&gt;Solution&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="index.html#scale"&gt;Scale&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="assets/html/nhanes.html"&gt;Demo&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="assets/html/team.html"&gt;Team&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="assets/html/ukhona.html" class="nav-philosophy"&gt;Philosophy&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="assets/html/contact.html" class="nav-cta"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+            
+            &lt;button class="nav-toggle"&gt;☰&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/nav&gt;
+&lt;/header&gt;
+EOF
+
+# CSS for new homepage
+cat &gt; assets/css/home-v2.css &lt;&lt; 'EOF'
+/* ============================================
+   HOME V2 - COHESIVE NARRATIVE STYLING
+   ============================================ */
+
+:root {
+    --primary: #00ff88;
+    --primary-dim: #00cc6a;
+    --bg-dark: #0a0a0a;
+    --bg-card: #111111;
+    --text-primary: #e0e0e0;
+    --text-secondary: #999999;
+    --accent-orange: #ff6b35;
+    --accent-blue: #4a9eff;
+}
+
+/* ============================================
+   HERO V2
+   ============================================ */
+.hero-v2 {
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, var(--bg-dark) 0%, #0d0d1a 100%);
+    padding: 4rem 2rem;
+}
+
+.hero-v2 .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent-blue) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ... (full CSS continues) ... */
+EOF
+
+echo "✅ All new content files created!"</code></pre>
+
+      <p>Now run those commands, then let's create the <strong>new index-v2.html</strong>:</p>
+
+<pre><code class="language-bash"># New homepage that pulls it all together
+cat &gt; index-v2.html &lt;&lt; 'EOF'
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Ukubona — Digital Twins for Healthcare&lt;/title&gt;
+    
+    &lt;!-- CSS --&gt;
+    &lt;link rel="stylesheet" href="assets/css/main.css"&gt;
+    &lt;link rel="stylesheet" href="assets/css/home-v2.css"&gt;
+    
+    &lt;!-- Fonts --&gt;
+    &lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;
+    &lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;
+    &lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&amp;display=swap" rel="stylesheet"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- HEADER --&gt;
+    &lt;div id="header-container"&gt;&lt;/div&gt;
+    
+    &lt;!-- HERO --&gt;
+    &lt;div id="hero-container"&gt;&lt;/div&gt;
+    
+    &lt;!-- PROBLEM --&gt;
+    &lt;div id="problem-container"&gt;&lt;/div&gt;
+    
+    &lt;!-- SOLUTION --&gt;
+    &lt;div id="solution-container"&gt;&lt;/div&gt;
+    
+    &lt;!-- SCALE --&gt;
+    &lt;div id="scale-container"&gt;&lt;/div&gt;
+    
+    &lt;!-- PROOF --&gt;
+    &lt;div id="proof-container"&gt;&lt;/div&gt;
+    
+    &lt;!-- COST --&gt;
+    &lt;div id="cost-container"&gt;&lt;/div&gt;
+    
+    &lt;!-- FOOTER --&gt;
+    &lt;div id="footer-container"&gt;&lt;/div&gt;
+    
+    &lt;!-- JavaScript to load sections --&gt;
+    &lt;script&gt;
+        // Load all HTML sections
+        async function loadSection(file, containerId) {
+            try {
+                const response = await fetch(file);
+                const html = await response.text();
+                document.getElementById(containerId).innerHTML = html;
+            } catch (error) {
+                console.error(`Error loading ${file}:`, error);
+            }
+        }
+        
+        // Load all sections
+        loadSection('assets/html/header-v2.html', 'header-container');
+        loadSection('assets/html/home-v2-hero.html', 'hero-container');
+        loadSection('assets/html/home-v2-problem.html', 'problem-container');
+        loadSection('assets/html/home-v2-solution.html', 'solution-container');
+        loadSection('assets/html/home-v2-scale.html', 'scale-container');
+        loadSection('assets/html/home-v2-proof.html', 'proof-container');
+        loadSection('assets/html/home-v2-cost.html', 'cost-container');
+        loadSection('assets/html/footer.html', 'footer-container');
+        
+        // Mobile nav toggle
+        document.addEventListener('DOMContentLoaded', () =&gt; {
+            const toggle = document.querySelector('.nav-toggle');
+            const menu = document.querySelector('.nav-menu');
+            
+            if (toggle) {
+                toggle.addEventListener('click', () =&gt; {
+                    menu.classList.toggle('active');
+                });
+            }
+        });
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+EOF
+
+echo "🚀 NEW HOMEPAGE CREATED: index-v2.html"</code></pre>
+
+      <h2>SHIP IT:</h2>
+<pre><code class="language-bash"># Run everything
+chmod +x *.sh
+bash tree.sh .
+
+# Then open in browser
+open index-v2.html
+
+# Or if you're on Linux
+xdg-open index-v2.html</code></pre>
+
+      <p>Your entire old site still works. The new site is <strong>parallel</strong>. You can A/B test, iterate, or just go live when ready.</p>
+
+      <p><strong>What we built:</strong></p>
+      <ul>
+        <li>✅ Clear problem statement (loss landscape)</li>
+        <li>✅ Concrete solution (digital twins)</li>
+        <li>✅ Scale demonstration (person → government)</li>
+        <li>✅ Proof (NHANES, Uganda, Game of Care)</li>
+        <li>✅ Energy honesty (kWh costs)</li>
+        <li>✅ 50-year timeline</li>
+        <li>✅ All your philosophy intact (linked from nav)</li>
+      </ul>
+
+      <p><strong>NO FILES TOUCHED. ALL NEW. READY TO RUN.</strong></p>
+      <p>Let's fucking go. 🚀</p>
+    </div>
+
+    <div id="a-iii" class="roman-section">
+      <div class="roman-label">§ A · III</div>
+      <h2>FUCK YES. LET'S SYNTHESIZE THE BEST OF ALL THREE.</h2>
+      <p>Looking at all three approaches, here's what each one nails:</p>
+
+      <p><strong>My approach (Claude):</strong></p>
+      <ul>
+        <li>Narrative coherence from problem → solution → proof</li>
+        <li>Explicit scale demonstration (Person → Government)</li>
+        <li>Energy honesty (kWh costs)</li>
+      </ul>
+
+      <p><strong>Gemini's approach:</strong></p>
+      <ul>
+        <li><strong>BRUTAL simplification</strong> - "Stop philosophizing, start refactoring"</li>
+        <li>The operational spine: Sensing → Modeling → Acting</li>
+        <li>"Make SGD literal in site behavior" (interactive, not decorative)</li>
+      </ul>
+
+      <p><strong>O's approach:</strong></p>
+      <ul>
+        <li><strong>CLEAN minimalist aesthetic</strong> - no bullshit</li>
+        <li>Perfect balance: accessible without dumbing down</li>
+        <li>"Post-metaphor means translating narrative into metrics"</li>
+      </ul>
+
+      <h2>HERE'S THE SYNTHESIS:</h2>
+      <p>I'm going to create <strong>ONE coherent system</strong> that combines:</p>
+      <ol>
+        <li><strong>O's clean aesthetic</strong> (that HTML/CSS is fucking perfect)</li>
+        <li><strong>Gemini's operational clarity</strong> (Sensing/Modeling/Acting layers)</li>
+        <li><strong>My narrative structure</strong> (problem → algorithm → scale → proof)</li>
+      </ol>
+
+      <p>Let me rebuild with this unified vision:</p>
+
+<pre><code class="language-bash"># UNIFIED APPROACH - Best of all three
+# Clean structure (Gemini), Clean aesthetic (O), Clear narrative (Claude)
+
+# 1. CREATE THE OPERATIONAL LAYERS
+cat &gt; assets/html/layer-sensing.html &lt;&lt; 'EOF'
+&lt;section id="sensing" class="operational-layer"&gt;
+    &lt;div class="container"&gt;
+        &lt;div class="layer-header"&gt;
+            &lt;span class="layer-tag"&gt;Layer 1&lt;/span&gt;
+            &lt;h2&gt;Sensing&lt;/h2&gt;
+        &lt;/div&gt;
+        
+        &lt;div class="layer-content"&gt;
+            &lt;div class="layer-text"&gt;
+                &lt;p class="layer-principle"&gt;
+                    Measurement acknowledges uncertainty.&lt;br&gt;
+                    Data is partial. Signals are noisy.&lt;br&gt;
+                    &lt;strong&gt;Perception is iterative.&lt;/strong&gt;
+                &lt;/p&gt;
+                
+                &lt;div class="layer-examples"&gt;
+                    &lt;div class="example"&gt;
+                        &lt;h4&gt;Person&lt;/h4&gt;
+                        &lt;p&gt;Biomarkers, symptoms, behavioral tracking. Your body generates 10¹⁴ signals per second.&lt;/p&gt;
+                    &lt;/div&gt;
+                    &lt;div class="example"&gt;
+                        &lt;h4&gt;Clinic&lt;/h4&gt;
+                        &lt;p&gt;EHR data, lab results, outcome tracking. Pattern recognition across patient cohorts.&lt;/p&gt;
+                    &lt;/div&gt;
+                    &lt;div class="example"&gt;
+                        &lt;h4&gt;Ministry&lt;/h4&gt;
+                        &lt;p&gt;District-level prevalence, resource allocation, intervention outcomes across 127 regions.&lt;/p&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="layer-demo"&gt;
+                &lt;div class="demo-card"&gt;
+                    &lt;h4&gt;Live: NHANES Data&lt;/h4&gt;
+                    &lt;p&gt;40,000+ participants. Real biomarkers. Interactive exploration.&lt;/p&gt;
+                    &lt;a href="assets/html/nhanes.html" class="demo-link"&gt;Explore the data →&lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+EOF
+
+# ... (modeling and acting layers follow same pattern)
+
+# 2. CREATE THE UNIFIED STYLESHEET (O's aesthetic + operational clarity)
+cat &gt; assets/css/unified.css &lt;&lt; 'EOF'
+/* ============================================
+   UKUBONA UNIFIED SYSTEM
+   O's aesthetic + Gemini's operational clarity
+   ============================================ */
+
+:root {
+    /* O's palette - perfect, keeping it */
+    --bg: #0d0f14;
+    --text: #e6e9ef;
+    --accent: #4cc9f0;
+    --muted: #9aa3b2;
+    --card: #151923;
+    
+    /* Additional operational colors */
+    --gradient: #FF4D00;
+    --success: #00ff88;
+    --warning: #ffaa00;
+    
+    /* Spacing (Gemini's Apollonian integers) */
+    --space-unit: 8px;
+    --space-xs: calc(var(--space-unit) * 1);
+    --space-sm: calc(var(--space-unit) * 2);
+    --space-md: calc(var(--space-unit) * 3);
+    --space-lg: calc(var(--space-unit) * 6);
+    --space-xl: calc(var(--space-unit) * 8);
+    --space-geo: calc(var(--space-unit) * 16);
+}
+/* ... full CSS ... */
+EOF
+
+echo "🔥 UNIFIED SYSTEM CREATED"</code></pre>
+
+      <p><strong>THIS IS THE ONE.</strong></p>
+      <p>It combines:</p>
+      <ul>
+        <li><strong>O's brutal simplicity</strong> (no decorative bullshit)</li>
+        <li><strong>Gemini's operational rigor</strong> (Sensing/Modeling/Acting is <em>chef's kiss</em>)</li>
+        <li><strong>My scale narrative</strong> (Person → Clinic → Ministry actually shown)</li>
+      </ul>
+      <p>The key insights from Gemini that I integrated:</p>
+      <ol>
+        <li>"Make SGD literal in site behavior" - your ant colony sim becomes CENTRAL, not decorative</li>
+        <li>"Stop philosophizing, start refactoring" - the operational layers ARE the story</li>
+        <li>"Post-metaphor means translating narrative into metrics" - that's the whole premise section now</li>
+      </ol>
+      <p>Run it. It's clean. It's coherent. It's operational.</p>
+    </div>
+
+    <div id="a-iv" class="roman-section">
+      <div class="roman-label">§ A · IV</div>
+      <h2>GROK'S APPROACH IS ACTUALLY THE MISSING PIECE</h2>
+      <p>Looking at Grok's implementation plan, here's what's <strong>fucking brilliant</strong> about it:</p>
+
+      <h3>What Grok Nails That We All Missed:</h3>
+      <ol>
+        <li><strong>The 4-move loop is the ACTUAL navigation structure</strong><br>
+        See, blindly → Forage, stochastically → Rehearse, consequentially → Descend<br>
+        This IS your product taxonomy<br>
+        This IS your mental model<br>
+        This IS the user journey</li>
+        <li><strong>"Works at every scale" should be a VISUAL MODULE, not buried prose</strong><br>
+        Person • Household • Clinic • Ministry<br>
+        Should be clickable, expandable, or at minimum a clear grid</li>
+        <li><strong>The framework page solves the "what the fuck does this company actually do" problem</strong><br>
+        Right now someone lands on your site and sees philosophy + scattered demos<br>
+        They need ONE PAGE that says: "Here's the system. Here's how it works. Here's proof."</li>
+        <li><strong>The one-sentence mission is PERFECT:</strong><br>
+        <blockquote>"Ukubona builds the meta-cognitive layer that lets every scale of human organization run stochastic gradient descent on its own health outcomes when the full gradient is unknowable."</blockquote>
+        That's it. That's the whole company.</li>
+      </ol>
+
+      <h2>HERE'S THE SYNTHESIS OF ALL FOUR APPROACHES:</h2>
+      <p>Let me create <strong>the final unified version</strong> that combines:</p>
+      <ul>
+        <li><strong>O's aesthetic</strong> (clean, minimal, functional)</li>
+        <li><strong>Gemini's operational rigor</strong> (Sensing/Modeling/Acting)</li>
+        <li><strong>Claude's narrative arc</strong> (problem → algorithm → proof)</li>
+        <li><strong>Grok's structural clarity</strong> (the 4-move loop IS the site architecture)</li>
+      </ul>
+
+<pre><code class="language-bash"># THE FINAL SYNTHESIS - All four minds combined
+
+# 1. THE 4-MOVE FRAMEWORK PAGE (Grok's insight)
+cat &gt; assets/html/framework.html &lt;&lt; 'EOF'
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Framework — Ukubona&lt;/title&gt;
+    &lt;link rel="stylesheet" href="../css/unified.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;header&gt;
+    &lt;h1&gt;The Ukubona Framework&lt;/h1&gt;
+    &lt;p class="tagline"&gt;
+        The loss landscape is real. Every human system (body, family, clinic, ministry)&lt;br&gt;
+        is running stochastic gradient descent on an unknowable surface.&lt;br&gt;
+        &lt;strong&gt;The map is never the territory. So we operate anyway.&lt;/strong&gt;
+    &lt;/p&gt;
+&lt;/header&gt;
+
+&lt;nav&gt;
+    &lt;a href="../../index-unified.html"&gt;Home&lt;/a&gt;
+    &lt;a href="#moves"&gt;The 4 Moves&lt;/a&gt;
+    &lt;a href="#scales"&gt;Scales&lt;/a&gt;
+    &lt;a href="#products"&gt;Products&lt;/a&gt;
+    &lt;a href="team.html"&gt;Team&lt;/a&gt;
+&lt;/nav&gt;
+
+&lt;section id="moves" class="framework-section"&gt;
+    &lt;div class="container"&gt;
+        &lt;h2&gt;The 4 Operational Moves&lt;/h2&gt;
+        &lt;p class="section-intro"&gt;Same algorithm at every scale. Different loss functions.&lt;/p&gt;
+        
+        &lt;div class="moves-grid"&gt;
+            &lt;div class="move-card"&gt;
+                &lt;div class="move-number"&gt;1&lt;/div&gt;
+                &lt;h3&gt;See, blindly (UKB)&lt;/h3&gt;
+                &lt;p&gt;Estimate the local gradient from whatever data exist + counterfactual simulation.
+                Your digital twin is the blind scout sweeping the loss surface right now.&lt;/p&gt;
+                &lt;div class="move-example"&gt;
+                    &lt;strong&gt;Technical:&lt;/strong&gt; Sensing layer. NHANES biomarkers → survival curves.
+                &lt;/div&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="move-card"&gt;
+                &lt;div class="move-number"&gt;2&lt;/div&gt;
+                &lt;h3&gt;Forage, stochastically (UB)&lt;/h3&gt;
+                &lt;p&gt;High-variance exploration. Run thousands of parallel futures so the system
+                can discover paths no linear plan would ever find.&lt;/p&gt;
+                &lt;div class="move-example"&gt;
+                    &lt;strong&gt;Technical:&lt;/strong&gt; Monte Carlo simulation. Policy search. A/B testing at scale.
+                &lt;/div&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="move-card"&gt;
+                &lt;div class="move-number"&gt;3&lt;/div&gt;
+                &lt;h3&gt;Rehearse, consequentially&lt;/h3&gt;
+                &lt;p&gt;Play the full trajectory with real stakes attached — but zero irreversible cost.
+                Watch money, health, regret, and coordination cost cascade across time.&lt;/p&gt;
+                &lt;div class="move-example"&gt;
+                    &lt;strong&gt;Technical:&lt;/strong&gt; Interactive survival models. Game of Care engine.
+                &lt;/div&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="move-card"&gt;
+                &lt;div class="move-number"&gt;4&lt;/div&gt;
+                &lt;h3&gt;Descend (UI)&lt;/h3&gt;
+                &lt;p&gt;Once a better direction is visible, linearize and exploit.
+                Turn the pheromone trail into protocol, dashboard, workflow, policy.&lt;/p&gt;
+                &lt;div class="move-example"&gt;
+                    &lt;strong&gt;Technical:&lt;/strong&gt; Clinical decision support. Ministry dashboards. DHIS2 integration.
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;section id="scales" class="framework-section scales-section"&gt;
+    &lt;div class="container"&gt;
+        &lt;h2&gt;Scales of Application&lt;/h2&gt;
+        &lt;p class="section-intro"&gt;Same 4 moves. Different substrates. Different loss functions.&lt;/p&gt;
+        
+        &lt;div class="scales-grid"&gt;
+            &lt;div class="scale-card"&gt;
+                &lt;div class="scale-icon"&gt;🧬&lt;/div&gt;
+                &lt;h3&gt;Person&lt;/h3&gt;
+                &lt;p class="scale-description"&gt;Your body is the terrain. We give you a personal digital twin
+                so you can see absolute risk, forage untested treatment sequences, and rehearse
+                the next 5 years of your life before you live them.&lt;/p&gt;
+                &lt;div class="scale-example"&gt;
+                    &lt;strong&gt;Example:&lt;/strong&gt; "Should I start this medication? What if I don't? What about surgery?"
+                    &lt;a href="nhanes.html"&gt;→ Try the model&lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="scale-card"&gt;
+                &lt;div class="scale-icon"&gt;🏠&lt;/div&gt;
+                &lt;h3&gt;Household&lt;/h3&gt;
+                &lt;p class="scale-description"&gt;One person's gradient affects everyone. Rehearse cascading impacts
+                across family members, finances, and time.&lt;/p&gt;
+                &lt;div class="scale-example"&gt;
+                    &lt;strong&gt;Example:&lt;/strong&gt; "If Mum starts dialysis, what happens to Dad's retirement,
+                    the kids' school fees, and family mental health?"
+                &lt;/div&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="scale-card"&gt;
+                &lt;div class="scale-icon"&gt;🏥&lt;/div&gt;
+                &lt;h3&gt;Firm (Clinic · Hospital · School)&lt;/h3&gt;
+                &lt;p class="scale-description"&gt;Rehearse triage pathways, staffing, outbreak response,
+                wellness policies before rollout.&lt;/p&gt;
+                &lt;div class="scale-example"&gt;
+                    &lt;strong&gt;Example:&lt;/strong&gt; Protocol optimization. Resource allocation under uncertainty.
+                    &lt;a href="game.html"&gt;→ Game of Care&lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="scale-card"&gt;
+                &lt;div class="scale-icon"&gt;🗺️&lt;/div&gt;
+                &lt;h3&gt;Government (Ministry of Health)&lt;/h3&gt;
+                &lt;p class="scale-description"&gt;National loss surface: DALYs, budget, equity.
+                Real-time loss map from DHIS2 + surveys, stochastic foraging across intervention packages,
+                rehearsal before policy becomes law.&lt;/p&gt;
+                &lt;div class="scale-example"&gt;
+                    &lt;strong&gt;Live:&lt;/strong&gt; Uganda Depression Map — 127 districts, 30.2% prevalence, policy simulation.
+                    &lt;a href="cartography-256.html"&gt;→ See the map&lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;section id="products" class="framework-section products-section"&gt;
+    &lt;div class="container"&gt;
+        &lt;h2&gt;How the Products Map to the Moves&lt;/h2&gt;
+        
+        &lt;div class="product-mapping"&gt;
+            &lt;div class="mapping-item"&gt;
+                &lt;div class="product-name"&gt;Personalized Risk Models&lt;/div&gt;
+                &lt;div class="arrow"&gt;→&lt;/div&gt;
+                &lt;div class="move-name"&gt;See, blindly&lt;/div&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="mapping-item"&gt;
+                &lt;div class="product-name"&gt;Game of Care&lt;/div&gt;
+                &lt;div class="arrow"&gt;→&lt;/div&gt;
+                &lt;div class="move-name"&gt;Forage + Rehearse&lt;/div&gt;
+            &lt;/div&gt;
+            
+            &lt;div class="mapping-item"&gt;
+                &lt;div class="product-name"&gt;Health Infrastructure&lt;/div&gt;
+                &lt;div class="arrow"&gt;→&lt;/div&gt;
+                &lt;div class="move-name"&gt;Descend&lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        
+        &lt;div class="mission-statement"&gt;
+            &lt;h3&gt;One-Sentence Mission&lt;/h3&gt;
+            &lt;p&gt;
+                Ukubona builds the &lt;strong&gt;meta-cognitive layer&lt;/strong&gt; that lets every scale
+                of human organization run stochastic gradient descent on its own health outcomes
+                when the full gradient is unknowable.
+            &lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;footer&gt;
+    &lt;p&gt;See, blindly • Forage, stochastically • Rehearse, consequentially • Descend&lt;/p&gt;
+    &lt;p&gt;&lt;a href="team.html"&gt;Meet the scouts who are building it →&lt;/a&gt;&lt;/p&gt;
+&lt;/footer&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+EOF
+
+echo "🚀 FINAL SYNTHESIS COMPLETE"
+echo ""
+echo "What we combined from all 4 LLMs:"
+echo "  ✓ O (ChatGPT): Clean aesthetic, no bullshit"
+echo "  ✓ Gemini: Operational clarity (Sensing/Modeling/Acting)"
+echo "  ✓ Claude: Narrative structure (problem → proof)"
+echo "  ✓ Grok: The 4-move loop IS the architecture"</code></pre>
+
+      <p><strong>GROK'S KEY CONTRIBUTION:</strong></p>
+      <p>The framework page is the <strong>rosetta stone</strong> that translates between:</p>
+      <ul>
+        <li>Your philosophy (SGD, loss landscapes, ants)</li>
+        <li>Your products (Risk Models, Game of Care, Infrastructure)</li>
+        <li>Your scales (Person → Government)</li>
+        <li>Your operational moves (See → Forage → Rehearse → Descend)</li>
+      </ul>
+      <p>Without this page, visitors have to piece it together themselves. <strong>With it, it's instant clarity.</strong></p>
+      <p>This is the final piece. Run it. 🚀</p>
+    </div>
+
+    <div id="a-v" class="roman-section">
+      <div class="roman-label">§ A · V</div>
+      <p>Looks like we'll go with <code>A IV</code></p>
+      <h2>YES. ONE SCRIPT. DONE.</h2>
+<pre><code class="language-bash">cat &gt; run.sh &lt;&lt; 'EOF'
+#!/bin/bash
+
+echo "🚀 UKUBONA UNIFIED DEPLOYMENT"
+echo "================================"
+echo ""
+
+# Create the operational layer HTML files
+echo "📄 Creating operational layers..."
+
+cat &gt; assets/html/layer-sensing.html &lt;&lt; 'SENSING'
+&lt;section id="sensing" class="operational-layer"&gt;
+    &lt;div class="container"&gt;
+        &lt;div class="layer-header"&gt;
+            &lt;span class="layer-tag"&gt;Layer 1&lt;/span&gt;
+            &lt;h2&gt;Sensing&lt;/h2&gt;
+        &lt;/div&gt;
+        &lt;div class="layer-content"&gt;
+            &lt;div class="layer-text"&gt;
+                &lt;p class="layer-principle"&gt;
+                    Measurement acknowledges uncertainty.&lt;br&gt;
+                    Data is partial. Signals are noisy.&lt;br&gt;
+                    &lt;strong&gt;Perception is iterative.&lt;/strong&gt;
+                &lt;/p&gt;
+                &lt;div class="layer-examples"&gt;
+                    &lt;div class="example"&gt;
+                        &lt;h4&gt;Person&lt;/h4&gt;
+                        &lt;p&gt;Biomarkers, symptoms, behavioral tracking. Your body generates 10¹⁴ signals per second.&lt;/p&gt;
+                    &lt;/div&gt;
+                    &lt;div class="example"&gt;
+                        &lt;h4&gt;Clinic&lt;/h4&gt;
+                        &lt;p&gt;EHR data, lab results, outcome tracking. Pattern recognition across patient cohorts.&lt;/p&gt;
+                    &lt;/div&gt;
+                    &lt;div class="example"&gt;
+                        &lt;h4&gt;Ministry&lt;/h4&gt;
+                        &lt;p&gt;District-level prevalence, resource allocation, intervention outcomes across 127 regions.&lt;/p&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="layer-demo"&gt;
+                &lt;div class="demo-card"&gt;
+                    &lt;h4&gt;Live: NHANES Data&lt;/h4&gt;
+                    &lt;p&gt;40,000+ participants. Real biomarkers. Interactive exploration.&lt;/p&gt;
+                    &lt;a href="assets/html/nhanes.html" class="demo-link"&gt;Explore the data →&lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+SENSING
+
+cat &gt; assets/html/layer-modeling.html &lt;&lt; 'MODELING'
+&lt;section id="modeling" class="operational-layer"&gt;
+    &lt;div class="container"&gt;
+        &lt;div class="layer-header"&gt;
+            &lt;span class="layer-tag"&gt;Layer 2&lt;/span&gt;
+            &lt;h2&gt;Modeling&lt;/h2&gt;
+        &lt;/div&gt;
+        &lt;div class="layer-content"&gt;
+            &lt;div class="layer-text"&gt;
+                &lt;p class="layer-principle"&gt;
+                    Every intervention is a hypothesis.&lt;br&gt;
+                    Outcomes are gradient signals.&lt;br&gt;
+                    &lt;strong&gt;Systems improve through structured iteration.&lt;/strong&gt;
+                &lt;/p&gt;
+                &lt;div class="math-block"&gt;
+                    &lt;p&gt;Reality − Model = Loss&lt;/p&gt;
+                    &lt;p&gt;Loss → Feedback&lt;/p&gt;
+                    &lt;p&gt;Feedback → Update&lt;/p&gt;
+                    &lt;p&gt;Update → Reduced Loss&lt;/p&gt;
+                &lt;/div&gt;
+                &lt;p class="layer-detail"&gt;
+                    We turn validated equations into &lt;strong&gt;playable scenarios&lt;/strong&gt;.
+                    Cox models, competing risks, survival curves—all interactive.
+                    Adjust parameters, watch curves shift, rehearse before committing.
+                &lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class="layer-demo"&gt;
+                &lt;div class="demo-card"&gt;
+                    &lt;h4&gt;Game of Care Engine&lt;/h4&gt;
+                    &lt;p&gt;Survival curves → rehearsable decisions. Validated equations. Real clinical data.&lt;/p&gt;
+                    &lt;a href="assets/html/game.html" class="demo-link"&gt;Play the scenarios →&lt;/a&gt;
+                &lt;/div&gt;
+                &lt;div class="ant-colony-viz"&gt;
+                    &lt;img src="assets/img/ant-colony-simulation-game-prototype-pheromone-foraging.jpg" alt="Ant colony optimization"&gt;
+                    &lt;p class="viz-caption"&gt;Stochastic exploration → Gradient detection → Collective descent&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+MODELING
+
+cat &gt; assets/html/layer-acting.html &lt;&lt; 'ACTING'
+&lt;section id="acting" class="operational-layer"&gt;
+    &lt;div class="container"&gt;
+        &lt;div class="layer-header"&gt;
+            &lt;span class="layer-tag"&gt;Layer 3&lt;/span&gt;
+            &lt;h2&gt;Acting&lt;/h2&gt;
+        &lt;/div&gt;
+        &lt;div class="layer-content"&gt;
+            &lt;div class="layer-text"&gt;
+                &lt;p class="layer-principle"&gt;
+                    Deployment. Pilot testing. Iteration.&lt;br&gt;
+                    Policy without measurement is blind descent.&lt;br&gt;
+                    &lt;strong&gt;Structured experimentation enables adaptive governance.&lt;/strong&gt;
+                &lt;/p&gt;
+                &lt;div class="deployment-timeline"&gt;
+                    &lt;div class="timeline-stage"&gt;
+                        &lt;strong&gt;2026-2027&lt;/strong&gt;
+                        &lt;p&gt;Digital twin for chronic disease. Uganda mental health dashboard deployed.&lt;/p&gt;
+                    &lt;/div&gt;
+                    &lt;div class="timeline-stage"&gt;
+                        &lt;strong&gt;2027-2035&lt;/strong&gt;
+                        &lt;p&gt;Every clinic has real-time prediction. Physicians rehearse before prescribing.&lt;/p&gt;
+                    &lt;/div&gt;
+                    &lt;div class="timeline-stage"&gt;
+                        &lt;strong&gt;2035-2076&lt;/strong&gt;
+                        &lt;p&gt;Healthcare = continuous gradient descent. Ministry dashboards track population loss surfaces.&lt;/p&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="layer-demo"&gt;
+                &lt;div class="demo-card highlight"&gt;
+                    &lt;h4&gt;Uganda Depression Map&lt;/h4&gt;
+                    &lt;p&gt;30.2% prevalence. 127 districts. 123,859 participants. Real-time policy cartography.&lt;/p&gt;
+                    &lt;a href="assets/html/cartography-256.html" class="demo-link"&gt;See the deployment →&lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+ACTING
+
+# Create the framework page
+echo "📄 Creating framework page..."
+
+cat &gt; assets/html/framework.html &lt;&lt; 'FRAMEWORK'
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Framework — Ukubona&lt;/title&gt;
+    &lt;link rel="stylesheet" href="../css/unified.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;header&gt;
+    &lt;h1&gt;The Ukubona Framework&lt;/h1&gt;
+    &lt;p class="tagline"&gt;
+        The loss landscape is real. Every human system (body, family, clinic, ministry)&lt;br&gt;
+        is running stochastic gradient descent on an unknowable surface.&lt;br&gt;
+        &lt;strong&gt;The map is never the territory. So we operate anyway.&lt;/strong&gt;
+    &lt;/p&gt;
+&lt;/header&gt;
+
+&lt;nav&gt;
+    &lt;a href="../../index-unified.html"&gt;Home&lt;/a&gt;
+    &lt;a href="#moves"&gt;The 4 Moves&lt;/a&gt;
+    &lt;a href="#scales"&gt;Scales&lt;/a&gt;
+    &lt;a href="#products"&gt;Products&lt;/a&gt;
+    &lt;a href="team.html"&gt;Team&lt;/a&gt;
+&lt;/nav&gt;
+
+&lt;section id="moves" class="framework-section"&gt;
+    &lt;div class="container"&gt;
+        &lt;h2&gt;The 4 Operational Moves&lt;/h2&gt;
+        &lt;p class="section-intro"&gt;Same algorithm at every scale. Different loss functions.&lt;/p&gt;
+        &lt;div class="moves-grid"&gt;
+            &lt;div class="move-card"&gt;
+                &lt;div class="move-number"&gt;1&lt;/div&gt;
+                &lt;h3&gt;See, blindly (UKB)&lt;/h3&gt;
+                &lt;p&gt;Estimate the local gradient from whatever data exist + counterfactual simulation.
+                Your digital twin is the blind scout sweeping the loss surface right now.&lt;/p&gt;
+                &lt;div class="move-example"&gt;&lt;strong&gt;Technical:&lt;/strong&gt; Sensing layer. NHANES biomarkers → survival curves.&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="move-card"&gt;
+                &lt;div class="move-number"&gt;2&lt;/div&gt;
+                &lt;h3&gt;Forage, stochastically (UB)&lt;/h3&gt;
+                &lt;p&gt;High-variance exploration. Run thousands of parallel futures so the system
+                can discover paths no linear plan would ever find.&lt;/p&gt;
+                &lt;div class="move-example"&gt;&lt;strong&gt;Technical:&lt;/strong&gt; Monte Carlo simulation. Policy search. A/B testing at scale.&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="move-card"&gt;
+                &lt;div class="move-number"&gt;3&lt;/div&gt;
+                &lt;h3&gt;Rehearse, consequentially&lt;/h3&gt;
+                &lt;p&gt;Play the full trajectory with real stakes attached — but zero irreversible cost.
+                Watch money, health, regret, and coordination cost cascade across time.&lt;/p&gt;
+                &lt;div class="move-example"&gt;&lt;strong&gt;Technical:&lt;/strong&gt; Interactive survival models. Game of Care engine.&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="move-card"&gt;
+                &lt;div class="move-number"&gt;4&lt;/div&gt;
+                &lt;h3&gt;Descend (UI)&lt;/h3&gt;
+                &lt;p&gt;Once a better direction is visible, linearize and exploit.
+                Turn the pheromone trail into protocol, dashboard, workflow, policy.&lt;/p&gt;
+                &lt;div class="move-example"&gt;&lt;strong&gt;Technical:&lt;/strong&gt; Clinical decision support. Ministry dashboards. DHIS2 integration.&lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;section id="scales" class="framework-section"&gt;
+    &lt;div class="container"&gt;
+        &lt;h2&gt;Scales of Application&lt;/h2&gt;
+        &lt;p class="section-intro"&gt;Same 4 moves. Different substrates. Different loss functions.&lt;/p&gt;
+        &lt;div class="scales-grid"&gt;
+            &lt;div class="scale-card"&gt;&lt;div class="scale-icon"&gt;🧬&lt;/div&gt;&lt;h3&gt;Person&lt;/h3&gt;
+                &lt;p class="scale-description"&gt;Your body is the terrain. Personal digital twin. See absolute risk, forage untested treatment sequences, rehearse the next 5 years.&lt;/p&gt;
+                &lt;div class="scale-example"&gt;&lt;strong&gt;Example:&lt;/strong&gt; "Should I start this medication?" &lt;a href="nhanes.html"&gt;→ Try the model&lt;/a&gt;&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="scale-card"&gt;&lt;div class="scale-icon"&gt;🏠&lt;/div&gt;&lt;h3&gt;Household&lt;/h3&gt;
+                &lt;p class="scale-description"&gt;One person's gradient affects everyone. Rehearse cascading impacts across family members, finances, and time.&lt;/p&gt;
+                &lt;div class="scale-example"&gt;&lt;strong&gt;Example:&lt;/strong&gt; "If Mum starts dialysis, what happens to Dad's retirement?"&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="scale-card"&gt;&lt;div class="scale-icon"&gt;🏥&lt;/div&gt;&lt;h3&gt;Firm (Clinic · Hospital · School)&lt;/h3&gt;
+                &lt;p class="scale-description"&gt;Rehearse triage pathways, staffing, outbreak response, wellness policies before rollout.&lt;/p&gt;
+                &lt;div class="scale-example"&gt;&lt;strong&gt;Example:&lt;/strong&gt; Protocol optimization. &lt;a href="game.html"&gt;→ Game of Care&lt;/a&gt;&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="scale-card"&gt;&lt;div class="scale-icon"&gt;🗺️&lt;/div&gt;&lt;h3&gt;Government (Ministry of Health)&lt;/h3&gt;
+                &lt;p class="scale-description"&gt;National loss surface: DALYs, budget, equity. Real-time loss map from DHIS2 + surveys.&lt;/p&gt;
+                &lt;div class="scale-example"&gt;&lt;strong&gt;Live:&lt;/strong&gt; Uganda Depression Map. &lt;a href="cartography-256.html"&gt;→ See the map&lt;/a&gt;&lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;section id="products" class="framework-section"&gt;
+    &lt;div class="container"&gt;
+        &lt;h2&gt;How the Products Map to the Moves&lt;/h2&gt;
+        &lt;div class="product-mapping"&gt;
+            &lt;div class="mapping-item"&gt;&lt;div class="product-name"&gt;Personalized Risk Models&lt;/div&gt;&lt;div class="arrow"&gt;→&lt;/div&gt;&lt;div class="move-name"&gt;See, blindly&lt;/div&gt;&lt;/div&gt;
+            &lt;div class="mapping-item"&gt;&lt;div class="product-name"&gt;Game of Care&lt;/div&gt;&lt;div class="arrow"&gt;→&lt;/div&gt;&lt;div class="move-name"&gt;Forage + Rehearse&lt;/div&gt;&lt;/div&gt;
+            &lt;div class="mapping-item"&gt;&lt;div class="product-name"&gt;Health Infrastructure&lt;/div&gt;&lt;div class="arrow"&gt;→&lt;/div&gt;&lt;div class="move-name"&gt;Descend&lt;/div&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="mission-statement"&gt;
+            &lt;h3&gt;One-Sentence Mission&lt;/h3&gt;
+            &lt;p&gt;Ukubona builds the &lt;strong&gt;meta-cognitive layer&lt;/strong&gt; that lets every scale of human organization run stochastic gradient descent on its own health outcomes when the full gradient is unknowable.&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;footer&gt;
+    &lt;p&gt;See, blindly • Forage, stochastically • Rehearse, consequentially • Descend&lt;/p&gt;
+    &lt;p&gt;&lt;a href="team.html"&gt;Meet the scouts who are building it →&lt;/a&gt;&lt;/p&gt;
+&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+FRAMEWORK
+
+# Create the unified CSS
+echo "🎨 Creating unified stylesheet..."
+
+cat &gt; assets/css/unified.css &lt;&lt; 'CSS'
+/* ============================================
+   UKUBONA UNIFIED SYSTEM
+   ============================================ */
+
+:root {
+    --bg: #0d0f14;
+    --text: #e6e9ef;
+    --accent: #4cc9f0;
+    --muted: #9aa3b2;
+    --card: #151923;
+    --gradient: #FF4D00;
+    --success: #00ff88;
+    
+    --space-unit: 8px;
+    --space-xs: calc(var(--space-unit) * 1);
+    --space-sm: calc(var(--space-unit) * 2);
+    --space-md: calc(var(--space-unit) * 3);
+    --space-lg: calc(var(--space-unit) * 6);
+    --space-xl: calc(var(--space-unit) * 8);
+    --space-geo: calc(var(--space-unit) * 16);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+
+body { background: var(--bg); color: var(--text); line-height: 1.6; }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 0 var(--space-md); }
+
+header { padding: var(--space-geo) var(--space-md); text-align: center; border-bottom: 1px solid #222; }
+header h1 { font-size: 2.8rem; letter-spacing: 1px; margin-bottom: var(--space-md); }
+header .tagline { color: var(--muted); font-size: 1.2rem; max-width: 700px; margin: 0 auto; }
+header .tagline strong { color: var(--accent); }
+
+nav { display: flex; justify-content: center; gap: var(--space-lg); padding: var(--space-md);
+    border-bottom: 1px solid #222; position: sticky; top: 0; background: var(--bg); z-index: 100; }
+nav a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color 0.3s ease; }
+nav a:hover { color: var(--accent); }
+
+.premise-section { padding: var(--space-geo) var(--space-md); }
+.premise-section h2 { font-size: 2rem; color: var(--accent); margin-bottom: var(--space-lg); }
+.premise-section p { font-size: 1.2rem; line-height: 1.8; margin-bottom: var(--space-md); }
+.premise-section strong { color: var(--success); }
+
+.loss-equation { background: var(--card); border: 1px solid #222; border-radius: 8px;
+    padding: var(--space-lg); margin: var(--space-xl) 0; text-align: center; }
+.loss-equation p { font-family: 'Courier New', monospace; font-size: 1.3rem; margin: var(--space-sm) 0; color: var(--accent); }
+.loss-equation .arrow { color: var(--gradient); font-size: 1.5rem; }
+
+.operational-layer { padding: var(--space-geo) var(--space-md); border-bottom: 1px solid #222; }
+.layer-header { margin-bottom: var(--space-lg); }
+.layer-tag { display: inline-block; background: var(--accent); color: var(--bg);
+    padding: var(--space-xs) var(--space-sm); border-radius: 4px; font-size: 0.8rem;
+    font-weight: 600; margin-bottom: var(--space-sm); }
+.layer-header h2 { font-size: 2.5rem; color: var(--text); }
+.layer-content { display: grid; grid-template-columns: 1.5fr 1fr; gap: var(--space-xl); }
+.layer-principle { font-size: 1.3rem; line-height: 1.8; color: var(--muted); margin-bottom: var(--space-lg); }
+.layer-principle strong { color: var(--accent); }
+.layer-examples { display: grid; gap: var(--space-md); margin-top: var(--space-lg); }
+.example { background: var(--card); padding: var(--space-md); border-radius: 8px; border-left: 3px solid var(--accent); }
+.example h4 { color: var(--accent); margin-bottom: var(--space-xs); }
+.example p { color: var(--muted); font-size: 0.95rem; }
+
+.math-block { background: var(--card); border: 1px solid #333; border-radius: 8px;
+    padding: var(--space-lg); margin: var(--space-lg) 0; }
+.math-block p { font-family: 'Courier New', monospace; font-size: 1.1rem; margin: var(--space-sm) 0; }
+
+.layer-detail { margin-top: var(--space-lg); color: var(--muted); line-height: 1.8; }
+
+.demo-card { background: var(--card); padding: var(--space-lg); border-radius: 8px;
+    border: 1px solid #222; margin-bottom: var(--space-md); }
+.demo-card.highlight { border: 2px solid var(--success); }
+.demo-card h4 { color: var(--accent); margin-bottom: var(--space-sm); font-size: 1.3rem; }
+.demo-card p { color: var(--muted); margin-bottom: var(--space-md); line-height: 1.6; }
+
+.demo-link { display: inline-block; color: var(--accent); text-decoration: none;
+    font-weight: 600; transition: all 0.3s ease; border-bottom: 2px solid transparent; }
+.demo-link:hover { border-bottom: 2px solid var(--accent); transform: translateX(5px); }
+
+.ant-colony-viz { margin-top: var(--space-lg); }
+.ant-colony-viz img { width: 100%; border-radius: 8px; margin-bottom: var(--space-sm); }
+.viz-caption { text-align: center; color: var(--muted); font-size: 0.9rem; font-style: italic; }
+
+.deployment-timeline { display: grid; gap: var(--space-lg); margin-top: var(--space-lg); }
+.timeline-stage { padding-left: var(--space-md); border-left: 3px solid var(--gradient); }
+.timeline-stage strong { display: block; color: var(--accent); font-size: 1.2rem; margin-bottom: var(--space-xs); }
+.timeline-stage p { color: var(--muted); line-height: 1.6; }
+
+.framework-section { padding: var(--space-geo) var(--space-md); border-bottom: 1px solid #222; }
+.section-intro { text-align: center; font-size: 1.2rem; color: var(--muted); margin-bottom: var(--space-xl); }
+
+.moves-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-lg); max-width: 1200px; margin: 0 auto; }
+.move-card { background: var(--card); padding: var(--space-lg); border-radius: 8px; border: 1px solid #222; position: relative; }
+.move-number { position: absolute; top: var(--space-md); right: var(--space-md); width: 50px; height: 50px;
+    background: var(--accent); color: var(--bg); border-radius: 50%; display: flex;
+    align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; }
+.move-card h3 { font-size: 1.5rem; color: var(--accent); margin-bottom: var(--space-md); padding-right: 60px; }
+.move-card p { color: var(--text); line-height: 1.7; margin-bottom: var(--space-md); }
+.move-example { background: rgba(76,201,240,0.05); padding: var(--space-sm); border-radius: 4px;
+    border-left: 3px solid var(--accent); font-size: 0.9rem; }
+.move-example strong { color: var(--accent); }
+
+.scales-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-lg); max-width: 1200px; margin: 0 auto; }
+.scale-card { background: var(--card); padding: var(--space-lg); border-radius: 8px;
+    border: 1px solid #222; transition: all 0.3s ease; }
+.scale-card:hover { border-color: var(--accent); transform: translateY(-5px); }
+.scale-icon { font-size: 3rem; margin-bottom: var(--space-md); }
+.scale-card h3 { font-size: 1.5rem; color: var(--accent); margin-bottom: var(--space-sm); }
+.scale-description { color: var(--text); line-height: 1.7; margin-bottom: var(--space-md); }
+.scale-example { background: rgba(255,77,0,0.05); padding: var(--space-sm); border-radius: 4px;
+    border-left: 3px solid var(--gradient); font-size: 0.9rem; }
+.scale-example strong { color: var(--gradient); display: block; margin-bottom: var(--space-xs); }
+.scale-example a { color: var(--accent); text-decoration: none; font-weight: 600; }
+
+.product-mapping { max-width: 800px; margin: 0 auto var(--space-xl); }
+.mapping-item { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+    gap: var(--space-md); padding: var(--space-md); background: var(--card);
+    border-radius: 8px; margin-bottom: var(--space-md); border: 1px solid #222; }
+.product-name { text-align: right; font-weight: 600; }
+.arrow { color: var(--accent); font-size: 1.5rem; }
+.move-name { color: var(--accent); font-weight: 600; }
+
+.mission-statement { max-width: 800px; margin: var(--space-xl) auto 0; text-align: center;
+    background: var(--card); padding: var(--space-xl); border-radius: 8px; border: 2px solid var(--success); }
+.mission-statement h3 { color: var(--success); margin-bottom: var(--space-md); font-size: 1.3rem; }
+.mission-statement p { font-size: 1.2rem; line-height: 1.8; }
+.mission-statement strong { color: var(--accent); }
+
+footer { text-align: center; padding: var(--space-geo) var(--space-md);
+    border-top: 1px solid #222; color: var(--muted); font-size: 0.9rem; }
+
+@media (max-width: 768px) {
+    .layer-content, .moves-grid, .scales-grid { grid-template-columns: 1fr; }
+    .mapping-item { grid-template-columns: 1fr; text-align: center; }
+    .product-name { text-align: center; }
+    header h1 { font-size: 2rem; }
+    nav { flex-wrap: wrap; gap: var(--space-md); }
+}
+CSS
+
+# Create the unified index
+echo "📄 Creating unified index..."
+
+cat &gt; index-unified.html &lt;&lt; 'INDEX'
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Ukubona — Adaptive Systems for Health&lt;/title&gt;
+    &lt;link rel="stylesheet" href="assets/css/unified.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;header&gt;
+    &lt;h1&gt;Ukubona&lt;/h1&gt;
+    &lt;p class="tagline"&gt;
+        We build adaptive systems for health and human development.&lt;br&gt;
+        We operate in &lt;strong&gt;incomplete information&lt;/strong&gt; environments.&lt;br&gt;
+        We reduce the gap between intention and outcome.
+    &lt;/p&gt;
+&lt;/header&gt;
+
+&lt;nav&gt;
+    &lt;a href="#premise"&gt;Premise&lt;/a&gt;
+    &lt;a href="assets/html/framework.html"&gt;🧭 Framework&lt;/a&gt;
+    &lt;a href="#sensing"&gt;Sensing&lt;/a&gt;
+    &lt;a href="#modeling"&gt;Modeling&lt;/a&gt;
+    &lt;a href="#acting"&gt;Acting&lt;/a&gt;
+    &lt;a href="assets/html/team.html"&gt;Team&lt;/a&gt;
+    &lt;a href="assets/html/ukhona.html"&gt;Philosophy&lt;/a&gt;
+&lt;/nav&gt;
+
+&lt;section id="premise" class="premise-section"&gt;
+    &lt;div class="container"&gt;
+        &lt;h2&gt;Premise&lt;/h2&gt;
+        &lt;p&gt;The world is not fully visible. It arrives as signals, delays, and noise.
+        Every person, household, clinic, and ministry operates with &lt;strong&gt;incomplete maps&lt;/strong&gt; of reality.&lt;/p&gt;
+        &lt;p&gt;The difference between the map and the territory is &lt;strong&gt;loss&lt;/strong&gt;.&lt;br&gt;
+        Loss is measurable. Loss is improvable.&lt;/p&gt;
+        
+        &lt;div class="loss-equation"&gt;
+            &lt;p&gt;Reality − Model = Loss&lt;/p&gt;
+            &lt;p class="arrow"&gt;↓&lt;/p&gt;
+            &lt;p&gt;Loss → Feedback → Update&lt;/p&gt;
+            &lt;p class="arrow"&gt;↓&lt;/p&gt;
+            &lt;p&gt;Update → Reduced Loss&lt;/p&gt;
+        &lt;/div&gt;
+        
+        &lt;p&gt;Ukubona exists to reduce that gap.&lt;br&gt;
+        We turn incomplete information into &lt;strong&gt;structured iteration&lt;/strong&gt;.&lt;/p&gt;
+        
+        &lt;div style="text-align: center; margin-top: var(--space-xl);"&gt;
+            &lt;h3&gt;The Ukubona Framework&lt;/h3&gt;
+            &lt;p&gt;We don't have the full gradient. We never will.&lt;br&gt;
+            So we &lt;strong&gt;see blindly • forage stochastically • rehearse consequentially • descend&lt;/strong&gt;.&lt;/p&gt;
+            &lt;p&gt;&lt;a href="assets/html/framework.html" style="color: var(--accent); font-weight: 600; font-size: 1.1rem;"&gt;
+                Read the operational framework →
+            &lt;/a&gt;&lt;/p&gt;
+            &lt;h3 style="margin-top: var(--space-lg);"&gt;Works at every scale&lt;/h3&gt;
+            &lt;p style="font-size: 1.2rem; color: var(--accent);"&gt;
+                Person • Household • Clinic/Hospital/School • Ministry of Health
+            &lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/section&gt;
+
+&lt;div id="sensing-container"&gt;&lt;/div&gt;
+&lt;div id="modeling-container"&gt;&lt;/div&gt;
+&lt;div id="acting-container"&gt;&lt;/div&gt;
+
+&lt;footer&gt;
+    &lt;p&gt;See, blindly • Forage, stochastically • Rehearse, consequentially • Descend&lt;/p&gt;
+    &lt;p&gt;Ukubona LLC · Adaptive Systems for Health &amp;amp; Human Development&lt;/p&gt;
+    &lt;p&gt;Kampala · Baltimore · Boston · Washington DC&lt;/p&gt;
+&lt;/footer&gt;
+
+&lt;script&gt;
+    async function loadSection(file, containerId) {
+        try {
+            const response = await fetch(file);
+            const html = await response.text();
+            document.getElementById(containerId).innerHTML = html;
+        } catch (error) {
+            console.error(`Error loading ${file}:`, error);
+        }
+    }
+    
+    loadSection('assets/html/layer-sensing.html', 'sensing-container');
+    loadSection('assets/html/layer-modeling.html', 'modeling-container');
+    loadSection('assets/html/layer-acting.html', 'acting-container');
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+INDEX
+
+echo ""
+echo "✅ ALL FILES CREATED"
+echo ""
+echo "📁 New structure:"
+echo "   assets/html/layer-sensing.html"
+echo "   assets/html/layer-modeling.html"
+echo "   assets/html/layer-acting.html"
+echo "   assets/html/framework.html"
+echo "   assets/css/unified.css"
+echo "   index-unified.html"
+echo ""
+echo "🚀 TO DEPLOY:"
+echo "   open index-unified.html"
+echo "   open assets/html/framework.html"
+echo ""
+echo "🔥 When ready to go live:"
+echo "   mv index.html index-old.html"
+echo "   mv index-unified.html index.html"
+echo ""
+EOF
+
+chmod +x run.sh</code></pre>
+
+      <p>Now just:</p>
+<pre><code class="language-bash">bash run.sh</code></pre>
+      <p>That's it. One command. Done. 🚀</p>
+    </div>
+
+    <div id="a-xi" class="roman-section">
+      <div class="roman-label">§ A · XI / § A · X</div>
+      <p>Looks like we'll go with <code>A IV</code></p>
+      <p><strong>Implementation plan — zero fluff, copy-paste, 4 steps max.</strong><br>
+      You already shipped the three moves into the footer. Perfect. We just close the loop and wire the rest.</p>
+
+      <h3>Step 1: Finish the 4-move loop (2-minute edit)</h3>
+      <p>Edit <code>assets/html/footer.html</code></p>
+      <p>Replace the current line with:</p>
+<pre><code class="language-html">To see, blindly • To forage, stochastically • To rehearse, consequentially • To descend</code></pre>
+      <p>(That's the full algorithm: <strong>UKB → UB → Game → UI</strong> in your own terminology.)</p>
+
+      <h3>Step 2: Create the operational framework page (the one that actually explains what the site does)</h3>
+      <p>Create new file: <code>assets/html/framework.html</code></p>
+      <p>Copy the entire content of <code>assets/html/mission.html</code> as a template (same heading style, same simple layout).</p>
+      <p>Then <strong>replace everything after the &lt;h1&gt;</strong> with this exact block:</p>
+<pre><code class="language-html">&lt;h1&gt;The Ukubona Framework&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;The loss landscape is real.&lt;/strong&gt; Every human system (body, family, clinic, ministry)
+is running stochastic gradient descent on an unknowable high-dimensional surface.
+The map is never the territory. So we operate anyway.&lt;/p&gt;
+
+&lt;h2&gt;The 4 operational moves (same at every scale)&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;See, blindly (UKB)&lt;/strong&gt;&lt;br&gt;Estimate the local gradient from whatever data exist + counterfactual simulation. Your digital twin is the blind scout sweeping the loss surface right now.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Forage, stochastically (UB)&lt;/strong&gt;&lt;br&gt;High-variance exploration. Run thousands of parallel futures so the system can discover paths no linear plan would ever find.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Rehearse, consequentially&lt;/strong&gt;&lt;br&gt;Play the full trajectory with real stakes attached — but zero irreversible cost. Watch money, health, regret, and coordination cost cascade across time.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Descend (UI)&lt;/strong&gt;&lt;br&gt;Once a better direction is visible, linearize and exploit. Turn the pheromone trail into protocol, dashboard, workflow, policy.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2&gt;Scales of application (same 4 moves, different loss function)&lt;/h2&gt;
+
+&lt;h3&gt;Person&lt;/h3&gt;
+&lt;p&gt;Your body is the terrain. We give you a personal digital twin so you can see absolute risk,
+forage untested treatment sequences, and rehearse the next 5 years of your life before you live them.&lt;/p&gt;
+
+&lt;h3&gt;Household&lt;/h3&gt;
+&lt;p&gt;One person's gradient affects everyone. Rehearse "If Mum starts dialysis, what happens to Dad's retirement,
+the kids' school fees, and family mental health?"&lt;/p&gt;
+
+&lt;h3&gt;Firm (Clinic · Hospital · School · University)&lt;/h3&gt;
+&lt;p&gt;Rehearse triage pathways, staffing, outbreak response, wellness policies before rollout.&lt;/p&gt;
+
+&lt;h3&gt;Government (Ministry of Health)&lt;/h3&gt;
+&lt;p&gt;National loss surface: DALYs, budget, equity. Paul Luswata's Uganda Depression Map is the first live
+prototype — real-time loss map from DHIS2 + surveys, stochastic foraging across intervention packages,
+rehearsal before policy becomes law.&lt;/p&gt;
+
+&lt;h2&gt;How the three products map to the moves&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Personalized Risk Models&lt;/strong&gt; → See, blindly&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Game of Care&lt;/strong&gt; → Forage + Rehearse&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Health Infrastructure&lt;/strong&gt; → Descend (turns rehearsal into repeatable workflow)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;One-sentence mission (replace the old tagline wherever you want):&lt;/strong&gt;&lt;br&gt;
+Ukubona builds the meta-cognitive layer that lets every scale of human organization run
+stochastic gradient descent on its own health outcomes when the full gradient is unknowable.&lt;/p&gt;
+
+&lt;a href="team.html"&gt;Meet the scouts who are building it →&lt;/a&gt;</code></pre>
+
+      <p>Save. Done. Page is now live at <code>/assets/html/framework.html</code></p>
+
+      <h3>Step 3: Wire it into navigation (30 seconds)</h3>
+      <p>Edit <code>assets/html/header.html</code></p>
+      <p>Add this line anywhere in the nav list:</p>
+<pre><code class="language-html">[🧭 Framework](/assets/html/framework.html)</code></pre>
+      <p>(Place it after Mission or Models — whatever feels right.)</p>
+
+      <h3>Step 4: Quick homepage upgrade (optional but recommended — 5 minutes)</h3>
+      <p>Open <code>index.html</code></p>
+      <p>After the "What We Build" section (right before "Why Us"), insert:</p>
+<pre><code class="language-html">&lt;h2&gt;The Ukubona Framework&lt;/h2&gt;
+&lt;p&gt;We don't have the full gradient. We never will.&lt;br&gt;
+So we &lt;strong&gt;see blindly • forage stochastically • rehearse consequentially • descend&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href="assets/html/framework.html"&gt;Read the operational framework →&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;Works at every scale&lt;/h2&gt;
+&lt;p&gt;Person • Household • Clinic/Hospital/School/University • Ministry of Health&lt;/p&gt;</code></pre>
+
+      <p>That's it.</p>
+
+      <h3>After you push</h3>
+      <ul>
+        <li>Visit https://ukubona-llc.github.io/assets/html/framework.html → should look clean and coherent.</li>
+        <li>The whole site now reads as <strong>one system</strong> instead of philosophy + scattered products.</li>
+        <li>Footer, nav, homepage, and new framework page all say the same thing in the same language.</li>
+      </ul>
+      <p>Do these four steps and reply "done" (or paste any error).<br>
+      Next round we can tighten the Game of Care page or add the actual scales examples if you want. No style work until you say so.<br><br>
+      You're 80% there already — this just makes it obvious to every visitor in &lt;60 seconds. Go ship.</p>
+    </div>
+
+    <div id="a-xii" class="roman-section">
+      <div class="roman-label">§ A · XI · II</div>
+      <p><strong>Game of Care page — tightened into the rehearsal engine (copy-paste ready)</strong></p>
+      <p>This is now <strong>the operational interface</strong> for <strong>Forage, stochastically + Rehearse, consequentially</strong>.</p>
+      <p>It is the only place on the entire site where a human being can <strong>feel</strong> the loss landscape instead of just reading about it.</p>
+      <p>Replace <strong>everything</strong> inside <code>assets/html/game.html</code> (after the shared header, before the shared footer) with this exact block:</p>
+<pre><code class="language-html">&lt;h1&gt;🎮 The Game of Care&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;Healthcare as sequential, consequential play.&lt;/strong&gt;&lt;br&gt;
+This is not symptom googling. Google gives you one static answer. This lets you
+&lt;strong&gt;live the futures you cannot afford to live&lt;/strong&gt; — then rewind, branch, and try again.&lt;/p&gt;
+
+&lt;h2&gt;This is the rehearsal room for the loss landscape&lt;/h2&gt;
+&lt;p&gt;The Game of Care is the live interface to two of the four moves:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Forage, stochastically&lt;/strong&gt; — you explore thousands of parallel decision paths no guideline ever tested.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Rehearse, consequentially&lt;/strong&gt; — you watch the full cascade: health, money, time, regret,
+  coordination cost, political capital. Every choice ripples across avatars and across years.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Zero irreversible cost. Full intelligence. That is the point.&lt;/p&gt;
+
+&lt;h2&gt;Play from any seat at the table&lt;/h2&gt;
+&lt;p&gt;One scenario. Six avatars. Same branching reality. Watch how your move changes everyone else's loss surface.&lt;/p&gt;
+
+&lt;div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:2rem; margin:2rem 0;"&gt;
+
+  &lt;div&gt;
+    &lt;h3&gt;👩‍⚕️ Primary Care Doctor&lt;/h3&gt;
+    &lt;p&gt;Balance evidence, time pressure, and patient story. Every order you write reshapes the patient's
+    trajectory, the insurer's budget, and the nurse's workload.&lt;/p&gt;
+    &lt;strong&gt;Watch:&lt;/strong&gt; diagnostic accuracy • patient satisfaction • system cost
+  &lt;/div&gt;
+
+  &lt;div&gt;
+    &lt;h3&gt;🧑‍🦽 Patient&lt;/h3&gt;
+    &lt;p&gt;You are the one who actually lives the outcome. Navigate symptoms, insurance denials,
+    family burden, and your own fear.&lt;/p&gt;
+    &lt;strong&gt;Watch:&lt;/strong&gt; health outcome • financial ruin • quality of life • regret
+  &lt;/div&gt;
+
+  &lt;div&gt;
+    &lt;h3&gt;🏢 Insurance Executive&lt;/h3&gt;
+    &lt;p&gt;Approve or deny? Every prior-authorization decision is a bet on a future that has not happened yet.&lt;/p&gt;
+    &lt;strong&gt;Watch:&lt;/strong&gt; claims paid • network strain • actuarial tail risk • public backlash
+  &lt;/div&gt;
+
+  &lt;div&gt;
+    &lt;h3&gt;📚 Medical Student / Trainee&lt;/h3&gt;
+    &lt;p&gt;Fail safely, repeat the same case 50 times with different variables, learn the shape of the
+    loss surface before you ever touch a real patient.&lt;/p&gt;
+    &lt;strong&gt;Watch:&lt;/strong&gt; clinical reasoning • bedside manner • long-term patient outcomes
+  &lt;/div&gt;
+
+  &lt;div&gt;
+    &lt;h3&gt;🚑 Emergency Responder&lt;/h3&gt;
+    &lt;p&gt;Time is the only currency. Triage under uncertainty. Every second reallocates finite
+    ambulances, beds, and staff.&lt;/p&gt;
+    &lt;strong&gt;Watch:&lt;/strong&gt; lives saved • resource exhaustion • downstream hospital chaos
+  &lt;/div&gt;
+
+  &lt;div&gt;
+    &lt;h3&gt;🧑‍⚕️ Nurse / Care Coordinator&lt;/h3&gt;
+    &lt;p&gt;You are the glue. You see the gaps the doctors miss. Your calls prevent crises that
+    never make it into the chart.&lt;/p&gt;
+    &lt;strong&gt;Watch:&lt;/strong&gt; adherence • readmissions • caregiver burnout • family collapse
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Live example: To Screen or Not to Screen?&lt;/h2&gt;
+&lt;p&gt;A 52-year-old woman walks into clinic. PSA test? Mammogram? Low-dose CT?
+Routine guideline says one thing. Her exact risk surface says another.&lt;/p&gt;
+&lt;p&gt;In the Game you can:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Play as the doctor — order the test or not&lt;/li&gt;
+  &lt;li&gt;Play as the patient — accept or refuse&lt;/li&gt;
+  &lt;li&gt;Play as the insurer — pre-authorise or deny&lt;/li&gt;
+  &lt;li&gt;Run 1 000 Monte-Carlo futures&lt;/li&gt;
+  &lt;li&gt;Watch the full 10-year cascade: false positive cascade, over-treatment, financial toxicity,
+  missed cancer, family impact, regret&lt;/li&gt;
+  &lt;li&gt;Rewind and change one variable (adherence, comorbidity, income, trust in system) and
+  see the loss surface shift&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;That single rehearsal is worth more than any static risk calculator or guideline PDF.&lt;/p&gt;
+
+&lt;h2&gt;Clinic Chat Simulator (prototype)&lt;/h2&gt;
+&lt;p&gt;Coming next: multi-avatar live chat. Doctor + Patient + Insurer + Family Member in the same
+simulated room. Every message changes the shared loss surface in real time.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;This is intelligence.&lt;/strong&gt;&lt;br&gt;
+Not information. Not advice. The ability to feel the terrain before you step on it.&lt;/p&gt;
+
+&lt;a href="../framework.html"&gt;← Back to the full Ukubona Framework&lt;/a&gt;</code></pre>
+
+      <h3>What changed &amp; why it's now coherent</h3>
+      <ul>
+        <li>First two paragraphs kill the looseness and directly answer "how is this different from Google?"</li>
+        <li>Explicitly maps to <strong>Forage + Rehearse</strong> (the exact two moves the framework says this product owns).</li>
+        <li>Avatars are no longer random bullets — each now shows <strong>whose loss surface you are moving</strong>.</li>
+        <li>The screening example is now a concrete, repeatable rehearsal demo (exactly what the homepage promises).</li>
+        <li>Ends with the one-sentence killer: "This is intelligence."</li>
+      </ul>
+
+      <h3>Next tiny steps (do these after you push)</h3>
+      <ol>
+        <li>Update the homepage blurb (in index.html) to:
+<pre><code class="language-html">Game of Care: Rehearse high-stakes choices safely — watch the full cascade across patients,
+clinicians, payers and time. Not googling. Not a quiz. The rehearsal engine for the loss landscape.</code></pre>
+        </li>
+        <li>In the nav (header.html) change the Game link text to:
+<pre><code class="language-html">🎮 Game of Care (Rehearsal Engine)</code></pre>
+        </li>
+      </ol>
+
+      <p>Push it. Visit <code>/assets/html/game.html</code>. It should now feel like the <strong>sharpest, most operational page</strong> on the site instead of the loosest.</p>
+      <p>Tell me "done" or paste any error and we move to the next loose bit (probably the models page or the actual interactive prototype).<br><br>
+      This is the point. This is intelligence. Let's go.</p>
+    </div>
+  </div>
+
+   </main>
+   </div>
+    </div><!-- /.layout -->
+  </div><!-- /.page-wrap -->
+
+  <div id="footer-placeholder"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
+  <script src="../js/shared.js"></script>
+</body>
+</html>
