@@ -1,8 +1,8 @@
 <div class="nav-container wrap-max">
-  <img src="https://abikesa.github.io/logos/assets/ukubona-dark.png" 
-       alt="Ukubona LLC Logo" 
-       id="logo" 
-       class="logo" 
+  <img src="https://abikesa.github.io/logos/assets/ukubona-dark.png"
+       alt="Ukubona LLC Logo"
+       id="logo"
+       class="logo"
        data-light-src="https://abikesa.github.io/logos/assets/ukubona-light.png"
        data-dark-src="https://abikesa.github.io/logos/assets/ukubona-dark.png" />
   <div class="top-right">
@@ -16,14 +16,152 @@
     </button>
     <button id="toggle-theme" aria-label="Toggle theme">🌙</button>
   </div>
-</div>    
+</div>
 
 <div class="app-grid wrap-max" id="gridMenu" aria-hidden="true">
+
+  <!-- ── level switcher bar ── -->
+  <div class="grid-level-bar">
+    <button class="grid-lvl-btn active" data-level="1">L1</button>
+    <button class="grid-lvl-btn" data-level="2">L2</button>
+    <button class="grid-lvl-btn" data-level="3">L3</button>
+  </div>
+
+  <!-- ── level 1 ── -->
+  <div class="grid-level" id="grid-level-1">
     <a href="/"><div class="icon-box">🏠</div>Home</a>
-    <a href="ukhona/html/session0.html"><div class="icon-box">📐</div>Session 0</a>
-    <a href="ukhona/html/session1.html"><div class="icon-box">🌐</div>Session 1</a>
-    <a href="ukhona/html/session2.html"><div class="icon-box">👑</div>Session 2</a>
-    <a href="ukhona/html/session3.html"><div class="icon-box">🔭</div>Session 3</a>
-    <a href="ukhona/html/session4.html"><div class="icon-box">🩻</div>Session 4</a>
-    <a href="ukhona/html/session5.html"><div class="icon-box">👁️</div>Session 5</a>
+    <a href="ukhona/html/level1/session1.html"><div class="icon-box">🌱</div>Session 1</a>
+    <a href="ukhona/html/level1/session2.html"><div class="icon-box">🔬</div>Session 2</a>
+    <a href="ukhona/html/level1/session3.html"><div class="icon-box">🧭</div>Session 3</a>
+    <a href="ukhona/html/level1/session4.html"><div class="icon-box">⚗️</div>Session 4</a>
+    <a href="ukhona/html/level1/session5.html"><div class="icon-box">🎯</div>Session 5</a>
+    <button class="grid-nav-btn grid-next" data-to="2">Level 2 →</button>
+  </div>
+
+  <!-- ── level 2 ── -->
+  <div class="grid-level hidden" id="grid-level-2">
+    <a href="/"><div class="icon-box">🏠</div>Home</a>
+    <a href="ukhona/html/level2/session1.html"><div class="icon-box">🌐</div>Session 1</a>
+    <a href="ukhona/html/level2/session2.html"><div class="icon-box">👑</div>Session 2</a>
+    <a href="ukhona/html/level2/session3.html"><div class="icon-box">🔭</div>Session 3</a>
+    <a href="ukhona/html/level2/session4.html"><div class="icon-box">🩻</div>Session 4</a>
+    <a href="ukhona/html/level2/session5.html"><div class="icon-box">👁️</div>Session 5</a>
+    <button class="grid-nav-btn grid-prev" data-to="1">← Level 1</button>
+    <button class="grid-nav-btn grid-next" data-to="3">Level 3 →</button>
+  </div>
+
+  <!-- ── level 3 ── -->
+  <div class="grid-level hidden" id="grid-level-3">
+    <a href="/"><div class="icon-box">🏠</div>Home</a>
+    <a href="ukhona/html/level3/session1.html"><div class="icon-box">🧬</div>Session 1</a>
+    <a href="ukhona/html/level3/session2.html"><div class="icon-box">🏛️</div>Session 2</a>
+    <a href="ukhona/html/level3/session3.html"><div class="icon-box">⚡</div>Session 3</a>
+    <a href="ukhona/html/level3/session4.html"><div class="icon-box">🌊</div>Session 4</a>
+    <a href="ukhona/html/level3/session5.html"><div class="icon-box">🔥</div>Session 5</a>
+    <button class="grid-nav-btn grid-prev" data-to="2">← Level 2</button>
+  </div>
+
 </div>
+
+<style>
+  /* ── level switcher bar ── */
+  .grid-level-bar {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: .4rem;
+    padding-bottom: .75rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: .25rem;
+  }
+
+  .grid-lvl-btn {
+    flex: 1;
+    padding: .35rem 0;
+    background: var(--glass);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-family: 'Inter', sans-serif;
+    font-size: .65rem;
+    font-weight: 600;
+    letter-spacing: .1em;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .grid-lvl-btn:hover {
+    color: var(--text);
+    border-color: rgba(255,255,255,.25);
+  }
+
+  .grid-lvl-btn.active {
+    background: var(--primary-gradient);
+    border-color: transparent;
+    color: #fff;
+  }
+
+  /* ── level panels ── */
+  .grid-level {
+    grid-column: 1 / -1;
+    display: contents; /* slots children directly into the grid */
+  }
+
+  .grid-level.hidden {
+    display: none;
+  }
+
+  /* ── prev / next nav buttons ── */
+  .grid-nav-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .3rem;
+    padding: .75rem .5rem;
+    background: var(--glass);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text-secondary);
+    font-family: 'Inter', sans-serif;
+    font-size: .65rem;
+    font-weight: 500;
+    letter-spacing: .05em;
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+  }
+
+  .grid-nav-btn:hover {
+    background: var(--primary-gradient);
+    color: #fff;
+    border-color: transparent;
+    transform: translateY(-2px);
+  }
+</style>
+
+<script>
+  (function () {
+    // Wait for DOM — this script runs inline after injection
+    function initLevelGrid() {
+      const lvlBtns  = document.querySelectorAll('.grid-lvl-btn');
+      const navBtns  = document.querySelectorAll('.grid-nav-btn');
+      const levels   = document.querySelectorAll('.grid-level');
+
+      function switchTo(n) {
+        const target = String(n);
+        levels.forEach(l => l.classList.toggle('hidden', l.id !== `grid-level-${target}`));
+        lvlBtns.forEach(b => b.classList.toggle('active', b.dataset.level === target));
+      }
+
+      lvlBtns.forEach(btn => btn.addEventListener('click', () => switchTo(btn.dataset.level)));
+      navBtns.forEach(btn => btn.addEventListener('click', () => switchTo(btn.dataset.to)));
+    }
+
+    // shared.js injects this fragment, so the script may run before or after DOMContentLoaded
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initLevelGrid);
+    } else {
+      initLevelGrid();
+    }
+  })();
+</script>
