@@ -8,17 +8,17 @@
     </div>
 
     <div class="footer-level-trail">
-      <a href="../../ukhona/html/level1/session1.html" class="trail-dot" data-level="1" title="Level 1 · Foundations">
+      <a href="#" class="trail-dot" data-level="1" data-dest="ukhona/html/level1/session1.html" title="Level 1 · Foundations">
         <span class="trail-pip"></span>
         <span class="trail-label">Foundations</span>
       </a>
       <span class="trail-line"></span>
-      <a href="../../ukhona/html/level2/session1.html" class="trail-dot" data-level="2" title="Level 2 · Exploration">
+      <a href="#" class="trail-dot" data-level="2" data-dest="ukhona/html/level2/session1.html" title="Level 2 · Exploration">
         <span class="trail-pip"></span>
         <span class="trail-label">Exploration</span>
       </a>
       <span class="trail-line"></span>
-      <a href="../../ukhona/html/level3/session1.html" class="trail-dot" data-level="3" title="Level 3 · Integration">
+      <a href="#" class="trail-dot" data-level="3" data-dest="ukhona/html/level3/session1.html" title="Level 3 · Integration">
         <span class="trail-pip"></span>
         <span class="trail-label">Integration</span>
       </a>
@@ -99,19 +99,29 @@
 
 <script>
   (function () {
-    function highlightTrail() {
+    function initTrail() {
+      // Find the site root by walking up to where index.html lives
       const path = window.location.pathname;
-      const m = path.match(/level(\d)/);
-      if (!m) return;
-      const active = m[1];
+      const rootMatch = path.match(/^(.*?\/who-i\/|.*?\/repos-00\/|\/)/);
+      const root = rootMatch ? rootMatch[1] : '/';
+
+      // Wire up trail dot hrefs
+      document.querySelectorAll('.trail-dot[data-dest]').forEach(dot => {
+        dot.href = root + dot.dataset.dest;
+      });
+
+      // Highlight current level
+      const levelMatch = path.match(/level(\d)/);
+      const active = levelMatch ? levelMatch[1] : null;
       document.querySelectorAll('.trail-dot').forEach(dot => {
         dot.classList.toggle('active', dot.dataset.level === active);
       });
     }
+
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', highlightTrail);
+      document.addEventListener('DOMContentLoaded', initTrail);
     } else {
-      highlightTrail();
+      initTrail();
     }
   })();
 </script>
