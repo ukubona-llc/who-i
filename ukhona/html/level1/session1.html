@@ -1,148 +1,135 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Session I — The Existing Process · WHO-India AI Curriculum</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
-
-<style>
-/* The same style as provided in the example */
-: root {
-  --ivory:       #f7f3ed;
-  --warm-white:  #faf8f4;
-  --parchment:   #ede7da;
-  --terra:       #b85c38;
-  --terra-deep:  #8a3c22;
-  --terra-pale:  #f0d5c8;
-  --indigo:      #2c3e6b;
-  --indigo-deep: #1a2647;
-  --indigo-pale: #dde3f0;
-  --gold:        #c8943a;
-  --gold-pale:   #f5e8d0;
-  --slate:       #4a5568;
-  --mist:        #9aa3b2;
-  --ink:         #1a1a24;
-  --rule:        #d4c9b8;
-  --rule-light:  #e8e2d8;
-  --mono:        'DM Mono', 'Courier New', monospace;
-  --serif:       'Source Serif 4', Georgia, serif;
-  --display:     'Playfair Display', Georgia, serif;
-}
-
-* , *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-html { font-size: 17px; scroll-behavior: smooth; }
-
-body {
-  background: var(--ivory);
-  color: var(--ink);
-  font-family: var(--serif);
-  font-weight: 300;
-  line-height: 1.8;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-/* [...] The full CSS from the example is here, but truncated for brevity in this response. Use the full CSS from the provided example. */
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>🌱 The Existing Process · Level 1 Session 1</title>
+  <meta name="description" content="What is the current pipeline for literature review at WHO-India?">
+  <meta name="color-scheme" content="dark light">
+  <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-dark.ico" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-light.ico" media="(prefers-color-scheme: light)">
+  <link rel="preload" href="https://abikesa.github.io/logos/assets/ukubona-dark.png" as="image">
+  <link rel="preload" href="https://abikesa.github.io/logos/assets/ukubona-light.png" as="image">
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,800;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&display=swap" rel="stylesheet">
+  <link href="../../css/variables.css?v=1.1" rel="stylesheet">
+  <link href="../../css/head.css?v=1.1" rel="stylesheet">
+  <link href="../../css/card.css?v=1.1" rel="stylesheet">
+  <link href="../../css/footer.css" rel="stylesheet">
+  <style>
+    :root {
+      --session-accent: #4fc3f7;
+      --ff-display: 'Playfair Display', Georgia, serif;
+      --ff-body:    'Source Serif 4', Georgia, serif;
+    }
+    body { font-family: var(--ff-body); font-weight: 300; }
+    .spine { position: fixed; left: 0; top: 0; width: 3px; height: 0%; background: var(--session-accent); z-index: 200; transition: height .1s linear; }
+    .s-page { padding-top: calc(var(--header-h) + 3rem); padding-bottom: 6rem; max-width: 780px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
+    .s-crumb { font-family: 'Inter', sans-serif; font-size: .6rem; letter-spacing: .3em; text-transform: uppercase; color: var(--text-secondary); opacity: .5; margin-bottom: 2.5rem; display: flex; gap: .75rem; align-items: center; }
+    .s-crumb span { color: var(--session-accent); opacity: 1; }
+    .s-hero { margin-bottom: 3.5rem; }
+    .s-label { font-family: 'Inter', sans-serif; font-size: .6rem; letter-spacing: .3em; text-transform: uppercase; color: var(--session-accent); margin-bottom: .75rem; font-weight: 600; }
+    .s-title { font-family: var(--ff-display); font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; line-height: 1.1; letter-spacing: -.02em; color: var(--text); margin-bottom: .5rem; }
+    .s-subtitle { font-family: var(--ff-display); font-size: clamp(1rem, 2.5vw, 1.3rem); font-style: italic; font-weight: 400; color: var(--text-secondary); margin-bottom: 1.5rem; }
+    .s-oneliner { font-size: .9rem; line-height: 1.7; color: var(--text-secondary); border-left: 3px solid var(--session-accent); padding-left: 1rem; max-width: 540px; }
+    .s-badge { display: inline-flex; align-items: center; gap: .5rem; font-family: 'Inter', sans-serif; font-size: .55rem; letter-spacing: .2em; text-transform: uppercase; padding: .3rem .8rem; border-radius: 999px; border: 1px solid var(--session-accent); color: var(--session-accent); background: color-mix(in srgb, var(--session-accent) 8%, transparent); margin-bottom: 1.5rem; }
+    .s-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); gap: 1rem; }
+    .s-nav-btn { font-family: 'Inter', sans-serif; font-size: .7rem; letter-spacing: .1em; font-weight: 500; padding: .6rem 1.4rem; border-radius: 8px; border: 1px solid var(--border); background: var(--glass); color: var(--text-secondary); text-decoration: none; transition: var(--transition); }
+    .s-nav-btn:hover { border-color: var(--session-accent); color: var(--session-accent); }
+    .s-nav-next { margin-left: auto; }
+    @media (max-width: 600px) { .s-page { padding-left: 1.25rem; padding-right: 1.25rem; } }
+    
+    .s-page { max-width: 860px; }
+    .slide {
+      min-height: 320px; display: flex; flex-direction: column; justify-content: center;
+      padding: 3rem 3.5rem; margin-bottom: 2rem; border-radius: 16px;
+      background: var(--glass); border: 1px solid var(--border);
+      position: relative; overflow: hidden; transition: var(--transition);
+    }
+    .slide::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(135deg, color-mix(in srgb, var(--session-accent) 4%, transparent), transparent 60%);
+    }
+    .slide:hover { border-color: color-mix(in srgb, var(--session-accent) 40%, var(--border)); }
+    .slide-callout {
+      background: color-mix(in srgb, var(--session-accent) 7%, var(--glass));
+      border-color: color-mix(in srgb, var(--session-accent) 35%, transparent);
+    }
+    .slide-num {
+      font-family: "Inter", sans-serif; font-size: .6rem; letter-spacing: .4em;
+      font-weight: 700; color: var(--session-accent); opacity: .6; margin-bottom: 1.5rem;
+    }
+    .slide-h {
+      font-family: var(--ff-display); font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 800; line-height: 1.1; letter-spacing: -.02em;
+      color: var(--text); margin-bottom: 1.5rem;
+    }
+    .slide-lead {
+      font-size: clamp(1.05rem, 2.5vw, 1.35rem); line-height: 1.65;
+      color: var(--text-secondary); max-width: 600px;
+    }
+    .slide-lead em { color: var(--session-accent); font-style: italic; font-weight: 600; }
+    .slide-big {
+      font-family: var(--ff-display); font-size: clamp(1.6rem, 4.5vw, 2.6rem);
+      font-weight: 800; line-height: 1.15; color: var(--text);
+      letter-spacing: -.02em; max-width: 680px;
+    }
+    .slide-big em { color: var(--session-accent); font-style: italic; }
+    .slide-list {
+      list-style: none; padding: 0; margin: 0;
+      display: flex; flex-direction: column; gap: .9rem;
+      counter-reset: slide-counter;
+    }
+    .slide-list li {
+      counter-increment: slide-counter; display: flex; align-items: flex-start; gap: 1.2rem;
+      font-size: clamp(1rem, 2vw, 1.15rem); line-height: 1.5; color: var(--text-secondary);
+    }
+    .slide-list li::before {
+      content: counter(slide-counter, decimal-leading-zero);
+      font-family: "Inter", sans-serif; font-size: .65rem; font-weight: 700;
+      letter-spacing: .05em; color: var(--session-accent); min-width: 2rem; padding-top: .25em;
+    }
+    .slide-list li strong { color: var(--text); font-weight: 600; }
+    .slide-list li em { color: var(--session-accent); font-style: normal; }
+    @media (max-width: 600px) { .slide { padding: 2rem 1.5rem; min-height: 240px; } }
+  </style>
 </head>
 <body>
+<div class="spine" id="spine"></div>
+<div class="scroll-indicator" aria-hidden="true"><div class="scroll-progress"></div></div>
+<div class="bg-pattern" aria-hidden="true"></div>
+<header class="header" id="header"></header>
 
-<!-- Progress Bar -->
-<div id="progress-bar"></div>
-<div class="spine-line"></div>
-
-<!-- Navigation -->
-<nav>
-  <div class="nav-inner">
-    <div class="nav-brand">
-      <span class="nav-org">WHO-India · AI Curriculum</span>
-      <span class="nav-title">Evidence in the Age of Machines</span>
-    </div>
-    <div class="nav-links">
-      <span class="nav-session active">I · The Process</span>
-      <span class="nav-session">II · The Tools</span>
-      <span class="nav-session">III · The Framework</span>
-      <span class="nav-session">IV · The Protocol</span>
-      <span class="nav-session">V · The Institution</span>
-    </div>
-    <div class="nav-status">
-      <div class="status-dot"></div>
-      <span class="status-text">Level 1 — Foundations</span>
-    </div>
+<div class="s-page">
+  <div class="s-crumb">
+    <a href="../../" style="color:inherit;text-decoration:none;">Home</a> · Level 1 · <span>Session 1</span>
   </div>
-</nav>
-
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-left">
-    <div class="session-label">Session One · Level One</div>
-    <div class="hero-eyebrow">The Existing Process</div>
-    <h1 class="hero-h1">How Evidence<br>Becomes <em>Policy</em><br>in WHO-India</h1>
-    <p class="hero-desc">Simple overview of the current literature review process.</p>
+  <div class="s-hero">
+    <div class="s-badge">🌱 Level 1 of 3 · Session 1 of 5</div>
+    <p class="s-label">Level 1 · Foundations</p>
+    <h1 class="s-title">The Existing Process</h1>
+    <p class="s-subtitle">How Evidence Becomes Policy</p>
+    <p class="s-oneliner">What is the current pipeline for literature review at WHO-India?</p>
   </div>
-  <div class="hero-right">
-    <div class="level-badge">▸ Level 1 of 3 · Session 1 of 5</div>
-    <div class="mandate-card">
-      <div class="mandate-tag">One-Liner Topic</div>
-      <p class="mandate-text">"What is the current process for literature review at WHO-India?"</p>
-    </div>
-    <div class="mandate-card" style="border-left-color: var(--indigo); margin-bottom:0">
-      <div class="mandate-tag" style="color: var(--indigo)">Specialist AI Response to Senior</div>
-      <p class="mandate-text" style="font-style:normal; font-size:0.88rem; color: var(--slate)">Dear Dr. Grace Kabaniha, 
 
-To leverage AI for literature review, the current process involves receiving a mandate, searching PubMed, screening abstracts, extracting data, synthesizing evidence, and submitting the brief. AI can automate screening and extraction to save time and reduce bias.</p>
-    </div>
-  </div>
+  
+
+  <nav class="s-nav" aria-label="Session navigation">
+    
+    <a class='s-nav-btn s-nav-next' href='session2.html'>Next →</a>
+  </nav>
 </div>
 
-<!-- MAIN CONTENT - Simple bullet points -->
-<main class="main-content">
-
-  <section class="section" id="chain">
-    <div class="section-header">
-      <div class="section-num">01</div>
-      <div class="section-info">
-        <div class="section-marker">The Architecture</div>
-        <h2 class="section-title">Chain of Command</h2>
-      </div>
-    </div>
-    <ul style="list-style-type: none; font-size:1.2rem; line-height:1.5;">
-      <li>▶ Geneva sets global targets</li>
-      <li>▶ SEARO translates to regional priorities</li>
-      <li>▶ Country office tasks officer</li>
-      <li>▶ Officer conducts review</li>
-      <li>▶ Clearance and policy uptake</li>
-    </ul>
-  </section>
-
-  <!-- Similar simplified sections for the rest, but truncated for brevity -->
-</main>
-
-<footer>
-  <div class="footer-inner">
-    <div>
-      <div class="footer-brand">WHO-India AI Curriculum</div>
-      <div class="footer-text">Level 1 — Simple Overview</div>
-    </div>
-    <div class="footer-nav">
-      <a href="#">Next Level</a>
-    </div>
-  </div>
-</footer>
-
+<div id="footer-placeholder"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
+<script src="../../js/shared.js"></script>
 <script>
-  // Same script as example
+  const spine = document.getElementById('spine');
   window.addEventListener('scroll', () => {
-    const scrollTop = document.documentElement.scrollTop;
-    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const pct = (scrollTop / scrollHeight) * 100;
-    document.getElementById('progress-bar').style.width = pct + '%';
-  });
+    const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
+    spine.style.height = Math.min(pct, 100) + '%';
+  }, { passive: true });
 </script>
-
 </body>
 </html>

@@ -1,17 +1,22 @@
 /**
- * shared.js - Fixed Version
- * Handles: Header/Footer Injection, Grid Menu, Theme Toggle, Link Correction
+ * shared.js
+ * Handles: Header/Footer Injection, Grid Menu, Theme Toggle, Scroll Progress, Footer Chorus
  */
 
 document.addEventListener('DOMContentLoaded', async () => {
     'use strict';
 
-    // --- CONFIGURATION ---
-    
+    // --- PATH RESOLUTION ---
+    // Figures out where header.html / footer.html live relative to the current page.
+    // Three cases:
+    //   /ukhona/html/level1/session1.html  → ../../html/
+    //   /ukhona/html/someother.html        → ../html/
+    //   /index.html (root)                 → ukhona/html/
     const getPath = (filename) => {
-        const isSubDir = window.location.pathname.includes('/ukhona/html/');
-        const prefix = isSubDir ? '../html/' : 'ukhona/html/';
-        return `${prefix}${filename}`;
+        const path = window.location.pathname;
+        if (/\/ukhona\/html\/level\d\//.test(path)) return `../../html/${filename}`;
+        if (path.includes('/ukhona/html/'))          return `../html/${filename}`;
+        return `ukhona/html/${filename}`;
     };
 
     const REPO_NAME = '/repos-00';
@@ -19,170 +24,122 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const fixLinks = (container) => {
         if (!container || !BASE) return;
-        const links = container.querySelectorAll('a[href^="/"]');
-        links.forEach(a => {
+        container.querySelectorAll('a[href^="/"]').forEach(a => {
             const href = a.getAttribute('href');
-            if (!href.startsWith(BASE)) {
-                a.setAttribute('href', `${BASE}${href}`);
-            }
+            if (!href.startsWith(BASE)) a.setAttribute('href', `${BASE}${href}`);
         });
     };
 
-    // --- INJECTION ENGINE (WITH ERROR FEEDBACK) ---
+    // --- INJECTION ENGINE ---
     async function inject(id, filename) {
         const placeholder = document.getElementById(id);
-        if (!placeholder) {
-            console.error(`[System] Element #${id} not found`);
-            return;
-        }
-
+        if (!placeholder) { console.error(`[shared] #${id} not found`); return; }
         try {
-            const response = await fetch(getPath(filename));
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            
-            const data = await response.text();
-            placeholder.innerHTML = data;
+            const res = await fetch(getPath(filename));
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            placeholder.innerHTML = await res.text();
             fixLinks(placeholder);
-            console.log(`[System] ✓ Injected: ${filename}`);
+
+            // Re-run any inline <script> tags injected with the fragment
+            placeholder.querySelectorAll('script').forEach(old => {
+                const s = document.createElement('script');
+                if (old.src) s.src = old.src; else s.textContent = old.textContent;
+                old.replaceWith(s);
+            });
+
+            console.log(`[shared] ✓ ${filename}`);
         } catch (err) {
-            console.error(`[System] ✗ Failed to inject ${filename}:`, err);
-            placeholder.innerHTML = `<div style="color:red;padding:1rem;">Failed to load ${filename}</div>`;
+            console.error(`[shared] ✗ ${filename}`, err);
+            placeholder.innerHTML = `<div style="color:red;padding:1rem;font-family:monospace;font-size:.8rem;">Failed to load ${filename}<br>${err.message}</div>`;
         }
     }
 
     // --- LOAD PARTIALS ---
-    const PARTIALS = [
-        ['header', 'header.html'],
-        ['footer-placeholder', 'footer.html']
-    ];
+    await Promise.all([
+        inject('header',             'header.html'),
+        inject('footer-placeholder', 'footer.html'),
+    ]);
 
-    await Promise.all(PARTIALS.map(([id, file]) => inject(id, file)));
-
-    // --- INITIALIZE COMPONENTS ---
+    // --- INIT ---
     initGridMenu();
     initThemeToggle();
     initScrollProgress();
-    initFooterChorus(); 
+    initFooterChorus();
 
-    // --- GRID MENU (FIXED CLICK HANDLING) ---
+    // --- GRID MENU ---
     function initGridMenu() {
-        const menuBtn = document.getElementById('menuIcon');
+        const menuBtn  = document.getElementById('menuIcon');
         const menuGrid = document.getElementById('gridMenu');
-
         if (!menuBtn || !menuGrid) return;
 
         fixLinks(menuGrid);
+        let open = false;
 
-        let isOpen = false;
-
-        const openMenu = () => {
-            isOpen = true;
-            menuGrid.classList.add('active');
-            menuBtn.setAttribute('aria-expanded', 'true');
+        const toggle = (force) => {
+            open = force !== undefined ? force : !open;
+            menuGrid.classList.toggle('active', open);
+            menuBtn.setAttribute('aria-expanded', String(open));
         };
 
-        const closeMenu = () => {
-            isOpen = false;
-            menuGrid.classList.remove('active');
-            menuBtn.setAttribute('aria-expanded', 'false');
-        };
-
-        // Toggle on button click
-        menuBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            isOpen ? closeMenu() : openMenu();
-        });
-
-        // Close on outside click (capture phase to catch early)
-        document.addEventListener('click', (e) => {
-            if (isOpen && !menuGrid.contains(e.target) && !menuBtn.contains(e.target)) {
-                closeMenu();
-            }
+        menuBtn.addEventListener('click', e => { e.stopPropagation(); toggle(); });
+        document.addEventListener('click', e => {
+            if (open && !menuGrid.contains(e.target) && !menuBtn.contains(e.target)) toggle(false);
         }, true);
-
-        // Close on Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && isOpen) {
-                closeMenu();
-            }
-        });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') toggle(false); });
     }
 
     // --- THEME TOGGLE ---
     function initThemeToggle() {
-        const themeBtn = document.getElementById('toggle-theme');
+        const btn  = document.getElementById('toggle-theme');
         const logo = document.getElementById('logo');
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        
-        document.documentElement.setAttribute('data-theme', savedTheme);
+        const saved = localStorage.getItem('theme') || 'dark';
 
-        // Update logo for initial theme
-        if (logo) {
-            const lightSrc = logo.getAttribute('data-light-src');
-            const darkSrc = logo.getAttribute('data-dark-src');
-            logo.src = savedTheme === 'dark' ? darkSrc : lightSrc;
-        }
+        const apply = (theme) => {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            if (btn)  btn.textContent = theme === 'dark' ? '🌙' : '☀️';
+            if (logo) logo.src = theme === 'dark'
+                ? logo.getAttribute('data-dark-src')
+                : logo.getAttribute('data-light-src');
+        };
 
-        if (themeBtn) {
-            themeBtn.textContent = savedTheme === 'dark' ? '🌙' : '☀️';
-            
-            themeBtn.addEventListener('click', () => {
-                const currentTheme = document.documentElement.getAttribute('data-theme');
-                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                
-                document.documentElement.setAttribute('data-theme', newTheme);
-                localStorage.setItem('theme', newTheme);
-                themeBtn.textContent = newTheme === 'dark' ? '🌙' : '☀️';
-                
-                // Switch logo
-                if (logo) {
-                    const lightSrc = logo.getAttribute('data-light-src');
-                    const darkSrc = logo.getAttribute('data-dark-src');
-                    logo.src = newTheme === 'dark' ? darkSrc : lightSrc;
-                }
-            });
-        }
-    }
-
-    // --- SCROLL PROGRESS (DEBOUNCED) ---
-    function initScrollProgress() {
-        const progress = document.querySelector('.scroll-progress');
-        if (!progress) return;
-
-        let ticking = false;
-
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-                    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                    const scrolled = (winScroll / height) * 100;
-                    progress.style.width = scrolled + "%";
-                    ticking = false;
-                });
-                ticking = true;
-            }
+        apply(saved);
+        btn?.addEventListener('click', () => {
+            apply(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
         });
     }
 
-    // --- FOOTER CHORUS ---
+    // --- SCROLL PROGRESS ---
+    function initScrollProgress() {
+        const bar = document.querySelector('.scroll-progress');
+        if (!bar) return;
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(() => {
+                const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                bar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+                ticking = false;
+            });
+        }, { passive: true });
+    }
+
+    // --- FOOTER CHORUS (rotating chips) ---
     function initFooterChorus() {
         const box = document.querySelector('.rotating-chorus');
         if (!box) return;
-        
-        const chips = Array.from(box.querySelectorAll('.chip'));
-        if (chips.length === 0) return;
+        const chips = [...box.querySelectorAll('.chip')];
+        if (!chips.length) return;
 
-        let currentIndex = 0;
-        chips.forEach((chip, idx) => chip.style.display = idx === 0 ? 'inline' : 'none');
+        let idx = 0;
+        chips.forEach((c, i) => c.style.display = i === 0 ? 'inline' : 'none');
 
-        if (window.chorusInterval) clearInterval(window.chorusInterval);
-        
-        window.chorusInterval = setInterval(() => {
-            chips[currentIndex].style.display = 'none';
-            currentIndex = (currentIndex + 1) % chips.length;
-            chips[currentIndex].style.display = 'inline';
+        clearInterval(window._chorusTimer);
+        window._chorusTimer = setInterval(() => {
+            chips[idx].style.display = 'none';
+            idx = (idx + 1) % chips.length;
+            chips[idx].style.display = 'inline';
         }, 5000);
     }
 });

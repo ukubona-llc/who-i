@@ -1,81 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Session V — The Institution · WHO-India AI Curriculum</title>
-<!-- CSS -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>👁️ Surveillance Use Cases · Level 2 Session 5</title>
+  <meta name="description" content="How can AI assist ongoing evidence surveillance between full reviews?">
+  <meta name="color-scheme" content="dark light">
+  <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-dark.ico" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-light.ico" media="(prefers-color-scheme: light)">
+  <link rel="preload" href="https://abikesa.github.io/logos/assets/ukubona-dark.png" as="image">
+  <link rel="preload" href="https://abikesa.github.io/logos/assets/ukubona-light.png" as="image">
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,800;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&display=swap" rel="stylesheet">
+  <link href="../../css/variables.css?v=1.1" rel="stylesheet">
+  <link href="../../css/head.css?v=1.1" rel="stylesheet">
+  <link href="../../css/card.css?v=1.1" rel="stylesheet">
+  <link href="../../css/footer.css" rel="stylesheet">
+  <style>
+    :root {
+      --session-accent: #69db7c;
+      --ff-display: 'Playfair Display', Georgia, serif;
+      --ff-body:    'Source Serif 4', Georgia, serif;
+    }
+    body { font-family: var(--ff-body); font-weight: 300; }
+    .spine { position: fixed; left: 0; top: 0; width: 3px; height: 0%; background: var(--session-accent); z-index: 200; transition: height .1s linear; }
+    .s-page { padding-top: calc(var(--header-h) + 3rem); padding-bottom: 6rem; max-width: 780px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
+    .s-crumb { font-family: 'Inter', sans-serif; font-size: .6rem; letter-spacing: .3em; text-transform: uppercase; color: var(--text-secondary); opacity: .5; margin-bottom: 2.5rem; display: flex; gap: .75rem; align-items: center; }
+    .s-crumb span { color: var(--session-accent); opacity: 1; }
+    .s-hero { margin-bottom: 3.5rem; }
+    .s-label { font-family: 'Inter', sans-serif; font-size: .6rem; letter-spacing: .3em; text-transform: uppercase; color: var(--session-accent); margin-bottom: .75rem; font-weight: 600; }
+    .s-title { font-family: var(--ff-display); font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; line-height: 1.1; letter-spacing: -.02em; color: var(--text); margin-bottom: .5rem; }
+    .s-subtitle { font-family: var(--ff-display); font-size: clamp(1rem, 2.5vw, 1.3rem); font-style: italic; font-weight: 400; color: var(--text-secondary); margin-bottom: 1.5rem; }
+    .s-oneliner { font-size: .9rem; line-height: 1.7; color: var(--text-secondary); border-left: 3px solid var(--session-accent); padding-left: 1rem; max-width: 540px; }
+    .s-badge { display: inline-flex; align-items: center; gap: .5rem; font-family: 'Inter', sans-serif; font-size: .55rem; letter-spacing: .2em; text-transform: uppercase; padding: .3rem .8rem; border-radius: 999px; border: 1px solid var(--session-accent); color: var(--session-accent); background: color-mix(in srgb, var(--session-accent) 8%, transparent); margin-bottom: 1.5rem; }
+    .s-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); gap: 1rem; }
+    .s-nav-btn { font-family: 'Inter', sans-serif; font-size: .7rem; letter-spacing: .1em; font-weight: 500; padding: .6rem 1.4rem; border-radius: 8px; border: 1px solid var(--border); background: var(--glass); color: var(--text-secondary); text-decoration: none; transition: var(--transition); }
+    .s-nav-btn:hover { border-color: var(--session-accent); color: var(--session-accent); }
+    .s-nav-next { margin-left: auto; }
+    @media (max-width: 600px) { .s-page { padding-left: 1.25rem; padding-right: 1.25rem; } }
+    
+    .s-section { margin-bottom: 3rem; padding-bottom: 3rem; border-bottom: 1px solid var(--border); }
+    .s-section:last-of-type { border-bottom: none; }
+    .s-section h2 {
+      font-family: var(--ff-display); font-size: 1.3rem; font-weight: 600;
+      color: var(--text); margin-bottom: 1.25rem;
+      padding-left: 1rem; border-left: 3px solid var(--session-accent);
+    }
+    .s-section ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: .6rem; }
+    .s-section li {
+      padding: .7rem 1rem .7rem 1.25rem; background: var(--glass);
+      border: 1px solid var(--border); border-radius: 8px;
+      font-size: .95rem; color: var(--text-secondary); line-height: 1.65; transition: var(--transition);
+    }
+    .s-section li::before { content: "▸"; color: var(--session-accent); margin-right: .6rem; font-size: .75rem; }
+    .s-section li:hover {
+      background: color-mix(in srgb, var(--session-accent) 5%, var(--glass));
+      border-color: var(--session-accent); color: var(--text);
+    }
+    .s-section li strong { color: var(--text); font-weight: 600; }
+    .s-section li em { color: var(--session-accent); font-style: italic; }
+  </style>
 </head>
 <body>
+<div class="spine" id="spine"></div>
+<div class="scroll-indicator" aria-hidden="true"><div class="scroll-progress"></div></div>
+<div class="bg-pattern" aria-hidden="true"></div>
+<header class="header" id="header"></header>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-left">
-    <div class="session-label">Session Five · Level Two</div>
-    <div class="hero-eyebrow">The Institution</div>
-    <h1 class="hero-h1">Diagnostic on Institutionalization</h1>
-    <p class="hero-desc">Where AI fails, how to improve, Ukubona fills gap.</p>
+<div class="s-page">
+  <div class="s-crumb">
+    <a href="../../" style="color:inherit;text-decoration:none;">Home</a> · Level 2 · <span>Session 5</span>
   </div>
-  <div class="hero-right">
-    <div class="level-badge">▸ Level 2 of 3 · Session 5 of 5</div>
+  <div class="s-hero">
+    <div class="s-badge">👁️ Level 2 of 3 · Session 5 of 5</div>
+    <p class="s-label">Level 2 · Exploration</p>
+    <h1 class="s-title">Surveillance Use Cases</h1>
+    <p class="s-subtitle">AI Watching the Literature</p>
+    <p class="s-oneliner">How can AI assist ongoing evidence surveillance between full reviews?</p>
   </div>
+
+  
+
+  <nav class="s-nav" aria-label="Session navigation">
+    <a class='s-nav-btn' href='session4.html'>← Previous</a>
+    <a class='s-nav-btn s-nav-next' href='../level3/session1.html'>Next →</a>
+  </nav>
 </div>
 
-<!-- MAIN -->
-<main class="main-content">
-
-  <section class="section">
-    <div class="section-header">
-      <div class="section-num">01</div>
-      <div class="section-info">
-        <div class="section-marker">AI Fails</div>
-        <h2 class="section-title">Where AI Fails in Institution</h2>
-      </div>
-    </div>
-    <ul>
-      <li>▶ No memory across users.</li>
-      <li>▶ Not embedded in SOPs.</li>
-      <li>▶ Lacks scaling mechanisms.</li>
-      <li>▶ No measurement of learning.</li>
-      <li>▶ Individual reliance.</li>
-    </ul>
-  </section>
-
-  <section class="section">
-    <div class="section-header">
-      <div class="section-num">02</div>
-      <div class="section-info">
-        <div class="section-marker">Improvements</div>
-        <h2 class="section-title">How to Improve AI Institutionalization</h2>
-      </div>
-    </div>
-    <ul>
-      <li>▶ Shared AI profiles.</li>
-      <li>▶ Roadmap implementation.</li>
-      <li>▶ Recursive levels.</li>
-      <li>▶ Track loss reductions.</li>
-      <li>▶ Group training.</li>
-    </ul>
-  </section>
-
-  <section class="section">
-    <div class="section-header">
-      <div class="section-num">03</div>
-      <div class="section-info">
-        <div class="section-marker">Ukubona Gap Fill</div>
-        <h2 class="section-title">How Ukubona LLC Fills the Gap</h2>
-      </div>
-    </div>
-    <ul>
-      <li>▶ Profile templates.</li>
-      <li>▶ 12-month roadmap.</li>
-      <li>▶ Level 2+ curricula.</li>
-      <li>▶ Institutional consulting.</li>
-      <li>▶ Memory mechanisms.</li>
-    </ul>
-  </section>
-
-</main>
-
+<div id="footer-placeholder"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
+<script src="../../js/shared.js"></script>
+<script>
+  const spine = document.getElementById('spine');
+  window.addEventListener('scroll', () => {
+    const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
+    spine.style.height = Math.min(pct, 100) + '%';
+  }, { passive: true });
+</script>
 </body>
 </html>

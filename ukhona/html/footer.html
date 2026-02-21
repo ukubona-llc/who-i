@@ -1,15 +1,117 @@
 <footer class="footer">
   <div class="wrap-max footer-wrap">
+
     <div class="footer-chorus rotating-chorus" data-interval="60000">
       <span class="chip">To see, blindly</span>
       <span class="chip">To forage, stochastically</span>
       <span class="chip">To rehearse, consequentially</span>
     </div>
-    <div class="footer-micro">
-        <p>
-             © 2026 <a href="https://ukubona-llc.github.io/">Ukubona LLC</a>. All rights reserved.
-        </p>
 
+    <div class="footer-level-trail">
+      <a href="../../ukhona/html/level1/session1.html" class="trail-dot" data-level="1" title="Level 1 · Foundations">
+        <span class="trail-pip"></span>
+        <span class="trail-label">Foundations</span>
+      </a>
+      <span class="trail-line"></span>
+      <a href="../../ukhona/html/level2/session1.html" class="trail-dot" data-level="2" title="Level 2 · Exploration">
+        <span class="trail-pip"></span>
+        <span class="trail-label">Exploration</span>
+      </a>
+      <span class="trail-line"></span>
+      <a href="../../ukhona/html/level3/session1.html" class="trail-dot" data-level="3" title="Level 3 · Integration">
+        <span class="trail-pip"></span>
+        <span class="trail-label">Integration</span>
+      </a>
     </div>
+
+    <div class="footer-micro">
+      <p>© 2026 <a href="https://ukubona-llc.github.io/">Ukubona LLC</a>. All rights reserved.</p>
+    </div>
+
   </div>
 </footer>
+
+<style>
+  /* ── level trail ── */
+  .footer-level-trail {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 1.25rem 0 1rem;
+  }
+
+  .trail-dot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .35rem;
+    text-decoration: none;
+    position: relative;
+  }
+
+  .trail-pip {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: var(--glass);
+    transition: var(--transition);
+    display: block;
+  }
+
+  .trail-dot[data-level="1"] .trail-pip { border-color: #4fc3f7; }
+  .trail-dot[data-level="2"] .trail-pip { border-color: #69db7c; }
+  .trail-dot[data-level="3"] .trail-pip { border-color: #ffd43b; }
+
+  .trail-dot:hover .trail-pip,
+  .trail-dot.active .trail-pip {
+    transform: scale(1.4);
+  }
+  .trail-dot[data-level="1"]:hover .trail-pip,
+  .trail-dot[data-level="1"].active .trail-pip { background: #4fc3f7; box-shadow: 0 0 8px #4fc3f7; }
+  .trail-dot[data-level="2"]:hover .trail-pip,
+  .trail-dot[data-level="2"].active .trail-pip { background: #69db7c; box-shadow: 0 0 8px #69db7c; }
+  .trail-dot[data-level="3"]:hover .trail-pip,
+  .trail-dot[data-level="3"].active .trail-pip { background: #ffd43b; box-shadow: 0 0 8px #ffd43b; }
+
+  .trail-label {
+    font-family: 'Inter', sans-serif;
+    font-size: .55rem;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    opacity: .6;
+    transition: var(--transition);
+  }
+
+  .trail-dot:hover .trail-label { opacity: 1; color: var(--text); }
+
+  .trail-line {
+    flex: 1;
+    max-width: 80px;
+    height: 1px;
+    background: var(--border);
+    margin: 0 .5rem;
+    margin-bottom: 1.1rem; /* align with pip center */
+  }
+</style>
+
+<script>
+  (function () {
+    function highlightTrail() {
+      const path = window.location.pathname;
+      const m = path.match(/level(\d)/);
+      if (!m) return;
+      const active = m[1];
+      document.querySelectorAll('.trail-dot').forEach(dot => {
+        dot.classList.toggle('active', dot.dataset.level === active);
+      });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', highlightTrail);
+    } else {
+      highlightTrail();
+    }
+  })();
+</script>

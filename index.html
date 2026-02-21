@@ -6,69 +6,36 @@
   <title>Ukubona</title>
   <meta name="description" content="Ukubona LLC — to see, to perceive, to know.">
   <meta name="color-scheme" content="dark light">
-
   <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-dark.ico" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-light.ico" media="(prefers-color-scheme: light)">
   <link rel="preload" href="https://abikesa.github.io/logos/assets/ukubona-dark.png" as="image">
   <link rel="preload" href="https://abikesa.github.io/logos/assets/ukubona-light.png" as="image">
-
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <!-- Ukubona CSS cascade -->
   <link href="ukhona/css/variables.css?v=1.1" rel="stylesheet">
   <link href="ukhona/css/head.css?v=1.1" rel="stylesheet">
   <link href="ukhona/css/card.css?v=1.1" rel="stylesheet">
   <link href="ukhona/css/footer.css" rel="stylesheet">
-
   <style>
-    /* ── index layout: flex column so footer always renders ── */
     html { height: 100%; }
-    body {
-      min-height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Landing fills the space between fixed header and footer */
+    body { min-height: 100%; display: flex; flex-direction: column; }
     .landing-stage {
-      position: relative;
-      z-index: 10;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-      margin-top: var(--header-h);
-      text-align: center;
-      gap: 1rem;
+      position: relative; z-index: 10; flex: 1;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 2rem; margin-top: var(--header-h); text-align: center; gap: 1rem;
     }
-
-    /* landing-stage: just the breathing space between header and footer */
-    .topo-layer {
-      position: fixed; inset: 0; z-index: 0;
-      overflow: hidden; pointer-events: none;
-    }
-    .topo-layer svg {
-      width: 100%; height: 100%; opacity: .04;
-    }
+    .topo-layer { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+    .topo-layer svg { width: 100%; height: 100%; opacity: .04; }
     @keyframes topoFloat {
       0%, 100% { transform: translate(0, 0); }
       50%       { transform: translate(-12px, 8px); }
     }
     .topo-layer svg g { animation: topoFloat 32s ease-in-out infinite; }
-
-    /* Mobile: reduce padding on short viewports */
-    @media (max-height: 500px) {
-      .landing-stage { padding: 2rem 2rem 1rem; }
-    }
   </style>
 </head>
 <body>
-
-<!-- quiet topographic atmosphere -->
 <div class="topo-layer" aria-hidden="true">
   <svg viewBox="0 0 1000 750" preserveAspectRatio="xMidYMid slice">
     <g fill="none" stroke="currentColor" stroke-width=".8">
@@ -87,26 +54,12 @@
     </g>
   </svg>
 </div>
-
-<!-- scroll progress (head.css component) -->
-<div class="scroll-indicator" aria-hidden="true">
-  <div class="scroll-progress"></div>
-</div>
-
-<!-- bg-pattern (head.css animated gradient) -->
+<div class="scroll-indicator" aria-hidden="true"><div class="scroll-progress"></div></div>
 <div class="bg-pattern" aria-hidden="true"></div>
-
-<!-- header: shared.js injects header.html here -->
 <header class="header" id="header"></header>
-
-<!-- THE LANDING — intentionally empty. footer owns the words. header owns the nav. -->
 <main class="landing-stage" aria-label="Ukubona landing"></main>
-
-<!-- footer: shared.js injects footer.html here -->
 <div id="footer-placeholder"></div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
 <script src="ukhona/js/shared.js"></script>
-
 </body>
 </html>
