@@ -12,7 +12,6 @@
   <link rel="preload" href="https://abikesa.github.io/logos/assets/ukubona-light.png" as="image">
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Inter for the shell UI; Cormorant for the headline -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
   <link href="ukhona/css/variables.css?v=1.1" rel="stylesheet">
   <link href="ukhona/css/head.css?v=1.1" rel="stylesheet">
@@ -20,15 +19,16 @@
   <link href="ukhona/css/footer.css" rel="stylesheet">
 
   <style>
-    /* ── layout shell (unchanged) ── */
+    /* ── shell (unchanged) ── */
     html { height: 100%; }
     body { min-height: 100%; display: flex; flex-direction: column; }
 
     .landing-stage {
       position: relative; z-index: 10; flex: 1;
       display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      padding: 2rem; margin-top: var(--header-h);
+      align-items: center; justify-content: flex-start;
+      padding: 2rem 1.5rem 5rem;
+      margin-top: var(--header-h);
       text-align: center; gap: 0;
     }
 
@@ -40,190 +40,185 @@
     }
     .topo-layer svg g { animation: topoFloat 32s ease-in-out infinite; }
 
-    /* ══════════════════════════════════════
-       HEADLINE BLOCK
-       lives entirely inside .landing-stage
-    ══════════════════════════════════════ */
-
-    /* eyebrow */
+    /* ══ HEADLINE ══ */
     .lr-eyebrow {
       font-family: 'DM Mono', monospace;
-      font-size: 0.6rem;
-      font-style: italic;
-      letter-spacing: 0.22em;
-      text-transform: lowercase;
-      /* pick up the site accent, fall back to a warm gold */
+      font-size: 0.6rem; font-style: italic;
+      letter-spacing: 0.22em; text-transform: lowercase;
       color: var(--primary, #c9b99a);
-      opacity: 0;
-      margin-bottom: 2rem;
+      opacity: 0; margin-bottom: 1.8rem; margin-top: 2.5rem;
       animation: lrFadeUp 0.8s cubic-bezier(.22,1,.36,1) 0.1s forwards;
     }
-
-    /* headline */
-    .lr-headline {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      line-height: 1;
-      margin: 0;
-    }
-
-    .lr-line {
-      display: block;
-      opacity: 0;
-    }
-
-    /* "AI" — enormous, italic */
+    .lr-headline { font-family: 'Cormorant Garamond', Georgia, serif; line-height: 1; margin: 0; }
+    .lr-line { display: block; opacity: 0; }
     .lr-ai {
-      font-size: clamp(5rem, 15vw, 10rem);
-      font-weight: 300;
-      font-style: italic;
-      color: var(--text, #f0ede6);
-      letter-spacing: -0.02em;
+      font-size: clamp(4rem, 12vw, 8.5rem); font-weight: 300; font-style: italic;
+      color: var(--text, #f0ede6); letter-spacing: -0.02em;
       animation: lrFadeUp 0.9s cubic-bezier(.22,1,.36,1) 0.25s forwards;
     }
-
-    /* "Tools" — spaced caps, accent colour */
     .lr-tools {
-      font-size: clamp(1.6rem, 5vw, 3.2rem);
-      font-weight: 400;
-      font-style: normal;
-      letter-spacing: 0.32em;
-      text-transform: uppercase;
+      font-size: clamp(1.4rem, 4vw, 2.8rem); font-weight: 400; font-style: normal;
+      letter-spacing: 0.32em; text-transform: uppercase;
       color: var(--primary, #c9b99a);
       animation: lrFadeUp 0.9s cubic-bezier(.22,1,.36,1) 0.38s forwards;
-      margin: 0.15em 0 0.3em;
+      margin: 0.12em 0 0.28em;
     }
-
-    /* "for" — quiet italic connector */
     .lr-for {
-      font-size: clamp(0.85rem, 2vw, 1.2rem);
-      font-weight: 300;
-      font-style: italic;
-      letter-spacing: 0.08em;
-      color: var(--text-secondary, rgba(240,237,230,0.45));
+      font-size: clamp(0.8rem, 1.8vw, 1.1rem); font-weight: 300; font-style: italic;
+      letter-spacing: 0.08em; color: var(--text-secondary, rgba(240,237,230,0.45));
       animation: lrFadeUp 0.9s cubic-bezier(.22,1,.36,1) 0.5s forwards;
-      margin-bottom: 0.15em;
+      margin-bottom: 0.12em;
     }
-
-    /* "Literature" */
     .lr-lit {
-      font-size: clamp(2.8rem, 8.5vw, 6rem);
-      font-weight: 300;
-      font-style: italic;
+      font-size: clamp(2.4rem, 7.5vw, 5.5rem); font-weight: 300; font-style: italic;
       color: var(--text, #f0ede6);
       animation: lrFadeUp 0.9s cubic-bezier(.22,1,.36,1) 0.6s forwards;
     }
-
-    /* "Review" — roman, slightly lighter */
     .lr-review {
-      font-size: clamp(2.8rem, 8.5vw, 6rem);
-      font-weight: 300;
-      font-style: normal;
+      font-size: clamp(2.4rem, 7.5vw, 5.5rem); font-weight: 300; font-style: normal;
       color: var(--text-secondary, rgba(240,237,230,0.7));
       animation: lrFadeUp 0.9s cubic-bezier(.22,1,.36,1) 0.72s forwards;
     }
 
-    /* rule */
     .lr-rule {
-      width: 1px;
-      height: 44px;
+      width: 1px; height: 40px;
       background: linear-gradient(to bottom, var(--primary, #c9b99a), transparent);
-      margin: 2.2rem auto;
-      opacity: 0;
-      animation: lrFadeUp 0.9s cubic-bezier(.22,1,.36,1) 0.85s forwards;
+      margin: 2rem auto;
+      opacity: 0; animation: lrFadeUp 0.9s cubic-bezier(.22,1,.36,1) 0.82s forwards;
     }
 
-    /* search */
+    /* ══ SEARCH ══ */
     .lr-search-wrap {
-      width: min(520px, 88vw);
-      opacity: 0;
-      animation: lrFadeUp 0.9s cubic-bezier(.22,1,.36,1) 0.95s forwards;
+      width: min(580px, 92vw);
+      opacity: 0; animation: lrFadeUp 0.9s cubic-bezier(.22,1,.36,1) 0.92s forwards;
     }
-
     .lr-search {
       display: flex; align-items: center;
-      /* borrow --glass and --border from variables.css */
       background: var(--glass, rgba(255,255,255,0.04));
       border: 1px solid var(--border, rgba(255,255,255,0.08));
-      border-radius: 3px;
-      padding: 0 1rem;
-      gap: 0.7rem;
+      border-radius: 3px; padding: 0 1rem; gap: 0.7rem;
       transition: border-color 0.2s, box-shadow 0.2s;
     }
-
     .lr-search:focus-within {
       border-color: var(--primary, #c9b99a);
-      box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary, #c9b99a) 15%, transparent);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary, #c9b99a) 12%, transparent);
     }
-
-    .lr-search svg {
-      flex-shrink: 0;
-      color: var(--primary, #c9b99a);
-      opacity: 0.5;
-    }
-
+    .lr-search svg { flex-shrink: 0; color: var(--primary, #c9b99a); opacity: 0.5; }
     .lr-search input {
-      flex: 1; border: none; outline: none;
-      background: transparent;
+      flex: 1; border: none; outline: none; background: transparent;
       color: var(--text, #f0ede6);
-      font-family: 'DM Mono', monospace;
-      font-size: 0.78rem;
-      font-weight: 300;
-      letter-spacing: 0.04em;
-      padding: 0.9rem 0;
+      font-family: 'DM Mono', monospace; font-size: 0.8rem; font-weight: 300;
+      letter-spacing: 0.04em; padding: 0.9rem 0;
       caret-color: var(--primary, #c9b99a);
     }
-
-    .lr-search input::placeholder {
+    .lr-search input::placeholder { color: var(--text-secondary, rgba(240,237,230,0.3)); }
+    .lr-clear {
+      background: none; border: none; cursor: pointer; padding: 0.2rem;
       color: var(--text-secondary, rgba(240,237,230,0.3));
+      display: none; line-height: 1; font-size: 0.9rem;
+      transition: color 0.15s;
     }
+    .lr-clear:hover { color: var(--primary, #c9b99a); }
+    .lr-clear.show { display: block; }
 
-    /* pills */
+    /* ══ PILLS ══ */
     .lr-pills {
       display: flex; flex-wrap: wrap; justify-content: center;
-      gap: 0.45rem;
-      margin-top: 1.4rem;
-      opacity: 0;
-      animation: lrFadeUp 0.9s cubic-bezier(.22,1,.36,1) 1.1s forwards;
+      gap: 0.4rem; margin-top: 1.1rem;
+      opacity: 0; animation: lrFadeUp 0.9s cubic-bezier(.22,1,.36,1) 1.05s forwards;
     }
-
     .lr-pill {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.58rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
+      font-family: 'DM Mono', monospace; font-size: 0.57rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
       color: var(--text-secondary, rgba(240,237,230,0.45));
       border: 1px solid var(--border, rgba(255,255,255,0.08));
-      padding: 0.3rem 0.75rem;
-      border-radius: 2px;
-      cursor: pointer;
-      transition: color 0.18s, border-color 0.18s, background 0.18s;
+      padding: 0.28rem 0.7rem; border-radius: 2px;
+      cursor: pointer; background: transparent;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
       user-select: none;
-      background: transparent;
     }
-
-    .lr-pill:hover {
+    .lr-pill:hover, .lr-pill.active {
       color: var(--primary, #c9b99a);
       border-color: var(--primary, #c9b99a);
       background: color-mix(in srgb, var(--primary, #c9b99a) 8%, transparent);
     }
 
-    /* keyframes */
+    /* ══ RESULTS ══ */
+    .lr-results {
+      width: min(740px, 96vw); margin-top: 2rem;
+      opacity: 0; animation: lrFadeUp 0.9s cubic-bezier(.22,1,.36,1) 1.15s forwards;
+    }
+    .lr-count {
+      font-family: 'DM Mono', monospace; font-size: 0.57rem;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-secondary, rgba(240,237,230,0.32));
+      margin-bottom: 0.9rem; text-align: left;
+    }
+    .lr-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr));
+      gap: 1px;
+      background: var(--border, rgba(255,255,255,0.06));
+      border: 1px solid var(--border, rgba(255,255,255,0.06));
+      border-radius: 3px; overflow: hidden;
+    }
+    .lr-card {
+      background: var(--surface, #0e0e0e);
+      padding: 1.1rem 1.2rem 1rem;
+      display: flex; flex-direction: column; gap: 0.3rem;
+      text-align: left; text-decoration: none;
+      transition: background 0.15s; position: relative;
+    }
+    .lr-card::after {
+      content: '↗'; position: absolute; top: 0.9rem; right: 1rem;
+      font-size: 0.7rem; color: var(--primary, #c9b99a);
+      opacity: 0; transition: opacity 0.15s;
+    }
+    .lr-card:hover { background: var(--glass, rgba(255,255,255,0.04)); }
+    .lr-card:hover::after { opacity: 0.65; }
+    .lr-card-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem; font-weight: 400; font-style: italic;
+      color: var(--text, #f0ede6); transition: color 0.15s;
+    }
+    .lr-card:hover .lr-card-name { color: var(--primary, #c9b99a); }
+    .lr-card-focus {
+      font-family: 'DM Mono', monospace; font-size: 0.55rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--primary, #c9b99a); opacity: 0.55;
+    }
+    .lr-card-desc {
+      font-family: 'Inter', sans-serif; font-size: 0.74rem; font-weight: 300;
+      line-height: 1.55; color: var(--text-secondary, rgba(240,237,230,0.52));
+      margin-top: 0.15rem;
+    }
+
+    /* matched text highlight */
+    mark {
+      background: color-mix(in srgb, var(--primary, #c9b99a) 20%, transparent);
+      color: inherit; border-radius: 1px; padding: 0 1px;
+    }
+
+    .lr-empty {
+      padding: 3rem 1rem; display: none;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem; font-style: italic;
+      color: var(--text-secondary, rgba(240,237,230,0.3));
+    }
+
     @keyframes lrFadeUp {
       from { opacity: 0; transform: translateY(14px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-
     @media (prefers-reduced-motion: reduce) {
-      .lr-eyebrow, .lr-line, .lr-rule, .lr-search-wrap, .lr-pills {
+      .lr-eyebrow,.lr-line,.lr-rule,.lr-search-wrap,.lr-pills,.lr-results {
         animation: none; opacity: 1;
       }
     }
   </style>
 </head>
-
 <body>
 
-<!-- topo (unchanged from original) -->
 <div class="topo-layer" aria-hidden="true">
   <svg viewBox="0 0 1000 750" preserveAspectRatio="xMidYMid slice">
     <g fill="none" stroke="currentColor" stroke-width=".8">
@@ -245,12 +240,8 @@
 
 <div class="scroll-indicator" aria-hidden="true"><div class="scroll-progress"></div></div>
 <div class="bg-pattern" aria-hidden="true"></div>
-
 <header class="header" id="header"></header>
 
-<!-- ─────────────────────────────────────
-     MAIN — only the inner content is new
-───────────────────────────────────── -->
 <main class="landing-stage" aria-label="AI Tools for Literature Review">
 
   <p class="lr-eyebrow">ukubona · to see · to know</p>
@@ -268,22 +259,148 @@
   <div class="lr-search-wrap" role="search">
     <div class="lr-search">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-           stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
-           aria-hidden="true">
+           stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
         <circle cx="11" cy="11" r="8"/>
         <line x1="21" y1="21" x2="16.65" y2="16.65"/>
       </svg>
-      <input type="search"
-             placeholder="search a tool, method, or topic…"
-             aria-label="Search AI tools for literature review"
-             autocomplete="off" spellcheck="false">
+      <input id="lr-input" type="search"
+             placeholder="search tools, methods, or topics…   [ / to focus ]"
+             aria-label="Search AI tools" autocomplete="off" spellcheck="false">
+      <button class="lr-clear" id="lr-clear" aria-label="Clear search">✕</button>
     </div>
+
+    <div class="lr-pills" id="lr-pills" role="group" aria-label="Filter by category">
+      <button class="lr-pill active" data-cat="all">All · 20</button>
+      <button class="lr-pill" data-cat="systematic">Systematic Review</button>
+      <button class="lr-pill" data-cat="discovery">Discovery</button>
+      <button class="lr-pill" data-cat="summarisation">Summarisation</button>
+      <button class="lr-pill" data-cat="citation">Citation</button>
+      <button class="lr-pill" data-cat="medical">Medical</button>
+    </div>
+  </div>
+
+  <div class="lr-results" id="lr-results" aria-live="polite">
+    <p class="lr-count" id="lr-count"></p>
+    <div class="lr-grid" id="lr-grid"></div>
+    <p class="lr-empty" id="lr-empty">No tools match — try a different search or filter.</p>
+  </div>
 
 </main>
 
 <div id="footer-placeholder"></div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
 <script src="ukhona/js/shared.js"></script>
+
+<script>
+(function () {
+
+  const TOOLS = [
+    { name:"Elicit",           cats:["discovery","summarisation"],     focus:"General academic research",           url:"https://elicit.org",                   desc:"AI-powered research assistant that finds, summarises, and extracts data from academic papers — designed for systematic literature reviews." },
+    { name:"Consensus",        cats:["discovery","summarisation"],     focus:"General scientific literature",       url:"https://consensus.app",                desc:"Answers research questions by synthesising evidence directly from peer-reviewed papers, with one-click citations." },
+    { name:"Scite",            cats:["citation"],                      focus:"Citation analysis",                   url:"https://scite.ai",                     desc:"Shows how papers are cited — supporting, contrasting, or merely mentioning — so you can judge the weight of evidence behind a claim." },
+    { name:"Research Rabbit",  cats:["discovery"],                     focus:"Literature discovery & mapping",      url:"https://researchrabbit.ai",            desc:"Discovers related papers through interactive visualisations and evolving recommendations. Often described as 'Spotify for papers.'" },
+    { name:"Connected Papers", cats:["discovery","citation"],          focus:"Visual literature exploration",       url:"https://www.connectedpapers.com",      desc:"Builds visual graphs of similar papers based on citation networks, making it easy to spot clusters and seminal works." },
+    { name:"Iris.ai",          cats:["discovery"],                     focus:"STEM research mapping",               url:"https://iris.ai",                      desc:"Maps scientific literature using AI concept extraction and knowledge graphs — particularly strong for STEM fields." },
+    { name:"Litmaps",          cats:["discovery","citation"],          focus:"Literature mapping",                  url:"https://www.litmaps.com",              desc:"Creates interactive literature maps to visualise paper relationships and track how a research field has evolved over time." },
+    { name:"Scholarcy",        cats:["summarisation"],                 focus:"Article summarisation",               url:"https://www.scholarcy.com",            desc:"Automatically summarises articles, extracts key facts, and generates flashcards — ideal for quickly triaging a large corpus." },
+    { name:"SciSpace",         cats:["summarisation"],                 focus:"Academic writing & review",           url:"https://scispace.com",                 desc:"AI copilot that explains complex papers in plain language, generates summaries, and assists with academic writing." },
+    { name:"Paper Digest",     cats:["summarisation"],                 focus:"Paper summarisation",                 url:"https://www.paperdigest.org",          desc:"Provides AI-generated concise digests of recent papers across a wide variety of research fields — useful for daily literature monitoring." },
+    { name:"Rayyan",           cats:["systematic","medical"],          focus:"Systematic reviews (health sciences)",url:"https://rayyan.ai",                   desc:"Collaborative systematic review platform with AI-assisted abstract screening — the go-to for health-science review teams." },
+    { name:"Humata",           cats:["summarisation"],                 focus:"Document querying",                   url:"https://www.humata.ai",               desc:"Query and summarise large PDFs in natural language — useful when you need to interrogate individual papers or long reports." },
+    { name:"Semantic Scholar", cats:["discovery","summarisation"],     focus:"Broad academic search",               url:"https://www.semanticscholar.org",      desc:"Allen Institute's AI-enhanced academic search, featuring TL;DR summaries, citation graphs, and open-access paper links." },
+    { name:"Dimensions.ai",    cats:["discovery","citation"],          focus:"Research intelligence",               url:"https://www.dimensions.ai",            desc:"Discovers publications, grants, datasets, and patents in one platform, with rich analytics and export options for bibliometrics." },
+    { name:"Inciteful",        cats:["citation","discovery"],          focus:"Bibliometric analysis",               url:"https://inciteful.xyz",                desc:"Builds citation-based bibliometric networks so you can rapidly identify the most connected papers in any literature." },
+    { name:"OpenEvidence",     cats:["medical","summarisation"],       focus:"Medical literature review",           url:"https://www.openevidence.com",         desc:"AI medical search engine delivering evidence-based answers from clinical literature — built for fast point-of-care synthesis." },
+    { name:"Bohrium",          cats:["discovery"],                     focus:"Chemistry & materials science",       url:"https://www.bohrium.com",              desc:"Accelerates scientific discovery through literature analysis and hypothesis generation, with a focus on chemistry and materials science." },
+    { name:"Evidence Hunt",    cats:["medical","systematic"],          focus:"Clinical evidence review",            url:"https://www.evidencehunt.ai",          desc:"Rapid evidence synthesis for healthcare, pulling from clinical guidelines and primary studies to answer specific clinical questions." },
+    { name:"Nested Knowledge", cats:["systematic","medical"],          focus:"Systematic reviews (pharma/biotech)", url:"https://nested-knowledge.com",         desc:"Purpose-built for systematic reviews and meta-analyses in life sciences — covers screening, extraction, and synthesis in one workflow." },
+    { name:"DistillerSR",      cats:["systematic"],                    focus:"Systematic reviews (enterprise)",     url:"https://www.distillersr.com",          desc:"Enterprise systematic review software with AI-assisted screening — widely used in regulatory, HTA, and large-scale evidence synthesis." },
+  ];
+
+  let query = '', activeCat = 'all';
+
+  const input    = document.getElementById('lr-input');
+  const clearBtn = document.getElementById('lr-clear');
+  const grid     = document.getElementById('lr-grid');
+  const countEl  = document.getElementById('lr-count');
+  const emptyEl  = document.getElementById('lr-empty');
+  const pillWrap = document.getElementById('lr-pills');
+
+  function esc(s) {
+    return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  function hi(text, q) {
+    if (!q) return esc(text);
+    return esc(text).replace(
+      new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')', 'gi'),
+      '<mark>$1</mark>'
+    );
+  }
+
+  function matches(tool) {
+    const catOk = activeCat === 'all' || tool.cats.includes(activeCat);
+    if (!catOk) return false;
+    if (!query) return true;
+    return (tool.name + ' ' + tool.desc + ' ' + tool.focus).toLowerCase().includes(query.toLowerCase());
+  }
+
+  function render() {
+    const q = query.trim();
+    const filtered = TOOLS.filter(matches);
+    grid.innerHTML = '';
+    emptyEl.style.display = 'none';
+
+    if (!filtered.length) {
+      emptyEl.style.display = 'block';
+      countEl.textContent = '';
+      return;
+    }
+
+    countEl.textContent = filtered.length + (filtered.length === TOOLS.length ? ' tools' : ' of ' + TOOLS.length + ' tools');
+
+    filtered.forEach(tool => {
+      const a = document.createElement('a');
+      a.className = 'lr-card';
+      a.href = tool.url;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.innerHTML =
+        `<span class="lr-card-name">${hi(tool.name,q)}</span>` +
+        `<span class="lr-card-focus">${hi(tool.focus,q)}</span>` +
+        `<span class="lr-card-desc">${hi(tool.desc,q)}</span>`;
+      grid.appendChild(a);
+    });
+  }
+
+  input.addEventListener('input', () => {
+    query = input.value;
+    clearBtn.classList.toggle('show', query.length > 0);
+    render();
+  });
+
+  clearBtn.addEventListener('click', () => {
+    input.value = ''; query = '';
+    clearBtn.classList.remove('show');
+    input.focus(); render();
+  });
+
+  pillWrap.addEventListener('click', e => {
+    const pill = e.target.closest('.lr-pill');
+    if (!pill) return;
+    activeCat = pill.dataset.cat;
+    pillWrap.querySelectorAll('.lr-pill').forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+    render();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && document.activeElement === input) { clearBtn.click(); }
+    else if (e.key === '/' && document.activeElement !== input) { e.preventDefault(); input.focus(); }
+  });
+
+  render();
+})();
+</script>
 </body>
 </html>
