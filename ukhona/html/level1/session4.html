@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>⚗️ The Protocol · Level 1 Session 4</title>
-  <meta name="description" content="How do you build a reproducible search strategy?">
+  <meta name="description" content="How do you translate a PECO-F question into a reproducible search strategy?">
   <meta name="color-scheme" content="dark light">
   <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-dark.ico" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-light.ico" media="(prefers-color-scheme: light)">
@@ -25,7 +25,7 @@
     }
     body { font-family: var(--ff-body); font-weight: 300; }
     .spine { position: fixed; left: 0; top: 0; width: 3px; height: 0%; background: var(--session-accent); z-index: 200; transition: height .1s linear; }
-    .s-page { padding-top: calc(var(--header-h) + 3rem); padding-bottom: 6rem; max-width: 780px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
+    .s-page { padding-top: calc(var(--header-h) + 3rem); padding-bottom: 6rem; max-width: 860px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
     .s-crumb { font-family: 'Inter', sans-serif; font-size: .6rem; letter-spacing: .3em; text-transform: uppercase; color: var(--text-secondary); opacity: .5; margin-bottom: 2.5rem; display: flex; gap: .75rem; align-items: center; }
     .s-crumb span { color: var(--session-accent); opacity: 1; }
     .s-hero { margin-bottom: 3.5rem; }
@@ -39,60 +39,140 @@
     .s-nav-btn:hover { border-color: var(--session-accent); color: var(--session-accent); }
     .s-nav-next { margin-left: auto; }
     @media (max-width: 600px) { .s-page { padding-left: 1.25rem; padding-right: 1.25rem; } }
-    
-    .s-page { max-width: 860px; }
-    .slide {
-      min-height: 320px; display: flex; flex-direction: column; justify-content: center;
-      padding: 3rem 3.5rem; margin-bottom: 2rem; border-radius: 16px;
-      background: var(--glass); border: 1px solid var(--border);
-      position: relative; overflow: hidden; transition: var(--transition);
+
+    /* ── Session content ── */
+    .session-content { margin-top: 2rem; line-height: 1.8; color: var(--text-secondary); }
+    .session-content p { margin-bottom: 1.25rem; font-size: clamp(.95rem, 2vw, 1.05rem); }
+    .session-content h2 { font-family: var(--ff-display); font-size: clamp(1.4rem, 3.5vw, 2rem); font-weight: 800; color: var(--text); margin: 3rem 0 1rem; letter-spacing: -.02em; }
+    .session-content h3 { font-family: 'Inter', sans-serif; font-size: .65rem; letter-spacing: .3em; text-transform: uppercase; color: var(--session-accent); margin: 2rem 0 .75rem; font-weight: 700; }
+    .session-content strong { color: var(--text); font-weight: 600; }
+    .session-content ul { padding-left: 1.5rem; margin-bottom: 1.25rem; }
+    .session-content ul li { margin-bottom: .5rem; font-size: clamp(.95rem, 2vw, 1.05rem); }
+
+    /* ── Step-by-step flow ── */
+    .steps { display: flex; flex-direction: column; gap: 0; margin: 2rem 0; }
+    .step { display: flex; gap: 1.5rem; padding: 1.4rem 0; border-bottom: 1px solid var(--border); }
+    .step:last-child { border-bottom: none; }
+    .step-num {
+      font-family: 'Inter', sans-serif; font-size: .65rem; font-weight: 800;
+      letter-spacing: .1em; color: var(--session-accent);
+      min-width: 2.2rem; padding-top: .1rem; flex-shrink: 0;
     }
-    .slide::before {
-      content: ""; position: absolute; inset: 0; pointer-events: none;
-      background: linear-gradient(135deg, color-mix(in srgb, var(--session-accent) 4%, transparent), transparent 60%);
+    .step-body { flex: 1; }
+    .step-title { font-family: var(--ff-display); font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: .35rem; }
+    .step-desc { font-family: 'Inter', sans-serif; font-size: .8rem; font-weight: 300; line-height: 1.6; color: var(--text-secondary); }
+
+    /* ── Code / string blocks ── */
+    .code-block {
+      background: color-mix(in srgb, var(--session-accent) 5%, var(--glass));
+      border: 1px solid color-mix(in srgb, var(--session-accent) 20%, var(--border));
+      border-radius: 8px; padding: 1rem 1.25rem; margin: 1rem 0;
+      font-family: 'DM Mono', 'Courier New', monospace; font-size: .82rem;
+      line-height: 1.7; color: var(--text); overflow-x: auto; white-space: pre-wrap;
+      word-break: break-word;
     }
-    .slide:hover { border-color: color-mix(in srgb, var(--session-accent) 40%, var(--border)); }
-    .slide-callout {
-      background: color-mix(in srgb, var(--session-accent) 7%, var(--glass));
-      border-color: color-mix(in srgb, var(--session-accent) 35%, transparent);
+    .code-block .op { color: var(--session-accent); font-weight: 700; }
+    .code-block .grp { color: color-mix(in srgb, var(--session-accent) 70%, var(--text)); }
+    .code-block .term { color: var(--text); }
+    .code-caption {
+      font-family: 'Inter', sans-serif; font-size: .58rem; letter-spacing: .15em;
+      text-transform: uppercase; color: var(--text-secondary); opacity: .5;
+      margin-top: .4rem; margin-bottom: 1.25rem;
     }
-    .slide-num {
-      font-family: "Inter", sans-serif; font-size: .6rem; letter-spacing: .4em;
-      font-weight: 700; color: var(--session-accent); opacity: .6; margin-bottom: 1.5rem;
+
+    /* ── Quote block ── */
+    .q-block {
+      border-left: 3px solid color-mix(in srgb, var(--session-accent) 40%, transparent);
+      padding: 1rem 1.5rem; margin: 1.5rem 0;
+      background: color-mix(in srgb, var(--session-accent) 5%, transparent);
+      border-radius: 0 8px 8px 0; font-style: italic;
+      font-size: clamp(.9rem, 1.8vw, 1rem); color: var(--text);
     }
-    .slide-h {
-      font-family: var(--ff-display); font-size: clamp(1.6rem, 4vw, 2.4rem);
-      font-weight: 800; line-height: 1.1; letter-spacing: -.02em;
-      color: var(--text); margin-bottom: 1.5rem;
+    .q-label {
+      font-family: 'Inter', sans-serif; font-size: .55rem; letter-spacing: .25em;
+      text-transform: uppercase; font-style: normal; font-weight: 700;
+      color: color-mix(in srgb, var(--session-accent) 70%, var(--text-secondary));
+      display: block; margin-bottom: .5rem;
     }
-    .slide-lead {
-      font-size: clamp(1.05rem, 2.5vw, 1.35rem); line-height: 1.65;
-      color: var(--text-secondary); max-width: 600px;
+
+    /* ── Protocol log table ── */
+    .log-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: .8rem; }
+    .log-table th {
+      background: color-mix(in srgb, var(--session-accent) 12%, transparent);
+      color: var(--text); font-family: 'Inter', sans-serif; font-size: .55rem;
+      letter-spacing: .15em; text-transform: uppercase; font-weight: 700;
+      padding: .65rem .9rem; text-align: left;
+      border-bottom: 1px solid var(--session-accent);
     }
-    .slide-lead em { color: var(--session-accent); font-style: italic; font-weight: 600; }
-    .slide-big {
-      font-family: var(--ff-display); font-size: clamp(1.6rem, 4.5vw, 2.6rem);
-      font-weight: 800; line-height: 1.15; color: var(--text);
-      letter-spacing: -.02em; max-width: 680px;
+    .log-table td { padding: .75rem .9rem; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; line-height: 1.5; }
+    .log-table tr:last-child td { border-bottom: none; }
+    .log-table td:first-child { color: var(--text); font-weight: 500; white-space: nowrap; }
+    .log-table tr:hover td { background: color-mix(in srgb, var(--session-accent) 4%, transparent); }
+
+    /* ── Builder exercise ── */
+    .exercise-box {
+      background: color-mix(in srgb, var(--session-accent) 6%, var(--glass));
+      border: 1px dashed color-mix(in srgb, var(--session-accent) 50%, transparent);
+      padding: 2rem 2rem 1.75rem; border-radius: 14px; margin: 2.5rem 0;
     }
-    .slide-big em { color: var(--session-accent); font-style: italic; }
-    .slide-list {
-      list-style: none; padding: 0; margin: 0;
-      display: flex; flex-direction: column; gap: .9rem;
-      counter-reset: slide-counter;
+    .exercise-box h3 { margin-top: 0; }
+    .builder-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-bottom: 1.25rem;
     }
-    .slide-list li {
-      counter-increment: slide-counter; display: flex; align-items: flex-start; gap: 1.2rem;
-      font-size: clamp(1rem, 2vw, 1.15rem); line-height: 1.5; color: var(--text-secondary);
+    @media (max-width: 580px) { .builder-grid { grid-template-columns: 1fr; } }
+    .builder-field { display: flex; flex-direction: column; gap: .3rem; }
+    .builder-label {
+      font-family: 'Inter', sans-serif; font-size: .58rem; font-weight: 700;
+      letter-spacing: .15em; text-transform: uppercase; color: var(--session-accent);
     }
-    .slide-list li::before {
-      content: counter(slide-counter, decimal-leading-zero);
-      font-family: "Inter", sans-serif; font-size: .65rem; font-weight: 700;
-      letter-spacing: .05em; color: var(--session-accent); min-width: 2rem; padding-top: .25em;
+    .builder-sub {
+      font-family: 'Inter', sans-serif; font-size: .62rem; color: var(--text-secondary); margin-bottom: .1rem;
     }
-    .slide-list li strong { color: var(--text); font-weight: 600; }
-    .slide-list li em { color: var(--session-accent); font-style: normal; }
-    @media (max-width: 600px) { .slide { padding: 2rem 1.5rem; min-height: 240px; } }
+    .builder-input {
+      background: var(--glass); border: 1px solid var(--border); border-radius: 6px;
+      color: var(--text); font-family: var(--ff-body); font-size: .85rem;
+      padding: .6rem .85rem; transition: border-color .2s; resize: none;
+    }
+    .builder-input:focus { outline: none; border-color: var(--session-accent); }
+    .builder-input::placeholder { color: color-mix(in srgb, var(--text-secondary) 50%, transparent); font-style: italic; }
+    .build-btn {
+      font-family: 'Inter', sans-serif; font-size: .65rem; letter-spacing: .15em;
+      text-transform: uppercase; font-weight: 700; padding: .65rem 1.6rem;
+      border-radius: 8px; border: 1px solid var(--session-accent);
+      background: color-mix(in srgb, var(--session-accent) 12%, transparent);
+      color: var(--session-accent); cursor: pointer; transition: all .15s;
+      margin-top: .5rem;
+    }
+    .build-btn:hover { background: color-mix(in srgb, var(--session-accent) 22%, transparent); }
+    .builder-output {
+      margin-top: 1.5rem; display: none; flex-direction: column; gap: 1rem;
+    }
+    .builder-output.visible { display: flex; }
+    .out-section-label {
+      font-family: 'Inter', sans-serif; font-size: .55rem; font-weight: 700;
+      letter-spacing: .2em; text-transform: uppercase; color: var(--session-accent);
+      margin-bottom: .3rem;
+    }
+    .out-copy-row { display: flex; align-items: flex-start; gap: .75rem; }
+    .out-copy-row .code-block { flex: 1; margin: 0; font-size: .78rem; }
+    .copy-btn {
+      font-family: 'Inter', sans-serif; font-size: .55rem; letter-spacing: .1em;
+      text-transform: uppercase; font-weight: 600; padding: .4rem .85rem;
+      border-radius: 5px; border: 1px solid var(--border); background: var(--glass);
+      color: var(--text-secondary); cursor: pointer; white-space: nowrap;
+      transition: all .15s; margin-top: .1rem; flex-shrink: 0;
+    }
+    .copy-btn:hover { border-color: var(--session-accent); color: var(--session-accent); }
+    .copy-btn.copied { color: #a5d6a7; border-color: #a5d6a7; }
+
+    /* ── Takeaway ── */
+    .takeaway {
+      margin-top: 3rem; padding: 1.5rem 2rem; border-radius: 12px;
+      border: 1px solid color-mix(in srgb, var(--session-accent) 30%, transparent);
+      background: color-mix(in srgb, var(--session-accent) 5%, transparent);
+    }
+    .takeaway h3 { margin-top: 0; }
+    .takeaway p { margin-bottom: 0; font-size: .95rem; }
   </style>
 </head>
 <body>
@@ -105,19 +185,218 @@
   <div class="s-crumb">
     <a href="../../" style="color:inherit;text-decoration:none;">Home</a> · Level 1 · <span>Session 4</span>
   </div>
+
   <div class="s-hero">
     <div class="s-badge">⚗️ Level 1 of 3 · Session 4 of 5</div>
     <p class="s-label">Level 1 · Foundations</p>
     <h1 class="s-title">The Protocol</h1>
     <p class="s-subtitle">From Question to Search String</p>
-    <p class="s-oneliner">How do you build a reproducible search strategy?</p>
+    <p class="s-oneliner">How do you translate a PECO-F question into a reproducible search strategy — one you can log, hand off, and defend?</p>
   </div>
 
-  
+  <div class="session-content">
+
+    <h2>Why reproducibility matters in a policy context</h2>
+    <p>A literature search that cannot be reproduced is not a search — it is a reading list. For WHO India work, reproducibility is not academic rigour for its own sake. It matters because a health financing recommendation that reaches a Joint Secretary or a state health ministry may be challenged on methodological grounds. "We searched PubMed" is not a protocol. A documented, replicable search string with date ranges, database names, and inclusion logic is.</p>
+    <p>AI tools make it easier to search — and easier to search inconsistently. This session gives you a five-step protocol that produces a defensible, repeatable search every time, including a log you can attach to any evidence brief.</p>
+
+    <h2>The five-step protocol</h2>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <div class="step-title">Lock your PECO-F elements</div>
+          <div class="step-desc">Before opening any tool, write out all five PECO-F elements in plain language. Do not start searching until you can state the population, intervention, comparator, outcome, and feasibility/equity constraint in one sentence each. A vague P or a missing F will produce a vague search. This is the session 3 output — if you skipped it, go back.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <div class="step-title">Expand each element into synonym clusters</div>
+          <div class="step-desc">Every PECO-F element has multiple valid terms. "Catastrophic health expenditure" is also "out-of-pocket payments," "financial catastrophe," "impoverishment," "financial hardship." "Health insurance" is also "social health insurance," "community-based health insurance," "CBHI," "PM-JAY," "government health scheme." List every synonym before you write a search string. AI tools are good at this expansion step — ask Claude or GPT to "generate all synonyms and related terms for [element]" before building the string.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <div class="step-title">Build the Boolean string</div>
+          <div class="step-desc">Combine synonym clusters using Boolean logic: OR within clusters (to catch all synonyms), AND between clusters (to require all PECO elements). Wrap each cluster in parentheses. Add geographic and date filters last. The structure is always: (P synonyms) AND (E synonyms) AND (O synonyms) AND (geography filter) — with C and F as optional refiners rather than mandatory ANDs, since over-constraining kills recall.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-body">
+          <div class="step-title">Run in sequence across tools</div>
+          <div class="step-desc">No single database covers the full literature. The minimum defensible sequence for WHO India health financing work: PubMed / Medline (indexed biomedical), Embase (broader European coverage), Cochrane (systematic reviews), Dimensions.ai (LMIC-filtered), plus a targeted grey literature search of HTAIn, NSSO, NHA, and WHO IRIS. Log the date, database, string, and result count for each run.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">05</div>
+        <div class="step-body">
+          <div class="step-title">Log everything in a search protocol table</div>
+          <div class="step-desc">A one-page protocol log attached to every brief makes the search auditable. It takes five minutes to complete and eliminates the most common methodological challenge to evidence synthesis: "How did you decide what to include?" See the template below.</div>
+        </div>
+      </div>
+    </div>
+
+    <h2>A worked example: PM-JAY and financial protection</h2>
+    <p>Starting question: <em>Does PM-JAY reduce catastrophic health expenditure among below-poverty-line households in India?</em></p>
+
+    <h3>Step 2 — synonym expansion</h3>
+    <div class="code-block"><span class="grp">P:</span> <span class="term">"below poverty line" OR "BPL" OR "low income" OR "poor households" OR "informal sector" OR "uninsured"</span>
+<span class="grp">E:</span> <span class="term">"PM-JAY" OR "Pradhan Mantri Jan Arogya Yojana" OR "Ayushman Bharat" OR "government health insurance" OR "social health insurance" OR "publicly funded health insurance"</span>
+<span class="grp">O:</span> <span class="term">"catastrophic health expenditure" OR "out-of-pocket payment" OR "financial protection" OR "financial hardship" OR "impoverishment" OR "financial risk protection"</span>
+<span class="grp">Geography:</span> <span class="term">"India" OR "South Asia"</span></div>
+    <div class="code-caption">Synonym clusters — one per PECO element, before Boolean assembly</div>
+
+    <h3>Step 3 — Boolean string</h3>
+    <div class="code-block"><span class="grp">(</span><span class="term">"below poverty line" OR "BPL" OR "low income" OR "poor households" OR "informal sector"</span><span class="grp">)</span>
+<span class="op">AND</span>
+<span class="grp">(</span><span class="term">"PM-JAY" OR "Pradhan Mantri Jan Arogya Yojana" OR "Ayushman Bharat" OR "government health insurance" OR "social health insurance" OR "publicly funded health insurance"</span><span class="grp">)</span>
+<span class="op">AND</span>
+<span class="grp">(</span><span class="term">"catastrophic health expenditure" OR "out-of-pocket payment" OR "financial protection" OR "financial risk protection" OR "impoverishment"</span><span class="grp">)</span>
+<span class="op">AND</span>
+<span class="grp">(</span><span class="term">"India" OR "South Asia"</span><span class="grp">)</span></div>
+    <div class="code-caption">PubMed / Embase format — paste directly into database advanced search</div>
+
+    <h3>AI prompt version (for Elicit, Claude, Consensus)</h3>
+    <div class="q-block">
+      <span class="q-label">Paste-ready AI prompt</span>
+      "Search for systematic reviews and economic evaluations published after 2015 on whether publicly funded health insurance schemes — specifically PM-JAY or Ayushman Bharat — reduce catastrophic health expenditure or out-of-pocket payments among low-income or below-poverty-line households in India. Include studies that report equity outcomes disaggregated by income quintile, gender, or geography. Exclude studies focused solely on clinical outcomes without financial protection measures."
+    </div>
+
+    <h2>The search protocol log</h2>
+    <p>Every search should generate a one-page log. Here is the minimum structure — fill one row per database run:</p>
+
+    <table class="log-table">
+      <thead>
+        <tr>
+          <th>Database / Source</th>
+          <th>Date run</th>
+          <th>Search string / query</th>
+          <th>Filters applied</th>
+          <th>Results</th>
+          <th>Included after screening</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>PubMed</td>
+          <td>2024-11-12</td>
+          <td>(PM-JAY OR Ayushman Bharat…) AND (catastrophic…) AND (India…)</td>
+          <td>2015–2024 · English</td>
+          <td>147</td>
+          <td>18</td>
+        </tr>
+        <tr>
+          <td>Cochrane</td>
+          <td>2024-11-12</td>
+          <td>Same string, simplified</td>
+          <td>Systematic reviews only</td>
+          <td>9</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>Dimensions.ai</td>
+          <td>2024-11-13</td>
+          <td>Natural language query + LMIC filter</td>
+          <td>India · 2015–2024</td>
+          <td>203</td>
+          <td>22</td>
+        </tr>
+        <tr>
+          <td>HTAIn website</td>
+          <td>2024-11-13</td>
+          <td>Manual browse · PM-JAY category</td>
+          <td>—</td>
+          <td>6 reports</td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>WHO IRIS</td>
+          <td>2024-11-13</td>
+          <td>"financial protection" AND "India"</td>
+          <td>2015–2024</td>
+          <td>31</td>
+          <td>5</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Build your own search string</h2>
+
+    <div class="exercise-box">
+      <h3>⚗️ String builder — enter your PECO-F elements</h3>
+      <p style="font-size:.85rem;margin-bottom:1.25rem;">Fill in your elements using plain language or synonyms separated by commas. The builder will assemble a Boolean database string and a copy-paste AI prompt for you.</p>
+
+      <div class="builder-grid">
+        <div class="builder-field">
+          <span class="builder-label">P — Population</span>
+          <span class="builder-sub">e.g. below poverty line households, informal sector workers</span>
+          <textarea class="builder-input" id="b-p" rows="2" placeholder="informal workers, uninsured households, BPL"></textarea>
+        </div>
+        <div class="builder-field">
+          <span class="builder-label">E — Intervention / Exposure</span>
+          <span class="builder-sub">e.g. community health insurance, PM-JAY, tax-funded coverage</span>
+          <textarea class="builder-input" id="b-e" rows="2" placeholder="community health insurance, social health insurance, CBHI"></textarea>
+        </div>
+        <div class="builder-field">
+          <span class="builder-label">O — Outcome</span>
+          <span class="builder-sub">e.g. catastrophic expenditure, financial risk protection, utilisation</span>
+          <textarea class="builder-input" id="b-o" rows="2" placeholder="catastrophic health expenditure, out-of-pocket payments, impoverishment"></textarea>
+        </div>
+        <div class="builder-field">
+          <span class="builder-label">F — Equity / Feasibility constraint</span>
+          <span class="builder-sub">e.g. gender equity, income quintile, willingness to pay</span>
+          <textarea class="builder-input" id="b-f" rows="2" placeholder="equity, income quintile, gender, willingness to pay"></textarea>
+        </div>
+      </div>
+
+      <div class="builder-field" style="margin-bottom:.75rem;">
+        <span class="builder-label">Geography</span>
+        <span class="builder-sub">Leave blank for global; add countries or regions to narrow</span>
+        <textarea class="builder-input" id="b-geo" rows="1" placeholder="India, South Asia, LMIC"></textarea>
+      </div>
+
+      <button class="build-btn" onclick="buildString()">Build search string →</button>
+
+      <div class="builder-output" id="builder-output">
+
+        <div>
+          <div class="out-section-label">Boolean string — for PubMed / Embase / Cochrane</div>
+          <div class="out-copy-row">
+            <div class="code-block" id="out-boolean"></div>
+            <button class="copy-btn" onclick="copyText('out-boolean', this)">Copy</button>
+          </div>
+        </div>
+
+        <div>
+          <div class="out-section-label">AI prompt — for Elicit, Claude, Consensus</div>
+          <div class="out-copy-row">
+            <div class="code-block" id="out-prompt"></div>
+            <button class="copy-btn" onclick="copyText('out-prompt', this)">Copy</button>
+          </div>
+        </div>
+
+        <div>
+          <div class="out-section-label">Grey literature checklist — run manually</div>
+          <div class="code-block" id="out-grey"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="takeaway">
+      <h3>🎯 Key takeaway</h3>
+      <p>A search protocol is not overhead — it is the thing that makes your evidence brief defensible when challenged. The five steps are: lock PECO-F, expand synonyms, build Boolean string, run in sequence across databases, and log everything. The protocol log from this session becomes the methodology appendix of the brief you write in Session 5. Build it once; it takes ten minutes and saves ten hours of justification later.</p>
+    </div>
+
+  </div><!-- /session-content -->
 
   <nav class="s-nav" aria-label="Session navigation">
-    <a class='s-nav-btn' href='session3.html'>← Previous</a>
-    <a class='s-nav-btn s-nav-next' href='session5.html'>Next →</a>
+    <a class="s-nav-btn" href="session3.html">← Previous</a>
+    <a class="s-nav-btn s-nav-next" href="session5.html">Next →</a>
   </nav>
 </div>
 
@@ -125,11 +404,80 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
 <script src="../../js/shared.js"></script>
 <script>
+  /* ── scroll spine ── */
   const spine = document.getElementById('spine');
   window.addEventListener('scroll', () => {
     const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
     spine.style.height = Math.min(pct, 100) + '%';
   }, { passive: true });
+
+  /* ── string builder ── */
+  function tokenise(str) {
+    return str.split(',').map(s => s.trim()).filter(Boolean);
+  }
+
+  function booleanCluster(tokens) {
+    if (!tokens.length) return null;
+    if (tokens.length === 1) return `"${tokens[0]}"`;
+    return '(' + tokens.map(t => `"${t}"`).join(' OR ') + ')';
+  }
+
+  function buildString() {
+    const p   = tokenise(document.getElementById('b-p').value);
+    const e   = tokenise(document.getElementById('b-e').value);
+    const o   = tokenise(document.getElementById('b-o').value);
+    const f   = tokenise(document.getElementById('b-f').value);
+    const geo = tokenise(document.getElementById('b-geo').value);
+
+    if (!p.length && !e.length && !o.length) {
+      alert('Please fill in at least Population, Intervention, and Outcome before building.');
+      return;
+    }
+
+    // ── Boolean string ──
+    const clusters = [p, e, o].map(booleanCluster).filter(Boolean);
+    if (geo.length) clusters.push(booleanCluster(geo));
+    const boolStr = clusters.join('\nAND\n');
+
+    // ── AI prompt ──
+    const pTxt  = p.join(', ')   || '[population]';
+    const eTxt  = e.join(', ')   || '[intervention]';
+    const oTxt  = o.join(', ')   || '[outcome]';
+    const fTxt  = f.join(', ')   || 'equity and feasibility';
+    const gTxt  = geo.join(', ') || 'low- and middle-income countries';
+    const prompt = `Search for systematic reviews and economic evaluations published after 2015 examining whether ${eTxt} affects ${oTxt} among ${pTxt} in ${gTxt}. Include studies that report ${fTxt} outcomes. Exclude studies focused solely on clinical outcomes without financial or economic measures. Prioritise LMIC evidence where available.`;
+
+    // ── Grey literature checklist ──
+    const grey = [
+      '☐  HTAIn (htain.mohfw.gov.in) — search: ' + (e[0] || 'intervention'),
+      '☐  National Health Accounts India (mohfw.gov.in/nha)',
+      '☐  NSSO / NSO survey reports (mospi.gov.in)',
+      '☐  NITI Aayog working papers (niti.gov.in)',
+      '☐  WHO IRIS (iris.who.int) — search: ' + (o[0] || 'outcome') + ' ' + (geo[0] || 'India'),
+      '☐  World Bank Open Knowledge Repository — health financing',
+      '☐  State NHA / health budget documents (manual)',
+    ].join('\n');
+
+    document.getElementById('out-boolean').textContent = boolStr;
+    document.getElementById('out-prompt').textContent  = prompt;
+    document.getElementById('out-grey').textContent    = grey;
+    document.getElementById('builder-output').classList.add('visible');
+    document.getElementById('builder-output').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function copyText(elId, btn) {
+    const text = document.getElementById(elId).textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied ✓';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+
+  /* allow Enter to trigger build in last textarea */
+  document.getElementById('b-geo').addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); buildString(); }
+  });
 </script>
 </body>
 </html>
