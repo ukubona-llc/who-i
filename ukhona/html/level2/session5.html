@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>👁️ Surveillance Use Cases · Level 2 Session 5</title>
-  <meta name="description" content="How can AI assist ongoing evidence surveillance between full reviews?">
+  <meta name="description" content="How do you build an AI-assisted evidence surveillance system that keeps a WHO India brief current without running a full review every time?">
   <meta name="color-scheme" content="dark light">
   <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-dark.ico" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-light.ico" media="(prefers-color-scheme: light)">
@@ -25,7 +25,7 @@
     }
     body { font-family: var(--ff-body); font-weight: 300; }
     .spine { position: fixed; left: 0; top: 0; width: 3px; height: 0%; background: var(--session-accent); z-index: 200; transition: height .1s linear; }
-    .s-page { padding-top: calc(var(--header-h) + 3rem); padding-bottom: 6rem; max-width: 780px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
+    .s-page { padding-top: calc(var(--header-h) + 3rem); padding-bottom: 6rem; max-width: 860px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
     .s-crumb { font-family: 'Inter', sans-serif; font-size: .6rem; letter-spacing: .3em; text-transform: uppercase; color: var(--text-secondary); opacity: .5; margin-bottom: 2.5rem; display: flex; gap: .75rem; align-items: center; }
     .s-crumb span { color: var(--session-accent); opacity: 1; }
     .s-hero { margin-bottom: 3.5rem; }
@@ -39,27 +39,84 @@
     .s-nav-btn:hover { border-color: var(--session-accent); color: var(--session-accent); }
     .s-nav-next { margin-left: auto; }
     @media (max-width: 600px) { .s-page { padding-left: 1.25rem; padding-right: 1.25rem; } }
-    
-    .s-section { margin-bottom: 3rem; padding-bottom: 3rem; border-bottom: 1px solid var(--border); }
-    .s-section:last-of-type { border-bottom: none; }
-    .s-section h2 {
-      font-family: var(--ff-display); font-size: 1.3rem; font-weight: 600;
-      color: var(--text); margin-bottom: 1.25rem;
-      padding-left: 1rem; border-left: 3px solid var(--session-accent);
-    }
-    .s-section ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: .6rem; }
-    .s-section li {
-      padding: .7rem 1rem .7rem 1.25rem; background: var(--glass);
-      border: 1px solid var(--border); border-radius: 8px;
-      font-size: .95rem; color: var(--text-secondary); line-height: 1.65; transition: var(--transition);
-    }
-    .s-section li::before { content: "▸"; color: var(--session-accent); margin-right: .6rem; font-size: .75rem; }
-    .s-section li:hover {
-      background: color-mix(in srgb, var(--session-accent) 5%, var(--glass));
-      border-color: var(--session-accent); color: var(--text);
-    }
-    .s-section li strong { color: var(--text); font-weight: 600; }
-    .s-section li em { color: var(--session-accent); font-style: italic; }
+
+    /* ── content ── */
+    .session-content { margin-top: 2rem; line-height: 1.8; color: var(--text-secondary); }
+    .session-content p { margin-bottom: 1.25rem; font-size: clamp(.95rem, 2vw, 1.05rem); }
+    .session-content h2 { font-family: var(--ff-display); font-size: clamp(1.4rem, 3.5vw, 2rem); font-weight: 800; color: var(--text); margin: 3rem 0 1rem; letter-spacing: -.02em; }
+    .session-content h3 { font-family: 'Inter', sans-serif; font-size: .65rem; letter-spacing: .3em; text-transform: uppercase; color: var(--session-accent); margin: 2rem 0 .75rem; font-weight: 700; }
+    .session-content strong { color: var(--text); font-weight: 600; }
+    .session-content ul { padding-left: 1.5rem; margin-bottom: 1.25rem; }
+    .session-content ul li { margin-bottom: .5rem; font-size: clamp(.95rem, 2vw, 1.05rem); }
+
+    /* ── surveillance tiers ── */
+    .tiers { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(240px,100%), 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin: 1.75rem 0; }
+    .tier-card { background: var(--glass); padding: 1.2rem 1.4rem; display: flex; flex-direction: column; gap: .45rem; }
+    .tier-badge { font-family: 'Inter', sans-serif; font-size: .52rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--session-accent); opacity: .7; }
+    .tier-title { font-family: var(--ff-display); font-size: 1.05rem; font-weight: 700; color: var(--text); line-height: 1.2; }
+    .tier-freq { font-family: 'Inter', sans-serif; font-size: .68rem; font-weight: 600; color: var(--session-accent); }
+    .tier-desc { font-family: 'Inter', sans-serif; font-size: .73rem; font-weight: 300; line-height: 1.6; color: var(--text-secondary); }
+    .tier-tools { font-family: 'Inter', sans-serif; font-size: .65rem; font-weight: 500; color: var(--text); margin-top: .2rem; }
+
+    /* ── trigger table ── */
+    .trigger-table { width: 100%; border-collapse: collapse; margin: 1.75rem 0; font-size: .82rem; }
+    .trigger-table th { background: color-mix(in srgb, var(--session-accent) 12%, transparent); color: var(--text); font-family: 'Inter', sans-serif; font-size: .57rem; letter-spacing: .15em; text-transform: uppercase; font-weight: 700; padding: .7rem 1rem; text-align: left; border-bottom: 1px solid var(--session-accent); }
+    .trigger-table td { padding: .8rem 1rem; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; line-height: 1.55; }
+    .trigger-table tr:last-child td { border-bottom: none; }
+    .trigger-table td:first-child { color: var(--text); font-weight: 500; font-family: 'Inter', sans-serif; }
+    .trigger-table tr:hover td { background: color-mix(in srgb, var(--session-accent) 4%, transparent); }
+    .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: .4rem; vertical-align: middle; }
+    .dot-high { background: #ef9a9a; }
+    .dot-med { background: #ffcc80; }
+    .dot-low { background: #a9e6b4; }
+
+    /* ── worked signal example ── */
+    .signal-box { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin: 1.75rem 0; }
+    .signal-header { padding: .75rem 1.25rem; background: color-mix(in srgb, var(--session-accent) 9%, transparent); border-bottom: 1px solid var(--border); font-family: 'Inter', sans-serif; font-size: .58rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--session-accent); }
+    .signal-body { padding: 1.25rem 1.5rem; background: var(--glass); display: flex; flex-direction: column; gap: .65rem; }
+    .signal-row { display: flex; align-items: flex-start; gap: .85rem; }
+    .signal-label { font-family: 'Inter', sans-serif; font-size: .68rem; font-weight: 700; color: var(--text); min-width: 100px; flex-shrink: 0; padding-top: .05rem; }
+    .signal-val { font-family: 'Inter', sans-serif; font-size: .78rem; font-weight: 300; line-height: 1.6; color: var(--text-secondary); }
+    .signal-action { background: color-mix(in srgb, var(--session-accent) 7%, transparent); border: 1px solid color-mix(in srgb, var(--session-accent) 25%, transparent); border-radius: 6px; padding: .65rem 1rem; font-family: 'Inter', sans-serif; font-size: .75rem; font-weight: 400; color: var(--text); line-height: 1.55; margin-top: .25rem; }
+
+    /* ── Level 2 completion ── */
+    .completion-banner { margin: 3rem 0 2rem; padding: 2rem 2.5rem; border-radius: 14px; border: 1px solid color-mix(in srgb, var(--session-accent) 40%, transparent); background: color-mix(in srgb, var(--session-accent) 7%, transparent); display: flex; flex-direction: column; gap: .6rem; }
+    .completion-eyebrow { font-family: 'Inter', sans-serif; font-size: .55rem; font-weight: 700; letter-spacing: .25em; text-transform: uppercase; color: var(--session-accent); }
+    .completion-title { font-family: var(--ff-display); font-size: clamp(1.4rem, 3vw, 1.9rem); font-weight: 800; color: var(--text); line-height: 1.15; }
+    .completion-body { font-family: 'Inter', sans-serif; font-size: .82rem; font-weight: 300; line-height: 1.65; color: var(--text-secondary); max-width: 580px; }
+    .completion-link { display: inline-flex; align-items: center; gap: .5rem; margin-top: .5rem; font-family: 'Inter', sans-serif; font-size: .65rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--session-accent); text-decoration: none; border: 1px solid color-mix(in srgb, var(--session-accent) 40%, transparent); padding: .6rem 1.4rem; border-radius: 8px; background: color-mix(in srgb, var(--session-accent) 8%, transparent); transition: all .15s; width: fit-content; }
+    .completion-link:hover { background: color-mix(in srgb, var(--session-accent) 18%, transparent); border-color: var(--session-accent); }
+
+    /* ── exercise ── */
+    .exercise-box { background: color-mix(in srgb, var(--session-accent) 5%, var(--glass)); border: 1px dashed color-mix(in srgb, var(--session-accent) 45%, transparent); padding: 2rem 2rem 1.75rem; border-radius: 14px; margin: 2.5rem 0; }
+    .exercise-box h3 { margin-top: 0; }
+    .ex-fields { display: flex; flex-direction: column; gap: .85rem; margin-bottom: 1.1rem; }
+    .ex-row { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+    @media (max-width: 540px) { .ex-row { grid-template-columns: 1fr; } }
+    .ex-field { display: flex; flex-direction: column; gap: .3rem; }
+    .ex-label { font-family: 'Inter', sans-serif; font-size: .58rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--session-accent); }
+    .ex-sub { font-family: 'Inter', sans-serif; font-size: .62rem; color: var(--text-secondary); }
+    .ex-input { background: var(--glass); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-family: var(--ff-body); font-size: .85rem; padding: .55rem .85rem; transition: border-color .2s; }
+    .ex-input:focus { outline: none; border-color: var(--session-accent); }
+    .ex-input::placeholder { color: color-mix(in srgb, var(--text-secondary) 45%, transparent); font-style: italic; font-size: .8rem; }
+    .ex-textarea { background: var(--glass); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-family: var(--ff-body); font-size: .85rem; padding: .65rem .9rem; resize: vertical; min-height: 80px; transition: border-color .2s; }
+    .ex-textarea:focus { outline: none; border-color: var(--session-accent); }
+    .ex-textarea::placeholder { color: color-mix(in srgb, var(--text-secondary) 45%, transparent); font-style: italic; }
+    .run-btn { font-family: 'Inter', sans-serif; font-size: .65rem; letter-spacing: .15em; text-transform: uppercase; font-weight: 700; padding: .7rem 1.8rem; border-radius: 8px; border: 1px solid var(--session-accent); background: color-mix(in srgb, var(--session-accent) 12%, transparent); color: var(--session-accent); cursor: pointer; transition: all .15s; }
+    .run-btn:hover:not(:disabled) { background: color-mix(in srgb, var(--session-accent) 22%, transparent); }
+    .run-btn:disabled { opacity: .4; cursor: not-allowed; }
+    .plan-output { margin-top: 1.5rem; display: none; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .plan-output.visible { display: block; }
+    .po-header { padding: .7rem 1.2rem; background: color-mix(in srgb, var(--session-accent) 10%, transparent); border-bottom: 1px solid var(--border); font-family: 'Inter', sans-serif; font-size: .55rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--session-accent); display: flex; justify-content: space-between; align-items: center; }
+    .copy-btn { font-family: 'Inter', sans-serif; font-size: .52rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 600; padding: .3rem .75rem; border-radius: 4px; border: 1px solid var(--border); background: transparent; color: var(--text-secondary); cursor: pointer; transition: all .15s; }
+    .copy-btn:hover { border-color: var(--session-accent); color: var(--session-accent); }
+    .copy-btn.copied { color: #a5d6a7; border-color: #a5d6a7; }
+    .po-body { padding: 1.25rem 1.5rem; background: var(--glass); font-family: 'Inter', sans-serif; font-size: .84rem; line-height: 1.75; color: var(--text-secondary); white-space: pre-wrap; }
+
+    /* ── takeaway ── */
+    .takeaway { margin-top: 3rem; padding: 1.5rem 2rem; border-radius: 12px; border: 1px solid color-mix(in srgb, var(--session-accent) 30%, transparent); background: color-mix(in srgb, var(--session-accent) 5%, transparent); }
+    .takeaway h3 { margin-top: 0; }
+    .takeaway p { margin-bottom: 0; font-size: .95rem; }
   </style>
 </head>
 <body>
@@ -72,19 +129,183 @@
   <div class="s-crumb">
     <a href="../../" style="color:inherit;text-decoration:none;">Home</a> · Level 2 · <span>Session 5</span>
   </div>
+
   <div class="s-hero">
     <div class="s-badge">👁️ Level 2 of 3 · Session 5 of 5</div>
     <p class="s-label">Level 2 · Exploration</p>
     <h1 class="s-title">Surveillance Use Cases</h1>
     <p class="s-subtitle">AI Watching the Literature</p>
-    <p class="s-oneliner">How can AI assist ongoing evidence surveillance between full reviews?</p>
+    <p class="s-oneliner">How do you build an AI-assisted evidence surveillance system that keeps a WHO India brief current — without running a full review every time something changes?</p>
   </div>
 
-  
+  <div class="session-content">
+
+    <h2>The evidence half-life problem</h2>
+    <p>A well-conducted literature review has a shelf life. For health financing and UHC topics in India, that shelf life is often shorter than the policy cycle it is meant to inform. PM-JAY implementation data accumulates quarterly. NHA accounts are released annually. HTAIn publishes new assessments on a rolling basis. Budget Union statements shift the fiscal landscape. A brief produced in January may be materially outdated by the time it reaches a decision-maker in August.</p>
+    <p>The conventional response — running a new full systematic review whenever the evidence base shifts — is not realistic at WHO India's operating tempo. Evidence surveillance is the alternative: a structured, lightweight monitoring system that detects when new evidence is significant enough to update a brief, without requiring a full review to find out.</p>
+    <p>AI tools are well-suited to surveillance. They can monitor keyword combinations, flag new publications, screen abstracts against your inclusion criteria, and summarise what has changed. The challenge is not the technology — it is designing the surveillance protocol so that the signal-to-noise ratio stays high enough to be actionable rather than overwhelming.</p>
+
+    <h2>Three tiers of surveillance intensity</h2>
+    <p>Not every topic warrants the same surveillance investment. Calibrate by how fast the evidence base moves and how consequential a missed update would be:</p>
+
+    <div class="tiers">
+      <div class="tier-card">
+        <span class="tier-badge">Tier 1</span>
+        <div class="tier-title">Passive monitoring</div>
+        <div class="tier-freq">Monthly · 15 minutes</div>
+        <div class="tier-desc">Set-and-forget Google Scholar alerts and Semantic Scholar email notifications for your key search terms. Review the digest once a month. Flag anything that meets your PECO-F criteria for closer reading.</div>
+        <div class="tier-tools">Tools: Google Scholar alerts · Semantic Scholar · Research Rabbit updates</div>
+      </div>
+      <div class="tier-card">
+        <span class="tier-badge">Tier 2</span>
+        <div class="tier-title">Active triage</div>
+        <div class="tier-freq">Fortnightly · 45 minutes</div>
+        <div class="tier-desc">Run your saved search strings in PubMed and Dimensions.ai with a date filter for the last two weeks. Paste the abstract list into Claude or Elicit with a screening prompt. Review only the flagged abstracts yourself. Supplement with manual checks of HTAIn, MoHFW, and NITI Aayog for new grey literature.</div>
+        <div class="tier-tools">Tools: PubMed saved searches · Elicit · Claude · HTAIn manual browse</div>
+      </div>
+      <div class="tier-card">
+        <span class="tier-badge">Tier 3</span>
+        <div class="tier-title">Living evidence tracking</div>
+        <div class="tier-freq">Weekly · 90 minutes</div>
+        <div class="tier-desc">Reserved for active policy decisions with a tight timeline — a financing reform under deliberation, a budget submission window, an active HTAIn assessment. Run the full protocol at weekly cadence. Every new finding is immediately assessed against the current brief's conclusions for material impact.</div>
+        <div class="tier-tools">Tools: Full protocol stack · NotebookLM for document comparison · Claude for impact assessment</div>
+      </div>
+    </div>
+
+    <h2>What to watch — the India-specific signal list</h2>
+    <p>Generic keyword alerts produce noise. For WHO India health financing work, the high-value signals are specific. Monitor these sources and triggers with the highest priority:</p>
+
+    <table class="trigger-table">
+      <thead><tr><th>Source</th><th>What to watch for</th><th>Priority</th><th>Update trigger</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>HTAIn (htain.mohfw.gov.in)</td>
+          <td>New assessments on any intervention in your brief's topic area</td>
+          <td><span class="dot dot-high"></span>High</td>
+          <td>Any new HTAIn report overrides LMIC-extrapolated cost-effectiveness evidence</td>
+        </tr>
+        <tr>
+          <td>National Health Accounts India</td>
+          <td>Annual NHA release — OOP expenditure share, state-level financing data</td>
+          <td><span class="dot dot-high"></span>High</td>
+          <td>Updated OOP figures may change the baseline financial risk picture materially</td>
+        </tr>
+        <tr>
+          <td>PM-JAY / NHA (National Health Authority)</td>
+          <td>Quarterly claims data, state empanelment reports, beneficiary utilisation</td>
+          <td><span class="dot dot-high"></span>High</td>
+          <td>Claims settlement rates below 60% in a key state change the implementation feasibility evidence</td>
+        </tr>
+        <tr>
+          <td>PubMed — India health financing</td>
+          <td>New economic evaluations, PM-JAY impact studies, state insurance evaluations</td>
+          <td><span class="dot dot-med"></span>Medium</td>
+          <td>New RCT or well-designed DiD study with India-specific financial protection outcomes</td>
+        </tr>
+        <tr>
+          <td>Union Budget / State Budgets</td>
+          <td>Health allocation changes, NHM funding, PM-JAY budget revision</td>
+          <td><span class="dot dot-high"></span>High</td>
+          <td>Material change in fiscal space for the intervention under review</td>
+        </tr>
+        <tr>
+          <td>WHO IRIS / World Bank OKR</td>
+          <td>New LMIC systematic reviews on health financing, UHC progress reports</td>
+          <td><span class="dot dot-med"></span>Medium</td>
+          <td>New systematic review that includes India or South Asia with disaggregated results</td>
+        </tr>
+        <tr>
+          <td>NITI Aayog / MoHFW reports</td>
+          <td>State health index, NHP progress reports, disease burden updates</td>
+          <td><span class="dot dot-low"></span>Routine</td>
+          <td>New data that changes the population-level burden estimate underlying the brief's framing</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>From signal to action — a worked example</h2>
+    <p>Surveillance is only useful if it generates a clear decision: does this new finding change the brief, and if so, how? Here is how to process a new signal:</p>
+
+    <div class="signal-box">
+      <div class="signal-header">📡 Worked signal — new HTAIn assessment detected</div>
+      <div class="signal-body">
+        <div class="signal-row"><div class="signal-label">Signal detected</div><div class="signal-val">HTAIn publishes a new cost-effectiveness assessment of PM-JAY outpatient coverage expansion for rural BPL households — directly relevant to the brief you produced in Session 5.</div></div>
+        <div class="signal-row"><div class="signal-label">Immediate check</div><div class="signal-val">Upload the HTAIn PDF to Claude. Ask: "Does this assessment change any of the five findings or the recommendation in [paste brief text]? If yes, which finding changes and in what direction?"</div></div>
+        <div class="signal-row"><div class="signal-label">Three outcomes</div><div class="signal-val">
+          <strong>No material change:</strong> findings consistent with brief → log the new source in the protocol, no brief update required.<br>
+          <strong>Strengthens existing finding:</strong> brief finding now has India-specific HTAIn support → update the finding's quality caveat from "moderate, extrapolated from LMIC" to "moderate, India HTAIn evidence."<br>
+          <strong>Contradicts brief finding:</strong> HTAIn shows no financial protection effect where brief claimed moderate benefit → brief must be updated or withdrawn before next circulation.
+        </div></div>
+        <div class="signal-action">Action rule: if a new HTAIn or peer-reviewed India study materially contradicts a brief recommendation, the brief must carry a visible update note before any further circulation. The surveillance system's value is precisely that it catches this before a contradicted recommendation reaches a decision-maker.</div>
+      </div>
+    </div>
+
+    <h2>Build your surveillance plan</h2>
+
+    <div class="exercise-box">
+      <h3>👁️ Surveillance plan builder</h3>
+      <p style="font-size:.85rem;margin-bottom:1.1rem;">Describe a live WHO India topic you are monitoring or a brief you have recently produced. The tool will generate a structured surveillance protocol — sources, cadence, screening prompts, and update triggers — calibrated to your specific topic.</p>
+
+      <div class="ex-fields">
+        <div class="ex-row">
+          <div class="ex-field">
+            <span class="ex-label">Topic / brief title</span>
+            <span class="ex-sub">What evidence base are you monitoring?</span>
+            <input class="ex-input" id="sv-topic" type="text" placeholder="e.g. PM-JAY financial protection for informal workers, UP">
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Surveillance tier</span>
+            <span class="ex-sub">How fast is this evidence base moving?</span>
+            <select class="ex-input" id="sv-tier">
+              <option value="">Select tier…</option>
+              <option value="Tier 1 — Passive (monthly, ~15 min)">Tier 1 — Passive (monthly, ~15 min)</option>
+              <option value="Tier 2 — Active triage (fortnightly, ~45 min)">Tier 2 — Active triage (fortnightly, ~45 min)</option>
+              <option value="Tier 3 — Living evidence (weekly, ~90 min)">Tier 3 — Living evidence (weekly, ~90 min)</option>
+            </select>
+          </div>
+        </div>
+        <div class="ex-row">
+          <div class="ex-field">
+            <span class="ex-label">Key findings to protect</span>
+            <span class="ex-sub">The brief conclusions most at risk of being overturned</span>
+            <textarea class="ex-textarea" id="sv-findings" placeholder="e.g. PM-JAY reduces inpatient OOP by ~22% among BPL enrolled households; outpatient financial protection evidence is insufficient"></textarea>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Known evidence gaps</span>
+            <span class="ex-sub">What new evidence would most change the brief?</span>
+            <textarea class="ex-textarea" id="sv-gaps" placeholder="e.g. No India RCT on outpatient coverage; claims settlement data only available for 3 states"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <button class="run-btn" id="run-btn" onclick="buildPlan()">Generate surveillance plan →</button>
+
+      <div class="plan-output" id="plan-output">
+        <div class="po-header">
+          <span>👁️ Surveillance protocol — ready to implement</span>
+          <button class="copy-btn" id="copy-btn" onclick="copyPlan(this)">Copy</button>
+        </div>
+        <div class="po-body" id="po-body"></div>
+      </div>
+    </div>
+
+    <div class="completion-banner">
+      <span class="completion-eyebrow">✅ Level 2 complete</span>
+      <div class="completion-title">You can now read AI-retrieved evidence critically.<br>Level 3 is where it becomes systemic.</div>
+      <div class="completion-body">You have worked through the five Exploration skills: detecting structural bias in AI outputs, running iterative prompt sequences, appraising economic studies for India usability, judging when statistical pooling is legitimate, and building surveillance systems that keep evidence current. Level 3 — Integration — asks the harder question: how do you embed all of this into institutional practice, navigate equity and ethics, and use AI to support decisions under genuine uncertainty and real political constraints?</div>
+      <a class="completion-link" href="../level3/session1.html">Begin Level 3 — Integration →</a>
+    </div>
+
+    <div class="takeaway">
+      <h3>🎯 Level 2 takeaway</h3>
+      <p>Evidence surveillance is the system that prevents a well-built brief from becoming a liability when the evidence base moves. The three tiers match surveillance intensity to topic velocity. The India-specific signal list prioritises HTAIn, NHA, and PM-JAY operational data above generic PubMed alerts — because those sources move faster and matter more for WHO India policy than any journal publication. Build the surveillance plan before you circulate the brief. The moment a brief reaches a decision-maker is the moment it starts ageing.</p>
+    </div>
+
+  </div>
 
   <nav class="s-nav" aria-label="Session navigation">
-    <a class='s-nav-btn' href='session4.html'>← Previous</a>
-    <a class='s-nav-btn s-nav-next' href='../level3/session1.html'>Next →</a>
+    <a class="s-nav-btn" href="session4.html">← Previous</a>
+    <a class="s-nav-btn s-nav-next" href="../level3/session1.html">Level 3 →</a>
   </nav>
 </div>
 
@@ -97,6 +318,85 @@
     const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
     spine.style.height = Math.min(pct, 100) + '%';
   }, { passive: true });
+
+  async function buildPlan() {
+    const topic    = document.getElementById('sv-topic').value.trim();
+    const tier     = document.getElementById('sv-tier').value;
+    const findings = document.getElementById('sv-findings').value.trim();
+    const gaps     = document.getElementById('sv-gaps').value.trim();
+    if (!topic) { alert('Please enter a topic or brief title before generating.'); return; }
+
+    const btn = document.getElementById('run-btn');
+    const out = document.getElementById('plan-output');
+    const body = document.getElementById('po-body');
+    btn.disabled = true; btn.textContent = 'Building plan…';
+    out.classList.remove('visible');
+
+    const system = `You are a senior health economics advisor supporting WHO India evidence surveillance. Generate a structured, actionable surveillance protocol for a specific WHO India health financing topic.
+
+The protocol must be immediately implementable — specific source names, exact search terms, realistic time estimates, and clear update triggers. Calibrate to India's health financing context: HTAIn, NHA, PM-JAY operational data, NSSO, and NITI Aayog are higher-priority sources than generic PubMed alerts.
+
+Use exactly this format:
+
+SURVEILLANCE PROTOCOL: [topic name]
+Tier: [tier selected]
+Estimated time per cycle: [realistic time]
+
+SOURCES TO MONITOR (in priority order)
+1. [Source name] — [what to check] — [frequency]
+2. [Source name] — [what to check] — [frequency]
+3. [continue for 5–7 sources]
+
+SCREENING PROMPT (paste into Claude or Elicit each cycle)
+[A ready-to-use AI prompt that screens new abstracts/documents against the brief's inclusion criteria. Include the specific findings to protect and the outcome definitions.]
+
+UPDATE TRIGGERS (when the brief must be revised)
+HIGH — [specific condition that requires immediate brief update]
+MEDIUM — [condition that requires update before next circulation]
+ROUTINE — [condition to log but not act on immediately]
+
+FIRST ACTION
+[One specific task to complete in the next 48 hours to set up this surveillance system — a Google Scholar alert to create, a bookmark to save, a saved PubMed search to set up.]
+
+Keep every item specific and actionable. No generic advice.`;
+
+    const msg = `Topic: ${topic}
+Surveillance tier requested: ${tier || 'not specified — recommend appropriate tier'}
+Key brief findings to protect: ${findings || 'not specified'}
+Known evidence gaps: ${gaps || 'not specified'}`;
+
+    try {
+      const resp = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          system,
+          messages: [{ role: 'user', content: msg }]
+        })
+      });
+      const data = await resp.json();
+      const result = data?.content?.[0]?.text || 'No response received.';
+      body.textContent = result;
+      out.classList.add('visible');
+      out.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } catch (err) {
+      body.textContent = 'Could not reach the AI service. Check your connection and try again.';
+      out.classList.add('visible');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Generate surveillance plan →';
+    }
+  }
+
+  function copyPlan(btn) {
+    const text = document.getElementById('po-body').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied ✓'; btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
 </script>
 </body>
 </html>

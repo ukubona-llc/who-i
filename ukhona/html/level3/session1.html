@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>🧬 Ethics of AI Evidence · Level 3 Session 1</title>
-  <meta name="description" content="What are the ethical limits of AI in evidence-based policy?">
+  <meta name="description" content="What are the ethical limits of AI in evidence-based policy — and how do you apply them to WHO India's specific context?">
   <meta name="color-scheme" content="dark light">
   <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-dark.ico" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-light.ico" media="(prefers-color-scheme: light)">
@@ -25,7 +25,7 @@
     }
     body { font-family: var(--ff-body); font-weight: 300; }
     .spine { position: fixed; left: 0; top: 0; width: 3px; height: 0%; background: var(--session-accent); z-index: 200; transition: height .1s linear; }
-    .s-page { padding-top: calc(var(--header-h) + 3rem); padding-bottom: 6rem; max-width: 780px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
+    .s-page { padding-top: calc(var(--header-h) + 3rem); padding-bottom: 6rem; max-width: 860px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
     .s-crumb { font-family: 'Inter', sans-serif; font-size: .6rem; letter-spacing: .3em; text-transform: uppercase; color: var(--text-secondary); opacity: .5; margin-bottom: 2.5rem; display: flex; gap: .75rem; align-items: center; }
     .s-crumb span { color: var(--session-accent); opacity: 1; }
     .s-hero { margin-bottom: 3.5rem; }
@@ -39,27 +39,82 @@
     .s-nav-btn:hover { border-color: var(--session-accent); color: var(--session-accent); }
     .s-nav-next { margin-left: auto; }
     @media (max-width: 600px) { .s-page { padding-left: 1.25rem; padding-right: 1.25rem; } }
-    
-    .s-section { margin-bottom: 3rem; padding-bottom: 3rem; border-bottom: 1px solid var(--border); }
-    .s-section:last-of-type { border-bottom: none; }
-    .s-section h2 {
-      font-family: var(--ff-display); font-size: 1.3rem; font-weight: 600;
-      color: var(--text); margin-bottom: 1.25rem;
-      padding-left: 1rem; border-left: 3px solid var(--session-accent);
+
+    /* ── content ── */
+    .session-content { margin-top: 2rem; line-height: 1.8; color: var(--text-secondary); }
+    .session-content p { margin-bottom: 1.25rem; font-size: clamp(.95rem, 2vw, 1.05rem); }
+    .session-content h2 { font-family: var(--ff-display); font-size: clamp(1.4rem, 3.5vw, 2rem); font-weight: 800; color: var(--text); margin: 3rem 0 1rem; letter-spacing: -.02em; }
+    .session-content h3 { font-family: 'Inter', sans-serif; font-size: .65rem; letter-spacing: .3em; text-transform: uppercase; color: var(--session-accent); margin: 2rem 0 .75rem; font-weight: 700; }
+    .session-content strong { color: var(--text); font-weight: 600; }
+    .session-content em { font-style: italic; }
+
+    /* ── welcome Level 3 ── */
+    .l3-welcome {
+      padding: 1.75rem 2rem; margin: 0 0 2rem;
+      background: color-mix(in srgb, var(--session-accent) 6%, transparent);
+      border: 1px solid color-mix(in srgb, var(--session-accent) 25%, transparent);
+      border-radius: 14px;
     }
-    .s-section ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: .6rem; }
-    .s-section li {
-      padding: .7rem 1rem .7rem 1.25rem; background: var(--glass);
-      border: 1px solid var(--border); border-radius: 8px;
-      font-size: .95rem; color: var(--text-secondary); line-height: 1.65; transition: var(--transition);
+    .l3-welcome p { margin-bottom: 0; font-size: clamp(.9rem, 1.8vw, 1rem); }
+
+    /* ── six principles grid ── */
+    .principles { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(260px,100%), 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin: 1.75rem 0; }
+    .pr-card { background: var(--glass); padding: 1.2rem 1.4rem; display: flex; flex-direction: column; gap: .45rem; }
+    .pr-num { font-family: 'Inter', sans-serif; font-size: .52rem; font-weight: 700; letter-spacing: .2em; color: var(--session-accent); opacity: .65; }
+    .pr-title { font-family: var(--ff-display); font-size: 1.05rem; font-weight: 700; color: var(--text); line-height: 1.2; }
+    .pr-who { font-family: 'Inter', sans-serif; font-size: .68rem; font-weight: 500; color: var(--session-accent); margin-bottom: .1rem; }
+    .pr-desc { font-family: 'Inter', sans-serif; font-size: .73rem; font-weight: 300; line-height: 1.6; color: var(--text-secondary); }
+    .pr-india { font-family: 'Inter', sans-serif; font-size: .68rem; font-weight: 400; color: var(--text); margin-top: .3rem; padding: .4rem .75rem; border-radius: 5px; background: color-mix(in srgb, var(--session-accent) 7%, transparent); border-left: 2px solid var(--session-accent); line-height: 1.5; }
+
+    /* ── lines AI must not cross ── */
+    .redlines { display: flex; flex-direction: column; gap: 0; margin: 1.75rem 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .rl-row { display: flex; border-bottom: 1px solid var(--border); }
+    .rl-row:last-child { border-bottom: none; }
+    .rl-icon { min-width: 52px; display: flex; align-items: flex-start; justify-content: center; padding-top: 1.1rem; background: color-mix(in srgb, #ef5350 8%, transparent); border-right: 1px solid var(--border); font-size: 1rem; }
+    .rl-body { padding: 1rem 1.3rem; background: var(--glass); flex: 1; }
+    .rl-title { font-family: var(--ff-display); font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: .25rem; }
+    .rl-desc { font-family: 'Inter', sans-serif; font-size: .76rem; font-weight: 300; line-height: 1.6; color: var(--text-secondary); }
+    .rl-india { font-family: 'Inter', sans-serif; font-size: .7rem; font-weight: 500; color: #ef9a9a; margin-top: .4rem; line-height: 1.5; }
+
+    /* ── disclosure template ── */
+    .disclosure-box {
+      background: var(--glass); border: 1px solid var(--border); border-radius: 12px;
+      overflow: hidden; margin: 1.75rem 0;
     }
-    .s-section li::before { content: "▸"; color: var(--session-accent); margin-right: .6rem; font-size: .75rem; }
-    .s-section li:hover {
-      background: color-mix(in srgb, var(--session-accent) 5%, var(--glass));
-      border-color: var(--session-accent); color: var(--text);
-    }
-    .s-section li strong { color: var(--text); font-weight: 600; }
-    .s-section li em { color: var(--session-accent); font-style: italic; }
+    .db-header { padding: .75rem 1.25rem; background: color-mix(in srgb, var(--session-accent) 9%, transparent); border-bottom: 1px solid var(--border); font-family: 'Inter', sans-serif; font-size: .58rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--session-accent); display: flex; justify-content: space-between; align-items: center; }
+    .db-body { padding: 1.25rem 1.5rem; font-family: 'Inter', sans-serif; font-size: .82rem; line-height: 1.75; color: var(--text-secondary); }
+    .db-body strong { color: var(--text); }
+    .copy-sm { font-family: 'Inter', sans-serif; font-size: .52rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 600; padding: .3rem .75rem; border-radius: 4px; border: 1px solid var(--border); background: transparent; color: var(--text-secondary); cursor: pointer; transition: all .15s; }
+    .copy-sm:hover { border-color: var(--session-accent); color: var(--session-accent); }
+    .copy-sm.copied { color: #a5d6a7; border-color: #a5d6a7; }
+
+    /* ── stress test ── */
+    .exercise-box { background: color-mix(in srgb, var(--session-accent) 5%, var(--glass)); border: 1px dashed color-mix(in srgb, var(--session-accent) 40%, transparent); padding: 2rem 2rem 1.75rem; border-radius: 14px; margin: 2.5rem 0; }
+    .exercise-box h3 { margin-top: 0; }
+    .ex-fields { display: flex; flex-direction: column; gap: .85rem; margin-bottom: 1.1rem; }
+    .ex-row { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+    @media (max-width: 540px) { .ex-row { grid-template-columns: 1fr; } }
+    .ex-field { display: flex; flex-direction: column; gap: .3rem; }
+    .ex-label { font-family: 'Inter', sans-serif; font-size: .58rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--session-accent); }
+    .ex-sub { font-family: 'Inter', sans-serif; font-size: .62rem; color: var(--text-secondary); }
+    .ex-input { background: var(--glass); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-family: var(--ff-body); font-size: .85rem; padding: .55rem .85rem; transition: border-color .2s; }
+    .ex-input:focus { outline: none; border-color: var(--session-accent); }
+    .ex-input::placeholder { color: color-mix(in srgb, var(--text-secondary) 45%, transparent); font-style: italic; font-size: .8rem; }
+    .ex-textarea { width: 100%; box-sizing: border-box; background: var(--glass); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-family: var(--ff-body); font-size: .88rem; padding: .7rem .9rem; resize: vertical; min-height: 100px; transition: border-color .2s; }
+    .ex-textarea:focus { outline: none; border-color: var(--session-accent); }
+    .ex-textarea::placeholder { color: color-mix(in srgb, var(--text-secondary) 45%, transparent); font-style: italic; }
+    .run-btn { font-family: 'Inter', sans-serif; font-size: .65rem; letter-spacing: .15em; text-transform: uppercase; font-weight: 700; padding: .7rem 1.8rem; border-radius: 8px; border: 1px solid var(--session-accent); background: color-mix(in srgb, var(--session-accent) 12%, transparent); color: var(--session-accent); cursor: pointer; transition: all .15s; }
+    .run-btn:hover:not(:disabled) { background: color-mix(in srgb, var(--session-accent) 22%, transparent); }
+    .run-btn:disabled { opacity: .4; cursor: not-allowed; }
+    .audit-output { margin-top: 1.5rem; display: none; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .audit-output.visible { display: block; }
+    .ao-header { padding: .7rem 1.2rem; background: color-mix(in srgb, var(--session-accent) 10%, transparent); border-bottom: 1px solid var(--border); font-family: 'Inter', sans-serif; font-size: .55rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--session-accent); display: flex; justify-content: space-between; align-items: center; }
+    .ao-body { padding: 1.25rem 1.5rem; background: var(--glass); font-family: 'Inter', sans-serif; font-size: .84rem; line-height: 1.75; color: var(--text-secondary); white-space: pre-wrap; }
+
+    /* ── takeaway ── */
+    .takeaway { margin-top: 3rem; padding: 1.5rem 2rem; border-radius: 12px; border: 1px solid color-mix(in srgb, var(--session-accent) 30%, transparent); background: color-mix(in srgb, var(--session-accent) 5%, transparent); }
+    .takeaway h3 { margin-top: 0; }
+    .takeaway p { margin-bottom: 0; font-size: .95rem; }
   </style>
 </head>
 <body>
@@ -72,19 +127,182 @@
   <div class="s-crumb">
     <a href="../../" style="color:inherit;text-decoration:none;">Home</a> · Level 3 · <span>Session 1</span>
   </div>
+
   <div class="s-hero">
     <div class="s-badge">🧬 Level 3 of 3 · Session 1 of 5</div>
     <p class="s-label">Level 3 · Integration</p>
     <h1 class="s-title">Ethics of AI Evidence</h1>
     <p class="s-subtitle">When the Algorithm Decides</p>
-    <p class="s-oneliner">What are the ethical limits of AI in evidence-based policy?</p>
+    <p class="s-oneliner">What are the ethical limits of AI in evidence-based policy — and what does WHO's own ethical framework require of you when AI touches a decision that affects a billion people?</p>
   </div>
 
-  
+  <div class="session-content">
+
+    <div class="l3-welcome">
+      <p>Level 3 assumes you can build a search, appraise a study, and write a brief. The Integration question is different: how do you use these tools responsibly when the stakes are institutional, the populations are vulnerable, and the political constraints are real? Ethics is not the last item on the checklist — it is the frame inside which all the technical skill operates. This session gives you that frame in concrete, applicable terms for WHO India work.</p>
+    </div>
+
+    <h2>The stakes are asymmetric</h2>
+    <p>When a WHO India evidence brief informs a health financing decision — an expansion of PM-JAY, a revision to state insurance benefit packages, a resource allocation across districts — the consequences are not evenly distributed. A recommendation that optimises for cost-efficiency at the aggregate level can simultaneously reduce financial protection for the poorest quintile. An AI tool that systematically under-retrieves evidence on scheduled tribe populations will produce a brief that is technically defensible and distributionally unjust.</p>
+    <p>The ethical obligation is not simply to be accurate. It is to be accurate <em>for the populations most at risk of being left out of the evidence base</em> — which, in India, are the poorest households, women, rural populations, and marginalised communities whose health-seeking behaviour and financial vulnerability are least represented in the published literature AI tools search.</p>
+
+    <h2>WHO's six ethical principles — applied to India</h2>
+    <p>WHO's 2021 Ethics and Governance of Artificial Intelligence for Health framework establishes six principles for AI use in health. They are not aspirational statements — they are operational requirements that apply directly to how this team uses AI for evidence synthesis.</p>
+
+    <div class="principles">
+      <div class="pr-card">
+        <span class="pr-num">01</span>
+        <div class="pr-title">Transparency</div>
+        <div class="pr-who">WHO principle: AI processes must be explainable</div>
+        <div class="pr-desc">Anyone who receives a WHO India brief should be able to understand how the evidence was retrieved, what tools were used, and what their limitations are. AI-assisted synthesis that is not disclosed is not transparent.</div>
+        <div class="pr-india">India application: Every brief using AI-assisted retrieval must include a methods note stating which tools were used and their known limitations for LMIC evidence. The protocol log from Session 4 is this disclosure.</div>
+      </div>
+      <div class="pr-card">
+        <span class="pr-num">02</span>
+        <div class="pr-title">Accountability</div>
+        <div class="pr-who">WHO principle: Human responsibility cannot be delegated to AI</div>
+        <div class="pr-desc">The brief's author is accountable for every finding and recommendation, regardless of which tool produced the first draft. "The AI said so" is not a defence when a recommendation causes harm. Human review and sign-off are non-negotiable.</div>
+        <div class="pr-india">India application: No AI-generated finding should appear in a WHO India brief without human verification against a primary source. The brief generator in Session 5 produces a first draft — not a final document.</div>
+      </div>
+      <div class="pr-card">
+        <span class="pr-num">03</span>
+        <div class="pr-title">Inclusiveness</div>
+        <div class="pr-who">WHO principle: AI must not perpetuate exclusion</div>
+        <div class="pr-desc">AI tools that fail to retrieve evidence on marginalised populations do not just miss them — they actively perpetuate their exclusion from policy by making it appear the evidence does not exist. Absence of evidence is not evidence of absence.</div>
+        <div class="pr-india">India application: Every brief must explicitly state which populations are and are not covered by the retrieved evidence. If evidence on ST/SC populations, women in informal employment, or rural households is absent, that absence must be named — not silently treated as a zero.</div>
+      </div>
+      <div class="pr-card">
+        <span class="pr-num">04</span>
+        <div class="pr-title">Equity</div>
+        <div class="pr-who">WHO principle: AI must actively advance health equity</div>
+        <div class="pr-desc">Equity is not served by neutral evidence synthesis. It requires actively seeking disaggregated evidence, weighting recommendations toward populations facing structural disadvantage, and flagging when aggregate findings mask distributional harm.</div>
+        <div class="pr-india">India application: The F dimension of PECO-F is an equity obligation, not an optional add-on. A brief on health insurance that does not disaggregate by income quintile has not met WHO's equity standard regardless of its methodological rigour.</div>
+      </div>
+      <div class="pr-card">
+        <span class="pr-num">05</span>
+        <div class="pr-title">Sustainability</div>
+        <div class="pr-who">WHO principle: AI use must be sustainable and context-appropriate</div>
+        <div class="pr-desc">Tools and workflows must be usable by the team over time — not dependent on a single expert, not priced out of reach, not requiring infrastructure that India's health system cannot sustain. Evidence workflows that break when a staff member leaves are not sustainable.</div>
+        <div class="pr-india">India application: The surveillance plans and protocol templates built in this curriculum are designed to be transferable, documented, and team-maintained — not locked to any one person's prompt library or paid subscription tier.</div>
+      </div>
+      <div class="pr-card">
+        <span class="pr-num">06</span>
+        <div class="pr-title">Data Protection</div>
+        <div class="pr-who">WHO principle: Health data must be protected</div>
+        <div class="pr-desc">Pasting sensitive health data — individual patient records, programme beneficiary lists, unpublished government data — into commercial AI tools may violate data protection obligations. The tool's training and storage practices determine the risk.</div>
+        <div class="pr-india">India application: Only publicly available or explicitly cleared data should be pasted into Claude, GPT, or Gemini for WHO India work. NSSO microdata, beneficiary records, and ministry working documents require explicit data governance clearance before AI processing.</div>
+      </div>
+    </div>
+
+    <h2>Five lines AI must not cross</h2>
+    <p>Beyond the six principles, there are five specific uses of AI in evidence synthesis that are ethically off-limits for WHO India work — not because the technology cannot do them, but because doing them would violate accountability, equity, or transparency obligations that WHO carries as a normative body.</p>
+
+    <div class="redlines">
+      <div class="rl-row">
+        <div class="rl-icon">⛔</div>
+        <div class="rl-body">
+          <div class="rl-title">AI as sole author of a policy recommendation</div>
+          <div class="rl-desc">A recommendation that reaches a Ministry or WHO country office must carry human analytical judgment — not just a prompt output. AI can draft; it cannot decide. The moment a brief's recommendation is written by AI without substantive human revision, accountability has been delegated to a system that cannot be held responsible.</div>
+          <div class="rl-india">WHO India context: this applies even when the AI output looks authoritative, cites plausible sources, and is formatted correctly. Plausibility is not accuracy. Format is not review.</div>
+        </div>
+      </div>
+      <div class="rl-row">
+        <div class="rl-icon">⛔</div>
+        <div class="rl-body">
+          <div class="rl-title">Undisclosed AI use in a submitted brief</div>
+          <div class="rl-desc">Submitting an AI-assisted brief without disclosing the AI contribution violates WHO's transparency principle and, in some contexts, may violate institutional integrity policies. Disclosure does not require apologising for using AI — it requires naming the tools and their role honestly.</div>
+          <div class="rl-india">WHO India context: the methods note template in the disclosure box below satisfies this requirement. It takes 90 seconds to complete and should be standard in every AI-assisted brief.</div>
+        </div>
+      </div>
+      <div class="rl-row">
+        <div class="rl-icon">⛔</div>
+        <div class="rl-body">
+          <div class="rl-title">Treating AI silence on a population as evidence of absence</div>
+          <div class="rl-desc">If an AI tool returns no evidence on a specific population — scheduled tribes, women in informal employment, migrants — that is a retrieval gap, not a research finding. Stating "no evidence was found" without noting the retrieval limitations implies the literature was adequately searched when it was not.</div>
+          <div class="rl-india">WHO India context: for any brief that will inform resource allocation across India's demographic diversity, the phrase "evidence is limited" must be followed by an explanation of why — retrieval tool limitations, publication gaps, or genuine absence of research.</div>
+        </div>
+      </div>
+      <div class="rl-row">
+        <div class="rl-icon">⛔</div>
+        <div class="rl-body">
+          <div class="rl-title">Using unverified AI-generated statistics in a circulated brief</div>
+          <div class="rl-desc">AI tools hallucinate specific numbers — cost-effectiveness thresholds, coverage rates, expenditure percentages — with the same confident tone they use for verified facts. An unverified statistic in a brief that reaches a Ministry is a liability that cannot be recalled once circulated.</div>
+          <div class="rl-india">WHO India context: every specific number in a brief — a percentage, a cost ratio, an incidence figure — must be traceable to a named, locatable source. If it cannot be found, it must be removed before circulation.</div>
+        </div>
+      </div>
+      <div class="rl-row">
+        <div class="rl-icon">⛔</div>
+        <div class="rl-body">
+          <div class="rl-title">Allowing AI efficiency to compress the equity review</div>
+          <div class="rl-desc">The speed of AI-assisted retrieval creates a new pressure: because a search can be done in hours instead of days, there is less time allocated to the equity review that should follow it. Speed is not an excuse for skipping disaggregation. A faster brief that omits equity analysis is not better — it is faster and worse.</div>
+          <div class="rl-india">WHO India context: the time saved by AI retrieval should be reinvested in equity analysis, not absorbed by the next deliverable. This is a team norm, not a methodological suggestion.</div>
+        </div>
+      </div>
+    </div>
+
+    <h2>AI disclosure — standard methods note</h2>
+    <p>This template satisfies WHO's transparency requirement. Copy it into the methods section or appendix of any AI-assisted brief before circulation. Adapt the bracketed fields.</p>
+
+    <div class="disclosure-box">
+      <div class="db-header">
+        <span>📋 Standard AI disclosure note — copy and adapt</span>
+        <button class="copy-sm" id="copy-disclosure" onclick="copyDisclosure(this)">Copy</button>
+      </div>
+      <div class="db-body" id="disclosure-text">
+        <strong>AI assistance disclosure</strong><br><br>
+        This evidence brief was produced with AI-assisted literature retrieval and synthesis. The following tools were used: [list tools — e.g. Elicit for structured extraction, Claude for document interrogation and first-draft synthesis]. AI-generated content was reviewed and verified by [name/role] against primary sources before inclusion. All specific statistics cited in this brief have been traced to named sources; unverified AI-generated figures were excluded.<br><br>
+        Known limitations of AI retrieval for this brief: [e.g. grey literature not indexed by Elicit; indexing lag of approximately 4–6 weeks; LMIC evidence under-represented relative to OECD literature]. These limitations are addressed through supplementary manual searches of HTAIn, NHA, and WHO IRIS (see search protocol log, Appendix [X]).<br><br>
+        <strong>Human accountability:</strong> The findings, evidence gaps, and recommendations in this brief reflect the analytical judgment of the named author(s). AI tools assisted retrieval and drafting; they did not determine the recommendation.
+      </div>
+    </div>
+
+    <h2>Stress-test your planned AI use</h2>
+
+    <div class="exercise-box">
+      <h3>🧬 Ethical stress-test — describe how you plan to use AI</h3>
+      <p style="font-size:.85rem;margin-bottom:1.1rem;">Describe a specific way you are planning to use AI in a WHO India evidence synthesis task. The tool will audit it against WHO's six ethical principles and the five red lines — and identify any obligations you need to address before proceeding.</p>
+
+      <div class="ex-fields">
+        <div class="ex-row">
+          <div class="ex-field">
+            <span class="ex-label">AI tool(s) you plan to use</span>
+            <span class="ex-sub">Which tools, for which steps</span>
+            <input class="ex-input" id="et-tools" type="text" placeholder="e.g. Elicit for screening, Claude for synthesis and brief drafting">
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Population affected by the policy</span>
+            <span class="ex-sub">Who will the brief's recommendation affect?</span>
+            <input class="ex-input" id="et-pop" type="text" placeholder="e.g. BPL households in rural UP, informal sector workers">
+          </div>
+        </div>
+        <div class="ex-field">
+          <span class="ex-label">Planned AI use — describe specifically</span>
+          <span class="ex-sub">What will AI do, what will humans do, what will be disclosed?</span>
+          <textarea class="ex-textarea" id="et-use" placeholder="e.g. I plan to use Elicit to screen 200 abstracts against my PECO-F criteria, then paste the 20 included abstracts into Claude to extract key findings and generate a first draft brief. I will verify the three main statistics against primary sources before circulating. The AI use will be disclosed in the methods note."></textarea>
+        </div>
+      </div>
+
+      <button class="run-btn" id="run-btn" onclick="runStressTest()">Run ethical audit →</button>
+
+      <div class="audit-output" id="audit-output">
+        <div class="ao-header">
+          <span>🧬 Ethical audit — WHO principles applied</span>
+          <button class="copy-sm" id="copy-audit" onclick="copyAudit(this)">Copy</button>
+        </div>
+        <div class="ao-body" id="ao-body"></div>
+      </div>
+    </div>
+
+    <div class="takeaway">
+      <h3>🎯 Key takeaway</h3>
+      <p>The ethical frame is not a constraint on good work — it is what makes the work defensible when it is challenged. WHO carries normative authority in India's health system. That authority depends on the trust that WHO evidence is produced with transparency, human accountability, and genuine attention to equity. AI tools that accelerate retrieval and synthesis are assets inside that frame. Outside it — undisclosed, unverified, equity-blind — they are liabilities. The disclosure note, the five red lines, and the stress-test in this session are the minimum ethical infrastructure for AI-assisted evidence work at WHO India. Session 2 takes the next question: how do you embed this into the institutional workflows of a country office?</p>
+    </div>
+
+  </div>
 
   <nav class="s-nav" aria-label="Session navigation">
-    <a class='s-nav-btn' href='../level2/session5.html'>← Previous</a>
-    <a class='s-nav-btn s-nav-next' href='session2.html'>Next →</a>
+    <a class="s-nav-btn" href="../level2/session5.html">← Previous</a>
+    <a class="s-nav-btn s-nav-next" href="session2.html">Next →</a>
   </nav>
 </div>
 
@@ -97,6 +315,100 @@
     const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
     spine.style.height = Math.min(pct, 100) + '%';
   }, { passive: true });
+
+  function copyDisclosure(btn) {
+    const text = document.getElementById('disclosure-text').innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied ✓'; btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+
+  async function runStressTest() {
+    const tools = document.getElementById('et-tools').value.trim();
+    const pop   = document.getElementById('et-pop').value.trim();
+    const use   = document.getElementById('et-use').value.trim();
+    if (!use) { alert('Please describe your planned AI use before running the audit.'); return; }
+
+    const btn  = document.getElementById('run-btn');
+    const out  = document.getElementById('audit-output');
+    const body = document.getElementById('ao-body');
+    btn.disabled = true; btn.textContent = 'Auditing…';
+    out.classList.remove('visible');
+
+    const system = `You are a WHO health ethics advisor specialising in AI governance for health policy in low- and middle-income countries. Audit a described AI use case against WHO's six ethical principles for AI in health and five specific red lines for WHO India evidence work.
+
+Be direct. Identify genuine issues — do not produce reassuring audit reports. If a planned use meets all requirements, say so briefly and note what would make it fail. If it violates a principle or red line, say exactly which one and what must change before proceeding.
+
+Use exactly this format:
+
+TRANSPARENCY
+Status: [MEETS / PARTIAL / FAILS]
+Note: [one sentence — is AI use disclosed? Is the methods note planned?]
+
+ACCOUNTABILITY  
+Status: [MEETS / PARTIAL / FAILS]
+Note: [one sentence — is human review and sign-off explicit? Is verification of statistics planned?]
+
+INCLUSIVENESS
+Status: [MEETS / PARTIAL / FAILS]
+Note: [one sentence — will marginalised populations be covered or explicitly acknowledged as absent?]
+
+EQUITY
+Status: [MEETS / PARTIAL / FAILS]
+Note: [one sentence — is disaggregated evidence being sought? Is the F dimension of PECO-F active?]
+
+SUSTAINABILITY
+Status: [MEETS / PARTIAL / FAILS]
+Note: [one sentence — is this workflow transferable and team-maintainable?]
+
+DATA PROTECTION
+Status: [MEETS / PARTIAL / FAILS]
+Note: [one sentence — is any sensitive or non-public data involved? Is it cleared for AI processing?]
+
+RED LINES CHECK
+[List only the red lines that are at risk or violated. If none: "No red lines at risk given the described use." Be specific about which red line and why.]
+
+OVERALL VERDICT
+[PROCEED / PROCEED WITH CONDITIONS / DO NOT PROCEED]
+Required actions before proceeding: [numbered list of specific, concrete changes — or "None" if the use is fully compliant]`;
+
+    const msg = `Tools planned: ${tools || 'not specified'}
+Population affected: ${pop || 'not specified'}
+Planned AI use: ${use}`;
+
+    try {
+      const resp = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          system,
+          messages: [{ role: 'user', content: msg }]
+        })
+      });
+      const data = await resp.json();
+      const result = data?.content?.[0]?.text || 'No response received.';
+      body.textContent = result;
+      out.classList.add('visible');
+      out.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } catch (err) {
+      body.textContent = 'Could not reach the AI service. Check your connection and try again.';
+      out.classList.add('visible');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Run ethical audit →';
+    }
+  }
+
+  function copyAudit(btn) {
+    const text = document.getElementById('ao-body').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied ✓'; btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
 </script>
 </body>
 </html>
