@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>🎯 The Output · Level 1 Session 5</title>
-  <meta name="description" content="How do you structure a policy brief from a literature review?">
+  <meta name="description" content="How do you turn a literature review into a policy brief that a decision-maker will actually use?">
   <meta name="color-scheme" content="dark light">
   <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-dark.ico" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-light.ico" media="(prefers-color-scheme: light)">
@@ -25,7 +25,7 @@
     }
     body { font-family: var(--ff-body); font-weight: 300; }
     .spine { position: fixed; left: 0; top: 0; width: 3px; height: 0%; background: var(--session-accent); z-index: 200; transition: height .1s linear; }
-    .s-page { padding-top: calc(var(--header-h) + 3rem); padding-bottom: 6rem; max-width: 780px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
+    .s-page { padding-top: calc(var(--header-h) + 3rem); padding-bottom: 6rem; max-width: 860px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
     .s-crumb { font-family: 'Inter', sans-serif; font-size: .6rem; letter-spacing: .3em; text-transform: uppercase; color: var(--text-secondary); opacity: .5; margin-bottom: 2.5rem; display: flex; gap: .75rem; align-items: center; }
     .s-crumb span { color: var(--session-accent); opacity: 1; }
     .s-hero { margin-bottom: 3.5rem; }
@@ -39,60 +39,176 @@
     .s-nav-btn:hover { border-color: var(--session-accent); color: var(--session-accent); }
     .s-nav-next { margin-left: auto; }
     @media (max-width: 600px) { .s-page { padding-left: 1.25rem; padding-right: 1.25rem; } }
-    
-    .s-page { max-width: 860px; }
-    .slide {
-      min-height: 320px; display: flex; flex-direction: column; justify-content: center;
-      padding: 3rem 3.5rem; margin-bottom: 2rem; border-radius: 16px;
-      background: var(--glass); border: 1px solid var(--border);
-      position: relative; overflow: hidden; transition: var(--transition);
+
+    /* ── Session content ── */
+    .session-content { margin-top: 2rem; line-height: 1.8; color: var(--text-secondary); }
+    .session-content p { margin-bottom: 1.25rem; font-size: clamp(.95rem, 2vw, 1.05rem); }
+    .session-content h2 { font-family: var(--ff-display); font-size: clamp(1.4rem, 3.5vw, 2rem); font-weight: 800; color: var(--text); margin: 3rem 0 1rem; letter-spacing: -.02em; }
+    .session-content h3 { font-family: 'Inter', sans-serif; font-size: .65rem; letter-spacing: .3em; text-transform: uppercase; color: var(--session-accent); margin: 2rem 0 .75rem; font-weight: 700; }
+    .session-content strong { color: var(--text); font-weight: 600; }
+
+    /* ── Brief anatomy ── */
+    .anatomy {
+      border: 1px solid var(--border); border-radius: 14px;
+      overflow: hidden; margin: 2rem 0;
     }
-    .slide::before {
-      content: ""; position: absolute; inset: 0; pointer-events: none;
-      background: linear-gradient(135deg, color-mix(in srgb, var(--session-accent) 4%, transparent), transparent 60%);
+    .anatomy-row {
+      display: grid; grid-template-columns: 160px 1fr;
+      border-bottom: 1px solid var(--border);
     }
-    .slide:hover { border-color: color-mix(in srgb, var(--session-accent) 40%, var(--border)); }
-    .slide-callout {
-      background: color-mix(in srgb, var(--session-accent) 7%, var(--glass));
-      border-color: color-mix(in srgb, var(--session-accent) 35%, transparent);
+    .anatomy-row:last-child { border-bottom: none; }
+    .anatomy-section {
+      padding: 1rem 1.2rem;
+      background: color-mix(in srgb, var(--session-accent) 8%, transparent);
+      border-right: 1px solid var(--border);
+      font-family: 'Inter', sans-serif; font-size: .65rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--session-accent); display: flex; align-items: flex-start;
+      padding-top: 1.1rem;
     }
-    .slide-num {
-      font-family: "Inter", sans-serif; font-size: .6rem; letter-spacing: .4em;
-      font-weight: 700; color: var(--session-accent); opacity: .6; margin-bottom: 1.5rem;
+    .anatomy-content {
+      padding: 1rem 1.4rem; background: var(--glass);
     }
-    .slide-h {
-      font-family: var(--ff-display); font-size: clamp(1.6rem, 4vw, 2.4rem);
-      font-weight: 800; line-height: 1.1; letter-spacing: -.02em;
-      color: var(--text); margin-bottom: 1.5rem;
+    .anatomy-title {
+      font-family: var(--ff-display); font-size: 1rem; font-weight: 700;
+      color: var(--text); margin-bottom: .3rem;
     }
-    .slide-lead {
-      font-size: clamp(1.05rem, 2.5vw, 1.35rem); line-height: 1.65;
-      color: var(--text-secondary); max-width: 600px;
+    .anatomy-desc {
+      font-family: 'Inter', sans-serif; font-size: .75rem; font-weight: 300;
+      line-height: 1.6; color: var(--text-secondary);
     }
-    .slide-lead em { color: var(--session-accent); font-style: italic; font-weight: 600; }
-    .slide-big {
-      font-family: var(--ff-display); font-size: clamp(1.6rem, 4.5vw, 2.6rem);
-      font-weight: 800; line-height: 1.15; color: var(--text);
-      letter-spacing: -.02em; max-width: 680px;
+    .anatomy-example {
+      font-family: 'Inter', sans-serif; font-size: .72rem; font-style: italic;
+      color: color-mix(in srgb, var(--session-accent) 80%, var(--text-secondary));
+      margin-top: .4rem; line-height: 1.5;
     }
-    .slide-big em { color: var(--session-accent); font-style: italic; }
-    .slide-list {
-      list-style: none; padding: 0; margin: 0;
-      display: flex; flex-direction: column; gap: .9rem;
-      counter-reset: slide-counter;
+    @media (max-width: 560px) {
+      .anatomy-row { grid-template-columns: 1fr; }
+      .anatomy-section { border-right: none; border-bottom: 1px solid var(--border); }
     }
-    .slide-list li {
-      counter-increment: slide-counter; display: flex; align-items: flex-start; gap: 1.2rem;
-      font-size: clamp(1rem, 2vw, 1.15rem); line-height: 1.5; color: var(--text-secondary);
+
+    /* ── Fatal errors ── */
+    .errors-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(min(250px,100%), 1fr));
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin: 1.75rem 0;
     }
-    .slide-list li::before {
-      content: counter(slide-counter, decimal-leading-zero);
-      font-family: "Inter", sans-serif; font-size: .65rem; font-weight: 700;
-      letter-spacing: .05em; color: var(--session-accent); min-width: 2rem; padding-top: .25em;
+    .err-card { background: var(--glass); padding: 1.1rem 1.3rem; display: flex; flex-direction: column; gap: .4rem; }
+    .err-icon { font-size: 1rem; }
+    .err-title { font-family: var(--ff-display); font-size: .98rem; font-weight: 600; color: var(--text); }
+    .err-desc { font-family: 'Inter', sans-serif; font-size: .72rem; font-weight: 300; line-height: 1.55; color: var(--text-secondary); }
+
+    /* ── Level 1 completion banner ── */
+    .completion-banner {
+      margin: 3rem 0 2rem; padding: 2rem 2.5rem;
+      border-radius: 14px;
+      border: 1px solid color-mix(in srgb, var(--session-accent) 40%, transparent);
+      background: color-mix(in srgb, var(--session-accent) 7%, transparent);
+      display: flex; flex-direction: column; gap: .6rem;
     }
-    .slide-list li strong { color: var(--text); font-weight: 600; }
-    .slide-list li em { color: var(--session-accent); font-style: normal; }
-    @media (max-width: 600px) { .slide { padding: 2rem 1.5rem; min-height: 240px; } }
+    .completion-eyebrow {
+      font-family: 'Inter', sans-serif; font-size: .55rem; font-weight: 700;
+      letter-spacing: .25em; text-transform: uppercase; color: var(--session-accent);
+    }
+    .completion-title {
+      font-family: var(--ff-display); font-size: clamp(1.4rem, 3vw, 1.9rem);
+      font-weight: 800; color: var(--text); line-height: 1.15;
+    }
+    .completion-body {
+      font-family: 'Inter', sans-serif; font-size: .82rem; font-weight: 300;
+      line-height: 1.65; color: var(--text-secondary); max-width: 580px;
+    }
+    .completion-link {
+      display: inline-flex; align-items: center; gap: .5rem; margin-top: .5rem;
+      font-family: 'Inter', sans-serif; font-size: .65rem; font-weight: 700;
+      letter-spacing: .15em; text-transform: uppercase;
+      color: var(--session-accent); text-decoration: none;
+      border: 1px solid color-mix(in srgb, var(--session-accent) 40%, transparent);
+      padding: .6rem 1.4rem; border-radius: 8px;
+      background: color-mix(in srgb, var(--session-accent) 8%, transparent);
+      transition: all .15s; width: fit-content;
+    }
+    .completion-link:hover { background: color-mix(in srgb, var(--session-accent) 18%, transparent); border-color: var(--session-accent); }
+
+    /* ── Brief generator ── */
+    .exercise-box {
+      background: color-mix(in srgb, var(--session-accent) 6%, var(--glass));
+      border: 1px dashed color-mix(in srgb, var(--session-accent) 50%, transparent);
+      padding: 2rem 2rem 1.75rem; border-radius: 14px; margin: 2.5rem 0;
+    }
+    .exercise-box h3 { margin-top: 0; }
+    .gen-fields { display: flex; flex-direction: column; gap: .9rem; margin-bottom: 1.25rem; }
+    .gen-field { display: flex; flex-direction: column; gap: .3rem; }
+    .gen-label {
+      font-family: 'Inter', sans-serif; font-size: .58rem; font-weight: 700;
+      letter-spacing: .15em; text-transform: uppercase; color: var(--session-accent);
+    }
+    .gen-sub { font-family: 'Inter', sans-serif; font-size: .62rem; color: var(--text-secondary); margin-bottom: .1rem; }
+    .gen-input {
+      background: var(--glass); border: 1px solid var(--border); border-radius: 6px;
+      color: var(--text); font-family: var(--ff-body); font-size: .88rem;
+      padding: .65rem .9rem; transition: border-color .2s; resize: vertical;
+    }
+    .gen-input:focus { outline: none; border-color: var(--session-accent); }
+    .gen-input::placeholder { color: color-mix(in srgb, var(--text-secondary) 45%, transparent); font-style: italic; }
+    .gen-row { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+    @media (max-width: 560px) { .gen-row { grid-template-columns: 1fr; } }
+    .run-btn {
+      font-family: 'Inter', sans-serif; font-size: .65rem; letter-spacing: .15em;
+      text-transform: uppercase; font-weight: 700; padding: .7rem 1.8rem;
+      border-radius: 8px; border: 1px solid var(--session-accent);
+      background: color-mix(in srgb, var(--session-accent) 12%, transparent);
+      color: var(--session-accent); cursor: pointer; transition: all .15s; margin-top: .5rem;
+    }
+    .run-btn:hover:not(:disabled) { background: color-mix(in srgb, var(--session-accent) 22%, transparent); }
+    .run-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+    /* ── Brief output ── */
+    .brief-output {
+      margin-top: 1.75rem; display: none; flex-direction: column; gap: 0;
+      border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+    }
+    .brief-output.visible { display: flex; }
+    .brief-header {
+      padding: 1rem 1.4rem; background: color-mix(in srgb, var(--session-accent) 10%, transparent);
+      border-bottom: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .brief-header-label {
+      font-family: 'Inter', sans-serif; font-size: .55rem; font-weight: 700;
+      letter-spacing: .2em; text-transform: uppercase; color: var(--session-accent);
+    }
+    .copy-btn {
+      font-family: 'Inter', sans-serif; font-size: .55rem; letter-spacing: .1em;
+      text-transform: uppercase; font-weight: 600; padding: .35rem .9rem;
+      border-radius: 5px; border: 1px solid var(--border); background: var(--glass);
+      color: var(--text-secondary); cursor: pointer; transition: all .15s; flex-shrink: 0;
+    }
+    .copy-btn:hover { border-color: var(--session-accent); color: var(--session-accent); }
+    .copy-btn.copied { color: #a5d6a7; border-color: #a5d6a7; }
+    .brief-body {
+      padding: 1.5rem 1.75rem; background: var(--glass);
+      font-family: 'Inter', sans-serif; font-size: .85rem; line-height: 1.75;
+      color: var(--text-secondary); white-space: pre-wrap;
+      max-height: 520px; overflow-y: auto;
+    }
+    .brief-body strong { color: var(--text); }
+    .brief-disclaimer {
+      padding: .7rem 1.4rem; background: var(--glass);
+      border-top: 1px solid var(--border);
+      font-family: 'Inter', sans-serif; font-size: .62rem; font-weight: 300;
+      color: var(--text-secondary); opacity: .55; line-height: 1.5;
+    }
+
+    /* ── Takeaway ── */
+    .takeaway {
+      margin-top: 3rem; padding: 1.5rem 2rem; border-radius: 12px;
+      border: 1px solid color-mix(in srgb, var(--session-accent) 30%, transparent);
+      background: color-mix(in srgb, var(--session-accent) 5%, transparent);
+    }
+    .takeaway h3 { margin-top: 0; }
+    .takeaway p { margin-bottom: 0; font-size: .95rem; }
   </style>
 </head>
 <body>
@@ -105,19 +221,177 @@
   <div class="s-crumb">
     <a href="../../" style="color:inherit;text-decoration:none;">Home</a> · Level 1 · <span>Session 5</span>
   </div>
+
   <div class="s-hero">
     <div class="s-badge">🎯 Level 1 of 3 · Session 5 of 5</div>
     <p class="s-label">Level 1 · Foundations</p>
     <h1 class="s-title">The Output</h1>
     <p class="s-subtitle">Writing the Evidence Brief</p>
-    <p class="s-oneliner">How do you structure a policy brief from a literature review?</p>
+    <p class="s-oneliner">How do you turn a literature review into a policy brief that a decision-maker will read, trust, and act on — in the time they actually have?</p>
   </div>
 
-  
+  <div class="session-content">
+
+    <h2>The brief-to-decision gap, revisited</h2>
+    <p>Session 1 named the brief-to-decision gap as one of the four critical bottlenecks in WHO India's evidence pipeline. This is where reviews go to die: a thorough 40-page synthesis that no one in a position to act on it will read before the window closes. The evidence brief is not a shorter version of the review. It is a different document with a different purpose, a different reader, and a different measure of success.</p>
+    <p>A policy brief succeeds when a decision-maker who reads only the first half-page understands the issue, the evidence, and the recommended action — and when the rest of the document exists to defend that recommendation if challenged. Structure, not volume, is what gets evidence used.</p>
+
+    <h2>The anatomy of a WHO India evidence brief</h2>
+    <p>The structure below is calibrated for health financing and UHC briefs directed at senior government, Ministry, or WHO country-office audiences. Each section has a strict function. The brief generator at the end of this session uses this template.</p>
+
+    <div class="anatomy">
+      <div class="anatomy-row">
+        <div class="anatomy-section">Issue</div>
+        <div class="anatomy-content">
+          <div class="anatomy-title">The policy problem — one sentence</div>
+          <div class="anatomy-desc">State the problem the decision-maker faces, not the research question you answered. Frame it in terms of what is at stake: lives, equity, fiscal pressure, programme performance.</div>
+          <div class="anatomy-example">e.g. "Despite PM-JAY coverage of 500M beneficiaries, 55% of enrolled households in rural Uttar Pradesh report continuing out-of-pocket expenditure exceeding 10% of household income at inpatient contact."</div>
+        </div>
+      </div>
+      <div class="anatomy-row">
+        <div class="anatomy-section">Evidence</div>
+        <div class="anatomy-content">
+          <div class="anatomy-title">What the literature shows — three to five findings</div>
+          <div class="anatomy-desc">Numbered, plain-language findings drawn directly from your reviewed studies. Each finding should state the direction of effect, the population, the setting, and the quality caveat if material. No citations in this section — those go in the appendix.</div>
+          <div class="anatomy-example">e.g. "1. Community-based health insurance reduces catastrophic expenditure by 30–45% among informal workers in comparable LMIC settings (6 studies; moderate quality)."</div>
+        </div>
+      </div>
+      <div class="anatomy-row">
+        <div class="anatomy-section">Gaps</div>
+        <div class="anatomy-content">
+          <div class="anatomy-title">What the evidence does not tell us</div>
+          <div class="anatomy-desc">One short paragraph. State explicitly what questions remain unanswered and why — not as a weakness but as a guide to where further investment is warranted and where the recommendation rests on inference rather than direct evidence.</div>
+          <div class="anatomy-example">e.g. "No studies directly measure financial protection outcomes for scheduled tribe populations under PM-JAY. Evidence is extrapolated from analogous sub-Saharan African contexts."</div>
+        </div>
+      </div>
+      <div class="anatomy-row">
+        <div class="anatomy-section">Options</div>
+        <div class="anatomy-content">
+          <div class="anatomy-title">Two or three actionable policy options</div>
+          <div class="anatomy-desc">Not a single recommendation. Decision-makers distrust single-option briefs — they read them as advocacy. Present two or three options with trade-offs stated: cost, equity impact, implementation complexity, political feasibility. The F dimension of PECO-F lives here.</div>
+          <div class="anatomy-example">e.g. "Option A: Expand PM-JAY outpatient coverage (higher cost, highest equity gain). Option B: Strengthen claims settlement at district level (lower cost, moderate equity gain, faster implementation)."</div>
+        </div>
+      </div>
+      <div class="anatomy-row">
+        <div class="anatomy-section">Recommendation</div>
+        <div class="anatomy-content">
+          <div class="anatomy-title">One preferred option with conditions</div>
+          <div class="anatomy-desc">A single, clear, conditional recommendation — not a hedge. State the preferred option, the conditions under which it is recommended, and the monitoring indicator that would signal it is working. This is the section that gets read first and quoted later.</div>
+          <div class="anatomy-example">e.g. "Given the fiscal envelope and state-level implementation capacity, Option B is recommended as a first step, with a 12-month review of claims settlement rates before considering Option A."</div>
+        </div>
+      </div>
+      <div class="anatomy-row">
+        <div class="anatomy-section">Methods</div>
+        <div class="anatomy-content">
+          <div class="anatomy-title">Search protocol log — one paragraph or table</div>
+          <div class="anatomy-desc">The protocol log from Session 4. Databases searched, date ranges, search strings, number of papers screened and included. This is what makes the brief defensible when the methodology is challenged. Attach as an appendix or final section.</div>
+          <div class="anatomy-example">e.g. "PubMed (147 results, 18 included), Cochrane (9, 4 included), HTAIn (6 reports, 3 included). Date: November 2024. Full log attached."</div>
+        </div>
+      </div>
+    </div>
+
+    <h2>The four fatal errors</h2>
+    <p>These are the mistakes that most commonly prevent a well-researched brief from reaching the decision it was written for:</p>
+
+    <div class="errors-grid">
+      <div class="err-card">
+        <div class="err-icon">📚</div>
+        <div class="err-title">Leading with the literature</div>
+        <div class="err-desc">Opening with "A systematic review of 47 studies found…" is the single fastest way to lose a senior reader. Lead with the policy problem. The evidence is the defence, not the headline.</div>
+      </div>
+      <div class="err-card">
+        <div class="err-icon">🌍</div>
+        <div class="err-title">Unadapted LMIC extrapolation</div>
+        <div class="err-desc">Citing CBHI evidence from Rwanda or Ghana without acknowledging India-specific constraints — federal structure, informal economy scale, state capacity variance — destroys credibility with anyone who knows the context.</div>
+      </div>
+      <div class="err-card">
+        <div class="err-icon">⚖️</div>
+        <div class="err-title">Missing the equity dimension</div>
+        <div class="err-desc">Aggregate findings that do not disaggregate by income quintile, gender, caste, or geography tell a policymaker nothing about distributional impact. The F element of PECO-F must appear in the Options section.</div>
+      </div>
+      <div class="err-card">
+        <div class="err-icon">🔒</div>
+        <div class="err-title">The single undisclosed option</div>
+        <div class="err-desc">A brief that presents only one option without acknowledging alternatives reads as advocacy, not evidence synthesis. It loses the trust of the reader and the credibility of WHO as a neutral technical body.</div>
+      </div>
+    </div>
+
+    <h2>Generate your draft brief</h2>
+
+    <div class="exercise-box">
+      <h3>🎯 AI brief generator — paste your findings, get a structured first draft</h3>
+      <p style="font-size:.85rem;margin-bottom:1.5rem;">Fill in the fields below with your policy context and key findings. The generator will produce a structured WHO India evidence brief first draft using the anatomy above — calibrated for a Ministry or WHO country-office audience. Edit and verify before use.</p>
+
+      <div class="gen-fields">
+
+        <div class="gen-row">
+          <div class="gen-field">
+            <span class="gen-label">Policy question</span>
+            <span class="gen-sub">The decision the brief must inform</span>
+            <textarea class="gen-input" id="g-question" rows="2" placeholder="e.g. Should PM-JAY be extended to cover outpatient primary care for BPL households in rural Uttar Pradesh?"></textarea>
+          </div>
+          <div class="gen-field">
+            <span class="gen-label">Target audience</span>
+            <span class="gen-sub">Who will read and act on this brief</span>
+            <textarea class="gen-input" id="g-audience" rows="2" placeholder="e.g. Joint Secretary, MoHFW; WHO India Country Representative"></textarea>
+          </div>
+        </div>
+
+        <div class="gen-field">
+          <span class="gen-label">Key findings from your review</span>
+          <span class="gen-sub">Paste 3–6 findings in plain language — numbers, populations, direction of effect. The more specific the better.</span>
+          <textarea class="gen-input" id="g-findings" rows="6" placeholder="e.g.
+1. PM-JAY reduced inpatient OOP by ~28% in enrolled districts (3 studies, moderate quality)
+2. Financial protection gains were concentrated in top 2 income quintiles of BPL category
+3. Claims settlement rates below 60% in 8 high-burden states limit effective coverage
+4. Community health insurance in comparable LMIC settings reduced catastrophic expenditure by 30–45%
+5. No direct evidence on PM-JAY outpatient coverage outcomes in India"></textarea>
+        </div>
+
+        <div class="gen-row">
+          <div class="gen-field">
+            <span class="gen-label">Key evidence gap</span>
+            <span class="gen-sub">What the literature does not answer</span>
+            <textarea class="gen-input" id="g-gap" rows="2" placeholder="e.g. No India-specific evidence on outpatient coverage impact for ST/SC populations"></textarea>
+          </div>
+          <div class="gen-field">
+            <span class="gen-label">Equity and feasibility constraints</span>
+            <span class="gen-sub">Budget, implementation, political, equity considerations</span>
+            <textarea class="gen-input" id="g-equity" rows="2" placeholder="e.g. State fiscal space limited; claims processing capacity varies; equity priority for lowest quintiles"></textarea>
+          </div>
+        </div>
+
+      </div>
+
+      <button class="run-btn" id="run-btn" onclick="generateBrief()">Generate evidence brief →</button>
+
+      <div class="brief-output" id="brief-output">
+        <div class="brief-header">
+          <span class="brief-header-label">🎯 Draft evidence brief — review and edit before use</span>
+          <button class="copy-btn" id="copy-brief" onclick="copyBrief(this)">Copy brief</button>
+        </div>
+        <div class="brief-body" id="brief-body"></div>
+        <div class="brief-disclaimer">AI-generated first draft. Verify all findings against source studies before circulation. Do not cite without human review. Search protocol log from Session 4 should be attached as appendix.</div>
+      </div>
+    </div>
+
+    <div class="completion-banner">
+      <span class="completion-eyebrow">✅ Level 1 complete</span>
+      <div class="completion-title">You have the foundations.<br>Level 2 is where it gets harder.</div>
+      <div class="completion-body">You can now frame a health financing question using PECO-F, choose the right tools for the job, build a reproducible search protocol, and structure an evidence brief that decision-makers will use. Level 2 — Exploration — is about the harder skills: spotting bias in the evidence you retrieve, prompting AI for complex UHC comparisons, and critically appraising cost-effectiveness studies under LMIC conditions.</div>
+      <a class="completion-link" href="../level2/session1.html">Begin Level 2 — Exploration →</a>
+    </div>
+
+    <div class="takeaway">
+      <h3>🎯 Level 1 takeaway</h3>
+      <p>The full Level 1 arc is: diagnose your pipeline bottlenecks (Session 1) → choose tools by job not by name (Session 2) → frame the question with PECO-F (Session 3) → translate to a reproducible search protocol (Session 4) → convert findings to a decision-ready brief (Session 5). Each session feeds the next. The brief generator in this session uses everything that came before it. Keep the search protocol log from Session 4 — it becomes the methodology appendix that makes this brief defensible.</p>
+    </div>
+
+  </div><!-- /session-content -->
 
   <nav class="s-nav" aria-label="Session navigation">
-    <a class='s-nav-btn' href='session4.html'>← Previous</a>
-    <a class='s-nav-btn s-nav-next' href='../level2/session1.html'>Next →</a>
+    <a class="s-nav-btn" href="session4.html">← Previous</a>
+    <a class="s-nav-btn s-nav-next" href="../level2/session1.html">Level 2 →</a>
   </nav>
 </div>
 
@@ -125,11 +399,97 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
 <script src="../../js/shared.js"></script>
 <script>
+  /* ── scroll spine ── */
   const spine = document.getElementById('spine');
   window.addEventListener('scroll', () => {
     const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
     spine.style.height = Math.min(pct, 100) + '%';
   }, { passive: true });
+
+  /* ── brief generator ── */
+  async function generateBrief() {
+    const question = document.getElementById('g-question').value.trim();
+    const audience = document.getElementById('g-audience').value.trim();
+    const findings = document.getElementById('g-findings').value.trim();
+    const gap      = document.getElementById('g-gap').value.trim();
+    const equity   = document.getElementById('g-equity').value.trim();
+
+    if (!question || !findings) {
+      alert('Please fill in at least the Policy Question and Key Findings before generating.');
+      return;
+    }
+
+    const btn  = document.getElementById('run-btn');
+    const out  = document.getElementById('brief-output');
+    const body = document.getElementById('brief-body');
+
+    btn.disabled = true;
+    btn.textContent = 'Drafting brief…';
+    out.classList.remove('visible');
+
+    const system = `You are a senior health economics policy advisor supporting WHO India. Your task is to write a structured evidence brief using the following mandatory template. Follow the structure precisely — use the exact section headings below, in order. Write in plain, direct policy English. No jargon. No passive voice where avoidable. The brief should fit on two pages when printed.
+
+TEMPLATE:
+
+ISSUE
+[One sentence stating the policy problem in terms of stakes — lives, equity, fiscal pressure, programme performance. Do not open with the research question.]
+
+EVIDENCE
+[Numbered list of 3–5 findings from the provided research. Each finding states direction of effect, population, setting, and quality caveat in plain language. No citations — those go in the appendix.]
+
+EVIDENCE GAPS
+[One short paragraph. What the literature does not answer. Frame as a guide to where inference was used and what future research would resolve.]
+
+POLICY OPTIONS
+[Two or three numbered options with trade-offs: cost, equity impact, implementation complexity, political feasibility. Do not recommend yet. Include the equity and feasibility constraints provided.]
+
+RECOMMENDATION
+[One clear conditional recommendation — state the preferred option, the conditions, and one monitoring indicator. Not a hedge. Not multiple recommendations.]
+
+METHODOLOGY NOTE
+[One short paragraph referencing the search protocol. Do not fabricate database result counts — note that the full log is attached.]
+
+Keep each section tight. The total brief should be readable in under 4 minutes.`;
+
+    const user = `Policy question: ${question}
+Target audience: ${audience || 'Senior government and WHO country-office officials'}
+Key findings: ${findings}
+Evidence gap: ${gap || 'Not specified'}
+Equity and feasibility constraints: ${equity || 'Not specified'}`;
+
+    try {
+      const resp = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          system,
+          messages: [{ role: 'user', content: user }]
+        })
+      });
+      const data = await resp.json();
+      const text = data?.content?.[0]?.text || 'No response received.';
+      body.textContent = text;
+      out.classList.add('visible');
+      out.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } catch (err) {
+      body.textContent = 'Could not reach the AI service. Check your connection and try again.';
+      out.classList.add('visible');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Generate evidence brief →';
+    }
+  }
+
+  function copyBrief(btn) {
+    const text = document.getElementById('brief-body').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied ✓';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy brief'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
 </script>
 </body>
 </html>
