@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>🌱 The Existing Process · Level 1 Session 1</title>
-  <meta name="description" content="What is the current pipeline for literature review at WHO-India?">
+  <meta name="description" content="What is the current pipeline for literature review at WHO India — and where does it break down?">
   <meta name="color-scheme" content="dark light">
   <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-dark.ico" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-light.ico" media="(prefers-color-scheme: light)">
@@ -25,7 +25,7 @@
     }
     body { font-family: var(--ff-body); font-weight: 300; }
     .spine { position: fixed; left: 0; top: 0; width: 3px; height: 0%; background: var(--session-accent); z-index: 200; transition: height .1s linear; }
-    .s-page { padding-top: calc(var(--header-h) + 3rem); padding-bottom: 6rem; max-width: 780px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
+    .s-page { padding-top: calc(var(--header-h) + 3rem); padding-bottom: 6rem; max-width: 860px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
     .s-crumb { font-family: 'Inter', sans-serif; font-size: .6rem; letter-spacing: .3em; text-transform: uppercase; color: var(--text-secondary); opacity: .5; margin-bottom: 2.5rem; display: flex; gap: .75rem; align-items: center; }
     .s-crumb span { color: var(--session-accent); opacity: 1; }
     .s-hero { margin-bottom: 3.5rem; }
@@ -39,60 +39,137 @@
     .s-nav-btn:hover { border-color: var(--session-accent); color: var(--session-accent); }
     .s-nav-next { margin-left: auto; }
     @media (max-width: 600px) { .s-page { padding-left: 1.25rem; padding-right: 1.25rem; } }
-    
-    .s-page { max-width: 860px; }
-    .slide {
-      min-height: 320px; display: flex; flex-direction: column; justify-content: center;
-      padding: 3rem 3.5rem; margin-bottom: 2rem; border-radius: 16px;
+
+    /* ── Session content ── */
+    .session-content { margin-top: 2rem; line-height: 1.8; color: var(--text-secondary); }
+    .session-content p { margin-bottom: 1.25rem; font-size: clamp(.95rem, 2vw, 1.05rem); }
+    .session-content h2 {
+      font-family: var(--ff-display); font-size: clamp(1.4rem, 3.5vw, 2rem);
+      font-weight: 800; color: var(--text); margin: 3rem 0 1rem; letter-spacing: -.02em;
+    }
+    .session-content h3 {
+      font-family: 'Inter', sans-serif; font-size: .65rem; letter-spacing: .3em;
+      text-transform: uppercase; color: var(--session-accent); margin: 2rem 0 .75rem; font-weight: 700;
+    }
+    .session-content strong { color: var(--text); font-weight: 600; }
+    .session-content ul { padding-left: 1.5rem; margin-bottom: 1.25rem; }
+    .session-content ul li { margin-bottom: .5rem; font-size: clamp(.95rem, 2vw, 1.05rem); }
+
+    /* Pipeline diagram */
+    .pipeline {
+      display: flex; flex-wrap: wrap; align-items: center;
+      gap: .5rem; margin: 2rem 0; padding: 1.75rem 2rem;
+      background: var(--glass); border: 1px solid var(--border); border-radius: 14px;
+    }
+    .p-step {
+      font-family: 'Inter', sans-serif; font-size: .7rem; font-weight: 600;
+      letter-spacing: .04em; padding: .5rem 1rem; border-radius: 6px;
+      background: color-mix(in srgb, var(--session-accent) 10%, transparent);
+      border: 1px solid color-mix(in srgb, var(--session-accent) 30%, transparent);
+      color: var(--text); white-space: nowrap;
+    }
+    .p-arrow {
+      font-size: .8rem; color: var(--session-accent); opacity: .5;
+      font-family: 'Inter', sans-serif;
+    }
+    .p-step.bottleneck {
+      background: color-mix(in srgb, #ef5350 12%, transparent);
+      border-color: color-mix(in srgb, #ef5350 35%, transparent);
+      color: #ef9a9a;
+    }
+    .pipeline-caption {
+      font-family: 'Inter', sans-serif; font-size: .6rem; letter-spacing: .1em;
+      color: var(--text-secondary); opacity: .5; margin-top: .75rem;
+      width: 100%; text-align: right;
+    }
+
+    /* Bottleneck cards */
+    .bottleneck-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden;
+      margin: 1.75rem 0;
+    }
+    .b-card {
+      background: var(--glass); padding: 1.25rem 1.4rem;
+      display: flex; flex-direction: column; gap: .5rem;
+    }
+    .b-num {
+      font-family: 'Inter', sans-serif; font-size: .55rem; font-weight: 700;
+      letter-spacing: .2em; color: var(--session-accent); opacity: .6;
+    }
+    .b-title {
+      font-family: var(--ff-display); font-size: 1.05rem; font-weight: 600;
+      color: var(--text); line-height: 1.25;
+    }
+    .b-desc {
+      font-family: 'Inter', sans-serif; font-size: .75rem; font-weight: 300;
+      line-height: 1.55; color: var(--text-secondary);
+    }
+
+    /* Quote block */
+    .q-block {
+      border-left: 3px solid color-mix(in srgb, var(--session-accent) 40%, transparent);
+      padding: 1rem 1.5rem; margin: 1.5rem 0;
+      background: color-mix(in srgb, var(--session-accent) 5%, transparent);
+      border-radius: 0 8px 8px 0; font-style: italic;
+      font-size: clamp(.9rem, 1.8vw, 1rem); color: var(--text);
+    }
+
+    /* Self-audit exercise */
+    .exercise-box {
+      background: color-mix(in srgb, var(--session-accent) 6%, var(--glass));
+      border: 1px dashed color-mix(in srgb, var(--session-accent) 50%, transparent);
+      padding: 2rem 2rem 1.5rem; border-radius: 14px; margin: 2.5rem 0;
+    }
+    .exercise-box h3 { margin-top: 0; }
+    .audit-row {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: .75rem 0; border-bottom: 1px solid var(--border);
+      font-size: .9rem;
+    }
+    .audit-row:last-child { border-bottom: none; }
+    .audit-label {
+      font-family: 'Inter', sans-serif; font-size: .75rem; font-weight: 500;
+      color: var(--text); flex: 1; line-height: 1.5;
+    }
+    .audit-sub {
+      font-family: 'Inter', sans-serif; font-size: .68rem; font-weight: 300;
+      color: var(--text-secondary); display: block; margin-top: .15rem;
+    }
+    .audit-options {
+      display: flex; gap: .4rem; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end;
+    }
+    .audit-btn {
+      font-family: 'Inter', sans-serif; font-size: .58rem; letter-spacing: .08em;
+      padding: .3rem .75rem; border-radius: 5px; border: 1px solid var(--border);
+      background: var(--glass); color: var(--text-secondary); cursor: pointer;
+      transition: all .15s; user-select: none;
+    }
+    .audit-btn:hover, .audit-btn.selected {
+      border-color: var(--session-accent); color: var(--session-accent);
+      background: color-mix(in srgb, var(--session-accent) 10%, transparent);
+    }
+    .audit-result {
+      margin-top: 1.5rem; padding: 1rem 1.25rem; border-radius: 8px;
       background: var(--glass); border: 1px solid var(--border);
-      position: relative; overflow: hidden; transition: var(--transition);
+      font-family: 'Inter', sans-serif; font-size: .82rem; line-height: 1.6;
+      color: var(--text-secondary); display: none;
     }
-    .slide::before {
-      content: ""; position: absolute; inset: 0; pointer-events: none;
-      background: linear-gradient(135deg, color-mix(in srgb, var(--session-accent) 4%, transparent), transparent 60%);
+    .audit-result.visible { display: block; }
+    .audit-result strong { color: var(--session-accent); }
+
+    /* Takeaway */
+    .takeaway {
+      margin-top: 3rem; padding: 1.5rem 2rem; border-radius: 12px;
+      border: 1px solid color-mix(in srgb, var(--session-accent) 30%, transparent);
+      background: color-mix(in srgb, var(--session-accent) 5%, transparent);
     }
-    .slide:hover { border-color: color-mix(in srgb, var(--session-accent) 40%, var(--border)); }
-    .slide-callout {
-      background: color-mix(in srgb, var(--session-accent) 7%, var(--glass));
-      border-color: color-mix(in srgb, var(--session-accent) 35%, transparent);
-    }
-    .slide-num {
-      font-family: "Inter", sans-serif; font-size: .6rem; letter-spacing: .4em;
-      font-weight: 700; color: var(--session-accent); opacity: .6; margin-bottom: 1.5rem;
-    }
-    .slide-h {
-      font-family: var(--ff-display); font-size: clamp(1.6rem, 4vw, 2.4rem);
-      font-weight: 800; line-height: 1.1; letter-spacing: -.02em;
-      color: var(--text); margin-bottom: 1.5rem;
-    }
-    .slide-lead {
-      font-size: clamp(1.05rem, 2.5vw, 1.35rem); line-height: 1.65;
-      color: var(--text-secondary); max-width: 600px;
-    }
-    .slide-lead em { color: var(--session-accent); font-style: italic; font-weight: 600; }
-    .slide-big {
-      font-family: var(--ff-display); font-size: clamp(1.6rem, 4.5vw, 2.6rem);
-      font-weight: 800; line-height: 1.15; color: var(--text);
-      letter-spacing: -.02em; max-width: 680px;
-    }
-    .slide-big em { color: var(--session-accent); font-style: italic; }
-    .slide-list {
-      list-style: none; padding: 0; margin: 0;
-      display: flex; flex-direction: column; gap: .9rem;
-      counter-reset: slide-counter;
-    }
-    .slide-list li {
-      counter-increment: slide-counter; display: flex; align-items: flex-start; gap: 1.2rem;
-      font-size: clamp(1rem, 2vw, 1.15rem); line-height: 1.5; color: var(--text-secondary);
-    }
-    .slide-list li::before {
-      content: counter(slide-counter, decimal-leading-zero);
-      font-family: "Inter", sans-serif; font-size: .65rem; font-weight: 700;
-      letter-spacing: .05em; color: var(--session-accent); min-width: 2rem; padding-top: .25em;
-    }
-    .slide-list li strong { color: var(--text); font-weight: 600; }
-    .slide-list li em { color: var(--session-accent); font-style: normal; }
-    @media (max-width: 600px) { .slide { padding: 2rem 1.5rem; min-height: 240px; } }
+    .takeaway h3 { margin-top: 0; }
+    .takeaway p { margin-bottom: 0; font-size: .95rem; }
   </style>
 </head>
 <body>
@@ -105,19 +182,160 @@
   <div class="s-crumb">
     <a href="../../" style="color:inherit;text-decoration:none;">Home</a> · Level 1 · <span>Session 1</span>
   </div>
+
   <div class="s-hero">
     <div class="s-badge">🌱 Level 1 of 3 · Session 1 of 5</div>
     <p class="s-label">Level 1 · Foundations</p>
     <h1 class="s-title">The Existing Process</h1>
-    <p class="s-subtitle">How Evidence Becomes Policy</p>
-    <p class="s-oneliner">What is the current pipeline for literature review at WHO-India?</p>
+    <p class="s-subtitle">How Evidence Becomes Policy — and Where It Doesn't</p>
+    <p class="s-oneliner">What is the current pipeline for literature review at WHO India, and which steps are consuming time that AI could return to you?</p>
   </div>
 
-  
+  <div class="session-content">
+
+    <h2>The pipeline, honestly described</h2>
+    <p>Every evidence-to-policy cycle at WHO India moves through a recognisable sequence of steps. The process is not broken — it has produced genuine results, from informing PM-JAY design to shaping national NCD guidelines. But it is slow, and the slowness is not random. It concentrates at specific, identifiable points that are exactly where AI tools offer the most leverage.</p>
+
+    <p>Here is the pipeline as it typically runs for a health financing or UHC evidence brief:</p>
+
+    <div class="pipeline">
+      <div class="p-step">Policy question defined</div>
+      <div class="p-arrow">→</div>
+      <div class="p-step bottleneck">Database search</div>
+      <div class="p-arrow">→</div>
+      <div class="p-step bottleneck">Title / abstract screening</div>
+      <div class="p-arrow">→</div>
+      <div class="p-step">Full-text retrieval</div>
+      <div class="p-arrow">→</div>
+      <div class="p-step bottleneck">Data extraction</div>
+      <div class="p-arrow">→</div>
+      <div class="p-step">Synthesis</div>
+      <div class="p-arrow">→</div>
+      <div class="p-step">Brief drafted</div>
+      <div class="p-arrow">→</div>
+      <div class="p-step">Policy decision</div>
+      <div class="pipeline-caption">Red steps = highest AI leverage · Blue steps = human judgment remains essential</div>
+    </div>
+
+    <p>The red steps — database search, abstract screening, and data extraction — account for roughly 60–70% of total review time in a standard health economics evidence review. They are also the steps most likely to be done inconsistently under time pressure, which means the quality of the final brief is often determined not by the synthesis but by what got dropped during screening.</p>
+
+    <h2>The four bottlenecks specific to WHO India</h2>
+    <p>Generic reviews of "how literature review works" are not what this session is for. The friction that WHO India financing and economics staff experience is specific. Here are the four most consequential pressure points:</p>
+
+    <div class="bottleneck-grid">
+      <div class="b-card">
+        <span class="b-num">01</span>
+        <div class="b-title">The grey literature gap</div>
+        <div class="b-desc">A significant share of the evidence most relevant to Indian health financing — NSSO household surveys, state NHA accounts, NITI Aayog working papers, HTAIn assessments — never reaches PubMed or Cochrane. Standard database searches systematically miss it. Screening 200 journal abstracts while missing the 2023 HTAIn report on PM-JAY equity outcomes is not a search strategy; it is a selection bias.</div>
+      </div>
+      <div class="b-card">
+        <span class="b-num">02</span>
+        <div class="b-title">The WEIRD-data bias</div>
+        <div class="b-desc">The indexed literature over-represents high-income country health systems. A search for evidence on community health insurance and catastrophic expenditure returns studies from the Netherlands, Canada, and South Korea before it surfaces comparable work from Kerala, Andhra Pradesh, or Rwanda. Without active filtering, AI tools inherit this bias — and can amplify it by defaulting to the most-cited results.</div>
+      </div>
+      <div class="b-card">
+        <span class="b-num">03</span>
+        <div class="b-title">The clinical-economics confusion</div>
+        <div class="b-desc">Most literature review tools — and many default AI prompts — are designed around clinical questions. Searching for "impact of health insurance on health outcomes India" returns RCT literature on specific diseases rather than economic evaluations of insurance coverage, financial risk protection, or utilisation equity. The question framing determines the evidence retrieved. This is addressed directly in Session 3.</div>
+      </div>
+      <div class="b-card">
+        <span class="b-num">04</span>
+        <div class="b-title">The brief-to-decision gap</div>
+        <div class="b-desc">Even well-conducted reviews regularly fail to reach decision-makers in usable form. A 45-page systematic review of health financing in LMICs does not serve a Joint Secretary at MoHFW under a two-day deadline. The translation step — from evidence synthesis to a one-page brief calibrated to budget constraints, political context, and equity commitments — is where most reviews stall. This is the subject of Session 5.</div>
+      </div>
+    </div>
+
+    <h2>What AI can and cannot fix</h2>
+    <p>It is worth being precise about where AI tools intervene in this pipeline — and where they do not.</p>
+
+    <p><strong>AI accelerates:</strong> database search construction, title and abstract screening, full-text data extraction, structuring a synthesis across multiple studies, drafting a first version of a brief. A task that takes two researchers three weeks of screening can often be reduced to a focused afternoon of prompt refinement, AI-assisted screening, and human verification.</p>
+
+    <p><strong>AI does not replace:</strong> the judgment call about which question matters, the contextual knowledge that a particular Indian state has no functional secondary care infrastructure, the equity lens that asks who benefits and who is excluded, the political reading of what a Ministry will act on. These remain yours. This curriculum is about using AI to protect your time for the parts that only you can do.</p>
+
+    <div class="q-block">
+      A 2023 analysis of India's National Health Programme guidelines found that systematic review evidence was formally cited in fewer than half of NHP guideline documents reviewed — not because the evidence did not exist, but because the pipeline from production to decision was too slow and too fragmented to be useful at the moment of decision.
+    </div>
+
+    <p>That gap is the reason this curriculum exists. The tools in the next session are not there to make literature review more academic — they are there to close the distance between evidence and the decision that needs it, before the window closes.</p>
+
+    <h2>Audit your own process</h2>
+
+    <div class="exercise-box">
+      <h3>🧪 Self-audit — where does your review time actually go?</h3>
+      <p style="font-size:.85rem;margin-bottom:1.25rem;">For a recent or ongoing evidence brief, estimate how much of your total time falls at each stage. This takes 90 seconds and generates a personalised read on where AI will give you the most back.</p>
+
+      <div class="audit-row">
+        <div class="audit-label">
+          Defining and scoping the question
+          <span class="audit-sub">Clarifying the policy context, agreeing on the research question, setting inclusion criteria</span>
+        </div>
+        <div class="audit-options">
+          <button class="audit-btn" data-row="0" data-val="low">≤ 1 day</button>
+          <button class="audit-btn" data-row="0" data-val="med">2–4 days</button>
+          <button class="audit-btn" data-row="0" data-val="high">&gt; 1 week</button>
+        </div>
+      </div>
+
+      <div class="audit-row">
+        <div class="audit-label">
+          Database search and grey literature hunt
+          <span class="audit-sub">Building search strings, running searches, tracking down reports and government documents</span>
+        </div>
+        <div class="audit-options">
+          <button class="audit-btn" data-row="1" data-val="low">≤ 1 day</button>
+          <button class="audit-btn" data-row="1" data-val="med">2–4 days</button>
+          <button class="audit-btn" data-row="1" data-val="high">&gt; 1 week</button>
+        </div>
+      </div>
+
+      <div class="audit-row">
+        <div class="audit-label">
+          Title, abstract, and full-text screening
+          <span class="audit-sub">Reading through results to find what is actually relevant</span>
+        </div>
+        <div class="audit-options">
+          <button class="audit-btn" data-row="2" data-val="low">≤ 1 day</button>
+          <button class="audit-btn" data-row="2" data-val="med">2–4 days</button>
+          <button class="audit-btn" data-row="2" data-val="high">&gt; 1 week</button>
+        </div>
+      </div>
+
+      <div class="audit-row">
+        <div class="audit-label">
+          Data extraction and quality appraisal
+          <span class="audit-sub">Pulling numbers, methods, and findings from included papers</span>
+        </div>
+        <div class="audit-options">
+          <button class="audit-btn" data-row="3" data-val="low">≤ 1 day</button>
+          <button class="audit-btn" data-row="3" data-val="med">2–4 days</button>
+          <button class="audit-btn" data-row="3" data-val="high">&gt; 1 week</button>
+        </div>
+      </div>
+
+      <div class="audit-row">
+        <div class="audit-label">
+          Writing the synthesis and brief
+          <span class="audit-sub">Turning evidence into a usable document for decision-makers</span>
+        </div>
+        <div class="audit-options">
+          <button class="audit-btn" data-row="4" data-val="low">≤ 1 day</button>
+          <button class="audit-btn" data-row="4" data-val="med">2–4 days</button>
+          <button class="audit-btn" data-row="4" data-val="high">&gt; 1 week</button>
+        </div>
+      </div>
+
+      <div class="audit-result" id="audit-result"></div>
+    </div>
+
+    <div class="takeaway">
+      <h3>🎯 Key takeaway</h3>
+      <p>The existing process is not the enemy — it is the baseline. The goal of this curriculum is not to replace your judgment but to compress the mechanical steps so that more of your working week is spent on the parts that require it: defining the right question, applying the equity lens, and translating findings into something a decision-maker can act on. The next session maps the tools available and what each one is actually good for.</p>
+    </div>
+
+  </div><!-- /session-content -->
 
   <nav class="s-nav" aria-label="Session navigation">
-    
-    <a class='s-nav-btn s-nav-next' href='session2.html'>Next →</a>
+    <a class="s-nav-btn s-nav-next" href="session2.html">Next →</a>
   </nav>
 </div>
 
@@ -125,11 +343,65 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
 <script src="../../js/shared.js"></script>
 <script>
+  /* ── scroll spine ── */
   const spine = document.getElementById('spine');
   window.addEventListener('scroll', () => {
     const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
     spine.style.height = Math.min(pct, 100) + '%';
   }, { passive: true });
+
+  /* ── self-audit widget ── */
+  const answers = [null, null, null, null, null];
+  const labels  = [
+    'question scoping',
+    'database search & grey literature',
+    'title / abstract screening',
+    'data extraction',
+    'synthesis & brief writing'
+  ];
+  const highAI = [1, 2, 3]; // indices where AI has most leverage
+
+  document.querySelectorAll('.audit-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const row = parseInt(btn.dataset.row);
+      const val = btn.dataset.val;
+      // deselect siblings
+      document.querySelectorAll(`.audit-btn[data-row="${row}"]`).forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      answers[row] = val;
+      maybeShowResult();
+    });
+  });
+
+  function maybeShowResult() {
+    if (answers.some(a => a === null)) return;
+    const result = document.getElementById('audit-result');
+    const highRows = answers
+      .map((v, i) => v === 'high' ? labels[i] : null)
+      .filter(Boolean);
+    const aiRows = answers
+      .map((v, i) => (v === 'med' || v === 'high') && highAI.includes(i) ? labels[i] : null)
+      .filter(Boolean);
+
+    let html = '';
+    if (highRows.length === 0) {
+      html = 'Your process is already lean. The tools in Session 2 will help you maintain that efficiency and handle the occasional high-volume search without adding overhead.';
+    } else {
+      html = `Your biggest time costs are in: <strong>${highRows.join(', ')}</strong>. `;
+      if (aiRows.length > 0) {
+        html += `Of these, <strong>${aiRows.join(' and ')}</strong> ${aiRows.length > 1 ? 'are' : 'is'} exactly where the tools in Session 2 — and the search protocol in Session 4 — will have the most immediate impact. `;
+      }
+      if (answers[4] === 'high') {
+        html += 'You are also spending significant time on synthesis and brief writing — Session 5 addresses this directly with an AI-assisted brief template calibrated for WHO India policy audiences.';
+      }
+      if (answers[0] === 'high') {
+        html += ' Question scoping is taking longer than it should — Session 3 (PECO-F) will help you get to a precise, searchable question faster.';
+      }
+    }
+
+    result.innerHTML = html;
+    result.classList.add('visible');
+  }
 </script>
 </body>
 </html>
