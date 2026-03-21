@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>🔭 Critical Appraisal · Level 2 Session 3</title>
-  <meta name="description" content="How do you appraise AI-retrieved evidence rigorously?">
+  <meta name="description" content="How do you appraise AI-retrieved health economics evidence rigorously — and use AI as a sparring partner to do it faster?">
   <meta name="color-scheme" content="dark light">
   <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-dark.ico" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-light.ico" media="(prefers-color-scheme: light)">
@@ -25,7 +25,7 @@
     }
     body { font-family: var(--ff-body); font-weight: 300; }
     .spine { position: fixed; left: 0; top: 0; width: 3px; height: 0%; background: var(--session-accent); z-index: 200; transition: height .1s linear; }
-    .s-page { padding-top: calc(var(--header-h) + 3rem); padding-bottom: 6rem; max-width: 780px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
+    .s-page { padding-top: calc(var(--header-h) + 3rem); padding-bottom: 6rem; max-width: 860px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
     .s-crumb { font-family: 'Inter', sans-serif; font-size: .6rem; letter-spacing: .3em; text-transform: uppercase; color: var(--text-secondary); opacity: .5; margin-bottom: 2.5rem; display: flex; gap: .75rem; align-items: center; }
     .s-crumb span { color: var(--session-accent); opacity: 1; }
     .s-hero { margin-bottom: 3.5rem; }
@@ -39,27 +39,132 @@
     .s-nav-btn:hover { border-color: var(--session-accent); color: var(--session-accent); }
     .s-nav-next { margin-left: auto; }
     @media (max-width: 600px) { .s-page { padding-left: 1.25rem; padding-right: 1.25rem; } }
-    
-    .s-section { margin-bottom: 3rem; padding-bottom: 3rem; border-bottom: 1px solid var(--border); }
-    .s-section:last-of-type { border-bottom: none; }
-    .s-section h2 {
-      font-family: var(--ff-display); font-size: 1.3rem; font-weight: 600;
-      color: var(--text); margin-bottom: 1.25rem;
-      padding-left: 1rem; border-left: 3px solid var(--session-accent);
+
+    /* ── content ── */
+    .session-content { margin-top: 2rem; line-height: 1.8; color: var(--text-secondary); }
+    .session-content p { margin-bottom: 1.25rem; font-size: clamp(.95rem, 2vw, 1.05rem); }
+    .session-content h2 { font-family: var(--ff-display); font-size: clamp(1.4rem, 3.5vw, 2rem); font-weight: 800; color: var(--text); margin: 3rem 0 1rem; letter-spacing: -.02em; }
+    .session-content h3 { font-family: 'Inter', sans-serif; font-size: .65rem; letter-spacing: .3em; text-transform: uppercase; color: var(--session-accent); margin: 2rem 0 .75rem; font-weight: 700; }
+    .session-content strong { color: var(--text); font-weight: 600; }
+
+    /* ── two-column comparison ── */
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin: 1.75rem 0; }
+    @media (max-width: 580px) { .split { grid-template-columns: 1fr; } }
+    .split-cell { background: var(--glass); padding: 1.25rem 1.4rem; display: flex; flex-direction: column; gap: .4rem; }
+    .split-label { font-family: 'Inter', sans-serif; font-size: .55rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--session-accent); }
+    .split-title { font-family: var(--ff-display); font-size: 1.05rem; font-weight: 700; color: var(--text); }
+    .split-body { font-family: 'Inter', sans-serif; font-size: .75rem; font-weight: 300; line-height: 1.6; color: var(--text-secondary); }
+
+    /* ── appraisal checklist table ── */
+    .appraisal-table { width: 100%; border-collapse: collapse; margin: 1.75rem 0; font-size: .82rem; }
+    .appraisal-table th {
+      background: color-mix(in srgb, var(--session-accent) 12%, transparent);
+      color: var(--text); font-family: 'Inter', sans-serif; font-size: .57rem;
+      letter-spacing: .15em; text-transform: uppercase; font-weight: 700;
+      padding: .7rem 1rem; text-align: left; border-bottom: 1px solid var(--session-accent);
     }
-    .s-section ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: .6rem; }
-    .s-section li {
-      padding: .7rem 1rem .7rem 1.25rem; background: var(--glass);
-      border: 1px solid var(--border); border-radius: 8px;
-      font-size: .95rem; color: var(--text-secondary); line-height: 1.65; transition: var(--transition);
+    .appraisal-table td { padding: .8rem 1rem; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; line-height: 1.55; }
+    .appraisal-table tr:last-child td { border-bottom: none; }
+    .appraisal-table td:first-child { color: var(--text); font-weight: 500; font-family: 'Inter', sans-serif; font-size: .8rem; white-space: nowrap; }
+    .appraisal-table td:nth-child(2) { font-style: italic; font-size: .78rem; }
+    .appraisal-table tr:hover td { background: color-mix(in srgb, var(--session-accent) 4%, transparent); }
+    .flag { display: inline-block; font-family: 'Inter', sans-serif; font-size: .5rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: .15rem .5rem; border-radius: 3px; }
+    .flag-red { background: color-mix(in srgb, #ef5350 15%, transparent); color: #ef9a9a; }
+    .flag-amber { background: color-mix(in srgb, #ffa726 15%, transparent); color: #ffcc80; }
+
+    /* ── worked example ── */
+    .example-box {
+      border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin: 1.75rem 0;
     }
-    .s-section li::before { content: "▸"; color: var(--session-accent); margin-right: .6rem; font-size: .75rem; }
-    .s-section li:hover {
+    .example-header {
+      padding: .75rem 1.25rem; background: color-mix(in srgb, var(--session-accent) 9%, transparent);
+      border-bottom: 1px solid var(--border);
+      font-family: 'Inter', sans-serif; font-size: .58rem; font-weight: 700;
+      letter-spacing: .18em; text-transform: uppercase; color: var(--session-accent);
+    }
+    .example-body { padding: 1.25rem 1.5rem; background: var(--glass); }
+    .example-abstract {
+      font-family: 'Inter', sans-serif; font-size: .8rem; font-style: italic;
+      line-height: 1.7; color: var(--text-secondary);
+      border-left: 2px solid color-mix(in srgb, var(--session-accent) 35%, transparent);
+      padding-left: 1rem; margin-bottom: 1.25rem;
+    }
+    .verdict-row { display: flex; align-items: flex-start; gap: .75rem; margin-bottom: .65rem; }
+    .verdict-q { font-family: 'Inter', sans-serif; font-size: .72rem; font-weight: 600; color: var(--text); min-width: 160px; flex-shrink: 0; line-height: 1.45; }
+    .verdict-a { font-family: 'Inter', sans-serif; font-size: .72rem; font-weight: 300; color: var(--text-secondary); line-height: 1.55; }
+    .verdict-a .flag { margin-right: .35rem; }
+
+    /* ── live appraisal tool ── */
+    .exercise-box {
       background: color-mix(in srgb, var(--session-accent) 5%, var(--glass));
-      border-color: var(--session-accent); color: var(--text);
+      border: 1px dashed color-mix(in srgb, var(--session-accent) 45%, transparent);
+      padding: 2rem 2rem 1.75rem; border-radius: 14px; margin: 2.5rem 0;
     }
-    .s-section li strong { color: var(--text); font-weight: 600; }
-    .s-section li em { color: var(--session-accent); font-style: italic; }
+    .exercise-box h3 { margin-top: 0; }
+    .exercise-box textarea {
+      width: 100%; box-sizing: border-box;
+      background: var(--glass); border: 1px solid var(--border); border-radius: 8px;
+      color: var(--text); font-family: var(--ff-body); font-size: .88rem;
+      padding: .8rem 1rem; resize: vertical; min-height: 140px;
+      margin: .75rem 0 .5rem; transition: border-color .2s;
+    }
+    .exercise-box textarea:focus { outline: none; border-color: var(--session-accent); }
+    .exercise-box textarea::placeholder { color: color-mix(in srgb, var(--text-secondary) 45%, transparent); font-style: italic; }
+    .context-row { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-bottom: 1rem; }
+    @media (max-width: 540px) { .context-row { grid-template-columns: 1fr; } }
+    .ctx-field { display: flex; flex-direction: column; gap: .3rem; }
+    .ctx-label { font-family: 'Inter', sans-serif; font-size: .58rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--session-accent); }
+    .ctx-input {
+      background: var(--glass); border: 1px solid var(--border); border-radius: 6px;
+      color: var(--text); font-family: var(--ff-body); font-size: .85rem;
+      padding: .55rem .85rem; transition: border-color .2s;
+    }
+    .ctx-input:focus { outline: none; border-color: var(--session-accent); }
+    .ctx-input::placeholder { color: color-mix(in srgb, var(--text-secondary) 45%, transparent); font-style: italic; font-size: .8rem; }
+    .run-btn {
+      font-family: 'Inter', sans-serif; font-size: .65rem; letter-spacing: .15em;
+      text-transform: uppercase; font-weight: 700; padding: .7rem 1.8rem;
+      border-radius: 8px; border: 1px solid var(--session-accent);
+      background: color-mix(in srgb, var(--session-accent) 12%, transparent);
+      color: var(--session-accent); cursor: pointer; transition: all .15s;
+    }
+    .run-btn:hover:not(:disabled) { background: color-mix(in srgb, var(--session-accent) 22%, transparent); }
+    .run-btn:disabled { opacity: .4; cursor: not-allowed; }
+    .appraisal-output {
+      margin-top: 1.5rem; display: none;
+      border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+    }
+    .appraisal-output.visible { display: block; }
+    .ao-header {
+      padding: .7rem 1.2rem;
+      background: color-mix(in srgb, var(--session-accent) 10%, transparent);
+      border-bottom: 1px solid var(--border);
+      font-family: 'Inter', sans-serif; font-size: .55rem; font-weight: 700;
+      letter-spacing: .2em; text-transform: uppercase; color: var(--session-accent);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .copy-btn {
+      font-family: 'Inter', sans-serif; font-size: .52rem; letter-spacing: .1em;
+      text-transform: uppercase; font-weight: 600; padding: .3rem .75rem;
+      border-radius: 4px; border: 1px solid var(--border); background: transparent;
+      color: var(--text-secondary); cursor: pointer; transition: all .15s;
+    }
+    .copy-btn:hover { border-color: var(--session-accent); color: var(--session-accent); }
+    .copy-btn.copied { color: #a5d6a7; border-color: #a5d6a7; }
+    .ao-body {
+      padding: 1.25rem 1.5rem; background: var(--glass);
+      font-family: 'Inter', sans-serif; font-size: .84rem;
+      line-height: 1.75; color: var(--text-secondary); white-space: pre-wrap;
+    }
+
+    /* ── takeaway ── */
+    .takeaway {
+      margin-top: 3rem; padding: 1.5rem 2rem; border-radius: 12px;
+      border: 1px solid color-mix(in srgb, var(--session-accent) 30%, transparent);
+      background: color-mix(in srgb, var(--session-accent) 5%, transparent);
+    }
+    .takeaway h3 { margin-top: 0; }
+    .takeaway p { margin-bottom: 0; font-size: .95rem; }
   </style>
 </head>
 <body>
@@ -72,19 +177,162 @@
   <div class="s-crumb">
     <a href="../../" style="color:inherit;text-decoration:none;">Home</a> · Level 2 · <span>Session 3</span>
   </div>
+
   <div class="s-hero">
     <div class="s-badge">🔭 Level 2 of 3 · Session 3 of 5</div>
     <p class="s-label">Level 2 · Exploration</p>
     <h1 class="s-title">Critical Appraisal</h1>
     <p class="s-subtitle">Reading Studies That Read Back</p>
-    <p class="s-oneliner">How do you appraise AI-retrieved evidence rigorously?</p>
+    <p class="s-oneliner">How do you appraise AI-retrieved health economics evidence rigorously — and use AI as a sparring partner rather than an authority?</p>
   </div>
 
-  
+  <div class="session-content">
+
+    <h2>Clinical appraisal is not enough</h2>
+    <p>Most critical appraisal training in public health is built around clinical questions: is the randomisation adequate, is blinding maintained, is the outcome validated? These are important. But for health economics and financing work, they are necessary and insufficient. A study that passes every GRADE or CONSORT criterion can still be worthless for a WHO India brief if its cost perspective is wrong, its discount rate is not reported, its outcomes are not transferable, or its equity assumptions are hidden.</p>
+    <p>This session introduces the additional appraisal layer that health economists need — the questions that GRADE does not ask but that determine whether a cost-effectiveness finding, a financial risk protection estimate, or a health insurance evaluation is usable for policy in India.</p>
+
+    <div class="split">
+      <div class="split-cell">
+        <span class="split-label">Clinical appraisal asks</span>
+        <div class="split-title">Is this study internally valid?</div>
+        <div class="split-body">Was the intervention well-defined? Was randomisation adequate? Was follow-up complete? Were outcomes measured consistently? These questions establish whether the study's findings are credible within its own context.</div>
+      </div>
+      <div class="split-cell">
+        <span class="split-label">Economic appraisal also asks</span>
+        <div class="split-title">Is this study usable for India?</div>
+        <div class="split-body">What cost perspective was used — societal, payer, household? Were costs adjusted for Indian price levels? Was the informal economy accounted for? Were equity weights applied? Is the intervention transferable to a federal LMIC with fragmented insurance coverage?</div>
+      </div>
+    </div>
+
+    <h2>The ten appraisal questions for health economics studies</h2>
+    <p>These ten questions cover both the internal validity layer (shared with clinical appraisal) and the economic transferability layer (specific to financing and UHC work). For each retrieved study, work through these in order. AI can help you answer them quickly — the tool at the end of this session does exactly that — but the questions themselves are yours to ask.</p>
+
+    <table class="appraisal-table">
+      <thead>
+        <tr><th>#</th><th>Question</th><th>What to look for</th><th>India-specific flag</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>01</td>
+          <td>Is the research question clearly stated?</td>
+          <td>Explicit population, intervention, comparator, outcome — not buried in the introduction</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>02</td>
+          <td>What type of economic evaluation is this?</td>
+          <td>Cost-effectiveness, cost-benefit, cost-utility, cost analysis only? Full evaluations compare costs AND outcomes. Partial analyses are weaker evidence for allocation decisions.</td>
+          <td><span class="flag flag-amber">Check</span> HTAIn reference case requires full CEA or CUA for priority-setting submissions</td>
+        </tr>
+        <tr>
+          <td>03</td>
+          <td>What is the cost perspective?</td>
+          <td>Societal (all costs), payer (government/insurer), or household (out-of-pocket)? The perspective determines what costs are included and whose financial protection is being measured.</td>
+          <td><span class="flag flag-red">Critical</span> Payer-perspective studies systematically miss household OOP — the primary financial risk measure for WHO India work</td>
+        </tr>
+        <tr>
+          <td>04</td>
+          <td>Are costs reported with unit prices and quantities separately?</td>
+          <td>Bundled cost figures cannot be transferred to another setting. Unit prices × quantities allows adjustment to Indian price levels.</td>
+          <td><span class="flag flag-red">Critical</span> Without this, no cost transferability to India is possible</td>
+        </tr>
+        <tr>
+          <td>05</td>
+          <td>Is a discount rate reported for future costs and outcomes?</td>
+          <td>Costs and outcomes occurring in future years must be discounted to present value. Missing discount rate = uninterpretable long-run estimates.</td>
+          <td><span class="flag flag-amber">Check</span> India's HTAIn reference case recommends 3% annual discount rate</td>
+        </tr>
+        <tr>
+          <td>06</td>
+          <td>Is uncertainty quantified?</td>
+          <td>Sensitivity analysis, probabilistic analysis, or confidence intervals. A single point estimate with no uncertainty range is not a reliable basis for policy.</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>07</td>
+          <td>Are equity outcomes reported?</td>
+          <td>Are results disaggregated by income quintile, gender, geography, or caste? Aggregate findings hide distributional impact — who gains and who is excluded.</td>
+          <td><span class="flag flag-red">Critical</span> India's NHP equity mandate requires distributional evidence; aggregate findings are insufficient for most WHO India briefs</td>
+        </tr>
+        <tr>
+          <td>08</td>
+          <td>Does the study account for the informal economy?</td>
+          <td>In settings where 80–90% of workers are informal, studies assuming formal employment-linked coverage miss the primary target population for UHC expansion.</td>
+          <td><span class="flag flag-red">Critical</span> India's informal sector is ~90% of the workforce — studies ignoring this are not transferable to PM-JAY or CBHI contexts</td>
+        </tr>
+        <tr>
+          <td>09</td>
+          <td>Is the comparator realistic for India?</td>
+          <td>The counterfactual matters. "No intervention" is rarely the real alternative — it competes with the existing mix of ESIS, CGHS, state schemes, and out-of-pocket care.</td>
+          <td><span class="flag flag-amber">Check</span> Studies comparing to "no coverage" overestimate incremental benefit relative to India's fragmented existing coverage</td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td>Are implementation and scale-up costs included?</td>
+          <td>Efficacy-study costs underestimate real-world costs. Claims processing infrastructure, beneficiary identification, provider empanelment, and fraud control are material in India's context.</td>
+          <td><span class="flag flag-amber">Check</span> PM-JAY implementation evidence shows claims settlement costs adding 15–25% to programme cost in high-volume states</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>A worked appraisal — PM-JAY financial protection study</h2>
+    <p>Here is how the ten questions apply to a representative type of study that commonly appears in AI-retrieved health financing searches for India:</p>
+
+    <div class="example-box">
+      <div class="example-header">📄 Representative abstract — apply the ten questions</div>
+      <div class="example-body">
+        <div class="example-abstract">"This study evaluates the impact of Pradhan Mantri Jan Arogya Yojana (PM-JAY) on out-of-pocket health expenditure among enrolled households in three Indian states. Using difference-in-differences estimation with NSSO 75th round data, we find that PM-JAY enrollment is associated with a 22% reduction in inpatient out-of-pocket expenditure (p&lt;0.01). Subgroup analysis shows larger effects in urban households. The study uses a government payer perspective and reports costs in 2018 Indian rupees. No discount rate is applied as the study period is two years. Sensitivity analysis is not reported."</div>
+
+        <div class="verdict-row"><div class="verdict-q">Q01 — Question stated?</div><div class="verdict-a">Yes. Population (enrolled PM-JAY households), intervention (PM-JAY), comparator (difference-in-differences implies pre/post), outcome (inpatient OOP) are all identifiable.</div></div>
+        <div class="verdict-row"><div class="verdict-q">Q02 — Evaluation type?</div><div class="verdict-a">Partial — cost analysis only. No outcome measure beyond OOP reduction. Cannot be used for cost-effectiveness comparison or DALY-based priority-setting.</div></div>
+        <div class="verdict-row"><div class="verdict-q">Q03 — Cost perspective?</div><div class="verdict-a"><span class="flag flag-red">Critical gap</span> Government payer perspective. Misses household OOP for outpatient care, informal payments, and travel costs — the dominant financial burden for poor households.</div></div>
+        <div class="verdict-row"><div class="verdict-q">Q07 — Equity outcomes?</div><div class="verdict-a"><span class="flag flag-red">Critical gap</span> Subgroup analysis shows larger urban effects — but no income quintile disaggregation. Cannot determine whether the poorest BPL households benefit.</div></div>
+        <div class="verdict-row"><div class="verdict-q">Q08 — Informal economy?</div><div class="verdict-a"><span class="flag flag-amber">Partial</span> PM-JAY targets BPL households, but the study does not report whether enrolled households are formal or informal sector — critical for transferability to non-PM-JAY CBHI contexts.</div></div>
+        <div class="verdict-row"><div class="verdict-q">Q06 — Uncertainty?</div><div class="verdict-a"><span class="flag flag-red">Critical gap</span> No sensitivity analysis. The 22% estimate is a point estimate with no range. Cannot assess robustness to model assumptions.</div></div>
+        <div class="verdict-row"><div class="verdict-q">Overall usability</div><div class="verdict-a">Useful as directional evidence that PM-JAY affects inpatient OOP. Not usable for equity analysis, cost-effectiveness comparison, or outpatient financial protection conclusions. Cite with explicit caveats on perspective and equity disaggregation gaps.</div></div>
+      </div>
+    </div>
+
+    <h2>Use AI as the appraiser</h2>
+
+    <div class="exercise-box">
+      <h3>🔭 Economic appraisal tool — paste any abstract or study description</h3>
+      <p style="font-size:.85rem;margin-bottom:.75rem;">Paste the abstract or a description of a health economics study. Add the policy context you are using it for. The tool will apply all ten appraisal questions and flag the critical gaps for WHO India use.</p>
+
+      <div class="context-row">
+        <div class="ctx-field">
+          <span class="ctx-label">Your policy context</span>
+          <input class="ctx-input" id="ctx-policy" type="text" placeholder="e.g. PM-JAY outpatient expansion for informal workers, UP">
+        </div>
+        <div class="ctx-field">
+          <span class="ctx-label">Study country / setting</span>
+          <input class="ctx-input" id="ctx-setting" type="text" placeholder="e.g. India, 3 states · or Kenya, Rwanda">
+        </div>
+      </div>
+
+      <textarea id="appraisal-input" placeholder="Paste the abstract or study description here. Include as much methodological detail as is available — study design, cost perspective, outcomes measured, population, any reported results…"></textarea>
+      <button class="run-btn" id="run-btn" onclick="runAppraisal()">Appraise this study →</button>
+
+      <div class="appraisal-output" id="appraisal-output">
+        <div class="ao-header">
+          <span>🔭 Economic appraisal — 10-question verdict</span>
+          <button class="copy-btn" id="copy-btn" onclick="copyOutput(this)">Copy</button>
+        </div>
+        <div class="ao-body" id="ao-body"></div>
+      </div>
+    </div>
+
+    <div class="takeaway">
+      <h3>🎯 Key takeaway</h3>
+      <p>Clinical appraisal answers "is this study valid?" Economic appraisal for WHO India work adds: "is this study usable here?" The three critical flags — cost perspective, equity disaggregation, and informal economy accounting — disqualify more retrieved studies than any clinical quality criterion. AI can apply the ten questions faster than any human reviewer, but you must supply the questions. The appraisal tool in this session is the fastest way to triage a set of retrieved studies before synthesis. Session 4 takes the studies that pass appraisal and asks when their numbers can legitimately be pooled.</p>
+    </div>
+
+  </div><!-- /session-content -->
 
   <nav class="s-nav" aria-label="Session navigation">
-    <a class='s-nav-btn' href='session2.html'>← Previous</a>
-    <a class='s-nav-btn s-nav-next' href='session4.html'>Next →</a>
+    <a class="s-nav-btn" href="session2.html">← Previous</a>
+    <a class="s-nav-btn s-nav-next" href="session4.html">Next →</a>
   </nav>
 </div>
 
@@ -92,11 +340,113 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
 <script src="../../js/shared.js"></script>
 <script>
+  /* ── scroll spine ── */
   const spine = document.getElementById('spine');
   window.addEventListener('scroll', () => {
     const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
     spine.style.height = Math.min(pct, 100) + '%';
   }, { passive: true });
+
+  /* ── economic appraisal tool ── */
+  async function runAppraisal() {
+    const text    = document.getElementById('appraisal-input').value.trim();
+    const policy  = document.getElementById('ctx-policy').value.trim();
+    const setting = document.getElementById('ctx-setting').value.trim();
+    if (!text) { alert('Please paste a study abstract or description before appraising.'); return; }
+
+    const btn = document.getElementById('run-btn');
+    const out = document.getElementById('appraisal-output');
+    const body = document.getElementById('ao-body');
+    btn.disabled = true; btn.textContent = 'Appraising…';
+    out.classList.remove('visible');
+
+    const system = `You are a senior health economics methodologist supporting WHO India. Your task is to critically appraise health economics and financing studies using a ten-question framework calibrated for LMIC policy use, specifically India.
+
+For each question, give a one-line verdict using one of: ADEQUATE · PARTIAL · NOT REPORTED · NOT APPLICABLE. Follow with one sentence of specific observation. Flag questions 3, 7, and 8 as CRITICAL if they reveal a gap that limits usability for Indian health financing policy.
+
+Use exactly this format:
+
+Q01 — Research question stated
+Verdict: [ADEQUATE / PARTIAL / NOT REPORTED]
+Observation: [one sentence]
+
+Q02 — Type of economic evaluation
+Verdict: [...]
+Observation: [...]
+
+Q03 — Cost perspective ⚑ CRITICAL FOR INDIA
+Verdict: [...]
+Observation: [...]
+
+Q04 — Unit costs reported separately
+Verdict: [...]
+Observation: [...]
+
+Q05 — Discount rate reported
+Verdict: [...]
+Observation: [...]
+
+Q06 — Uncertainty quantified
+Verdict: [...]
+Observation: [...]
+
+Q07 — Equity outcomes disaggregated ⚑ CRITICAL FOR INDIA
+Verdict: [...]
+Observation: [...]
+
+Q08 — Informal economy accounted for ⚑ CRITICAL FOR INDIA
+Verdict: [...]
+Observation: [...]
+
+Q09 — Comparator realistic for India
+Verdict: [...]
+Observation: [...]
+
+Q10 — Implementation and scale-up costs included
+Verdict: [...]
+Observation: [...]
+
+OVERALL USABILITY FOR INDIA POLICY
+[Two to three sentences: what this study can and cannot be used to support in the given policy context. Be specific and direct. Name the critical gaps that must be disclosed if this study is cited in a WHO India brief.]`;
+
+    const userMsg = `Policy context: ${policy || 'general WHO India health financing brief'}
+Study setting: ${setting || 'not specified'}
+
+Study text:
+${text}`;
+
+    try {
+      const resp = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          system,
+          messages: [{ role: 'user', content: userMsg }]
+        })
+      });
+      const data = await resp.json();
+      const result = data?.content?.[0]?.text || 'No response received.';
+      body.textContent = result;
+      out.classList.add('visible');
+      out.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } catch (err) {
+      body.textContent = 'Could not reach the AI service. Check your connection and try again.';
+      out.classList.add('visible');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Appraise this study →';
+    }
+  }
+
+  function copyOutput(btn) {
+    const text = document.getElementById('ao-body').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied ✓'; btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
 </script>
 </body>
 </html>
