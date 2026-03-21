@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>🔥 Future of Evidence · Level 3 Session 5</title>
-  <meta name="description" content="Where is AI-assisted evidence synthesis heading, and what remains irreducibly human?">
+  <meta name="description" content="Where is AI-assisted evidence synthesis heading — and what remains irreducibly human at the intersection of health economics, equity, and power?">
   <meta name="color-scheme" content="dark light">
   <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-dark.ico" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-light.ico" media="(prefers-color-scheme: light)">
@@ -25,7 +25,7 @@
     }
     body { font-family: var(--ff-body); font-weight: 300; }
     .spine { position: fixed; left: 0; top: 0; width: 3px; height: 0%; background: var(--session-accent); z-index: 200; transition: height .1s linear; }
-    .s-page { padding-top: calc(var(--header-h) + 3rem); padding-bottom: 6rem; max-width: 780px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
+    .s-page { padding-top: calc(var(--header-h) + 3rem); padding-bottom: 6rem; max-width: 860px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
     .s-crumb { font-family: 'Inter', sans-serif; font-size: .6rem; letter-spacing: .3em; text-transform: uppercase; color: var(--text-secondary); opacity: .5; margin-bottom: 2.5rem; display: flex; gap: .75rem; align-items: center; }
     .s-crumb span { color: var(--session-accent); opacity: 1; }
     .s-hero { margin-bottom: 3.5rem; }
@@ -37,29 +37,111 @@
     .s-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); gap: 1rem; }
     .s-nav-btn { font-family: 'Inter', sans-serif; font-size: .7rem; letter-spacing: .1em; font-weight: 500; padding: .6rem 1.4rem; border-radius: 8px; border: 1px solid var(--border); background: var(--glass); color: var(--text-secondary); text-decoration: none; transition: var(--transition); }
     .s-nav-btn:hover { border-color: var(--session-accent); color: var(--session-accent); }
-    .s-nav-next { margin-left: auto; }
-    @media (max-width: 600px) { .s-page { padding-left: 1.25rem; padding-right: 1.25rem; } }
-    
-    .s-section { margin-bottom: 3rem; padding-bottom: 3rem; border-bottom: 1px solid var(--border); }
-    .s-section:last-of-type { border-bottom: none; }
-    .s-section h2 {
-      font-family: var(--ff-display); font-size: 1.3rem; font-weight: 600;
-      color: var(--text); margin-bottom: 1.25rem;
-      padding-left: 1rem; border-left: 3px solid var(--session-accent);
+
+    /* ── content ── */
+    .session-content { margin-top: 2rem; line-height: 1.85; color: var(--text-secondary); }
+    .session-content p { margin-bottom: 1.4rem; font-size: clamp(.95rem, 2vw, 1.08rem); }
+    .session-content h2 { font-family: var(--ff-display); font-size: clamp(1.4rem, 3.5vw, 2rem); font-weight: 800; color: var(--text); margin: 3.5rem 0 1.1rem; letter-spacing: -.02em; }
+    .session-content h3 { font-family: 'Inter', sans-serif; font-size: .65rem; letter-spacing: .3em; text-transform: uppercase; color: var(--session-accent); margin: 2.5rem 0 .75rem; font-weight: 700; }
+    .session-content strong { color: var(--text); font-weight: 600; }
+    .session-content em { font-style: italic; }
+
+    /* ── pull quote ── */
+    .pull-quote {
+      font-family: var(--ff-display); font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 600; font-style: italic; line-height: 1.35;
+      color: var(--text); margin: 2.5rem 0;
+      padding: 1.75rem 2rem;
+      border-left: 4px solid var(--session-accent);
+      background: color-mix(in srgb, var(--session-accent) 5%, transparent);
+      border-radius: 0 12px 12px 0;
     }
-    .s-section ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: .6rem; }
-    .s-section li {
-      padding: .7rem 1rem .7rem 1.25rem; background: var(--glass);
-      border: 1px solid var(--border); border-radius: 8px;
-      font-size: .95rem; color: var(--text-secondary); line-height: 1.65; transition: var(--transition);
+
+    /* ── horizon cards ── */
+    .horizon { display: flex; flex-direction: column; gap: 0; margin: 1.75rem 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .hz-row { display: flex; border-bottom: 1px solid var(--border); }
+    .hz-row:last-child { border-bottom: none; }
+    .hz-time {
+      min-width: 90px; display: flex; flex-direction: column; align-items: center;
+      justify-content: flex-start; padding: 1.1rem .5rem .75rem;
+      background: color-mix(in srgb, var(--session-accent) 9%, transparent);
+      border-right: 1px solid var(--border);
+      font-family: 'Inter', sans-serif; font-size: .6rem; font-weight: 800;
+      color: var(--session-accent); text-align: center; line-height: 1.3;
     }
-    .s-section li::before { content: "▸"; color: var(--session-accent); margin-right: .6rem; font-size: .75rem; }
-    .s-section li:hover {
-      background: color-mix(in srgb, var(--session-accent) 5%, var(--glass));
-      border-color: var(--session-accent); color: var(--text);
+    .hz-time span { font-size: .5rem; font-weight: 400; color: var(--text-secondary); margin-top: .25rem; display: block; }
+    .hz-body { padding: 1rem 1.4rem; background: var(--glass); flex: 1; }
+    .hz-title { font-family: var(--ff-display); font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: .25rem; }
+    .hz-desc { font-family: 'Inter', sans-serif; font-size: .76rem; font-weight: 300; line-height: 1.65; color: var(--text-secondary); }
+    .hz-india { font-family: 'Inter', sans-serif; font-size: .68rem; font-weight: 500; color: var(--session-accent); margin-top: .35rem; line-height: 1.5; }
+
+    /* ── irreducibly human ── */
+    .human-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(260px,100%), 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin: 1.75rem 0; }
+    .hm-card { background: var(--glass); padding: 1.25rem 1.4rem; display: flex; flex-direction: column; gap: .5rem; }
+    .hm-icon { font-size: 1.1rem; }
+    .hm-title { font-family: var(--ff-display); font-size: 1.05rem; font-weight: 700; color: var(--text); line-height: 1.2; }
+    .hm-desc { font-family: 'Inter', sans-serif; font-size: .74rem; font-weight: 300; line-height: 1.65; color: var(--text-secondary); }
+
+    /* ── curriculum recap ── */
+    .recap { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin: 2rem 0; }
+    .recap-level { display: flex; align-items: stretch; }
+    .recap-badge {
+      min-width: 90px; display: flex; align-items: center; justify-content: center;
+      padding: 1rem .75rem; font-family: 'Inter', sans-serif; font-size: .55rem;
+      font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
+      text-align: center; line-height: 1.4;
     }
-    .s-section li strong { color: var(--text); font-weight: 600; }
-    .s-section li em { color: var(--session-accent); font-style: italic; }
+    .recap-badge.l1 { background: color-mix(in srgb, #4fc3f7 10%, transparent); color: #4fc3f7; border-right: 1px solid var(--border); }
+    .recap-badge.l2 { background: color-mix(in srgb, #69db7c 10%, transparent); color: #69db7c; border-right: 1px solid var(--border); }
+    .recap-badge.l3 { background: color-mix(in srgb, var(--session-accent) 10%, transparent); color: var(--session-accent); border-right: 1px solid var(--border); }
+    .recap-body { padding: 1rem 1.4rem; background: var(--glass); flex: 1; }
+    .recap-title { font-family: var(--ff-display); font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: .2rem; }
+    .recap-sessions { font-family: 'Inter', sans-serif; font-size: .72rem; font-weight: 300; line-height: 1.65; color: var(--text-secondary); }
+
+    /* ── commitment box ── */
+    .commitment-box {
+      background: color-mix(in srgb, var(--session-accent) 6%, var(--glass));
+      border: 1px solid color-mix(in srgb, var(--session-accent) 30%, transparent);
+      padding: 2rem 2rem 1.75rem; border-radius: 14px; margin: 2.5rem 0;
+    }
+    .commitment-box h3 { margin-top: 0; font-family: 'Inter', sans-serif; font-size: .65rem; letter-spacing: .3em; text-transform: uppercase; color: var(--session-accent); font-weight: 700; }
+    .commit-row { display: flex; flex-direction: column; gap: .35rem; margin-bottom: 1.1rem; }
+    .commit-label { font-family: 'Inter', sans-serif; font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--text); }
+    .commit-input {
+      width: 100%; box-sizing: border-box;
+      background: var(--glass); border: 1px solid var(--border); border-radius: 6px;
+      color: var(--text); font-family: var(--ff-body); font-size: .88rem;
+      padding: .7rem .9rem; resize: none; min-height: 60px; transition: border-color .2s;
+    }
+    .commit-input:focus { outline: none; border-color: var(--session-accent); }
+    .commit-input::placeholder { color: color-mix(in srgb, var(--text-secondary) 45%, transparent); font-style: italic; }
+    .commit-btn {
+      font-family: 'Inter', sans-serif; font-size: .65rem; letter-spacing: .15em;
+      text-transform: uppercase; font-weight: 700; padding: .7rem 1.8rem;
+      border-radius: 8px; border: 1px solid var(--session-accent);
+      background: color-mix(in srgb, var(--session-accent) 14%, transparent);
+      color: var(--session-accent); cursor: pointer; transition: all .15s;
+    }
+    .commit-btn:hover { background: color-mix(in srgb, var(--session-accent) 24%, transparent); }
+    .commit-output {
+      margin-top: 1.25rem; padding: 1.25rem 1.5rem;
+      background: var(--glass); border: 1px solid var(--border); border-radius: 10px;
+      font-family: var(--ff-display); font-size: 1.05rem; font-style: italic;
+      line-height: 1.6; color: var(--text); display: none;
+    }
+    .commit-output.visible { display: block; }
+
+    /* ── closing banner ── */
+    .closing-banner {
+      margin: 3.5rem 0 2rem; padding: 2.5rem 2.5rem;
+      border-radius: 14px;
+      border: 1px solid color-mix(in srgb, var(--session-accent) 45%, transparent);
+      background: color-mix(in srgb, var(--session-accent) 7%, transparent);
+    }
+    .closing-eyebrow { font-family: 'Inter', sans-serif; font-size: .55rem; font-weight: 700; letter-spacing: .25em; text-transform: uppercase; color: var(--session-accent); margin-bottom: .75rem; display: block; }
+    .closing-title { font-family: var(--ff-display); font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 800; color: var(--text); line-height: 1.1; margin-bottom: 1rem; }
+    .closing-body { font-family: 'Inter', sans-serif; font-size: .85rem; font-weight: 300; line-height: 1.75; color: var(--text-secondary); max-width: 620px; }
+    .closing-body strong { color: var(--text); }
   </style>
 </head>
 <body>
@@ -72,19 +154,158 @@
   <div class="s-crumb">
     <a href="../../" style="color:inherit;text-decoration:none;">Home</a> · Level 3 · <span>Session 5</span>
   </div>
+
   <div class="s-hero">
     <div class="s-badge">🔥 Level 3 of 3 · Session 5 of 5</div>
     <p class="s-label">Level 3 · Integration</p>
     <h1 class="s-title">Future of Evidence</h1>
     <p class="s-subtitle">What Comes After the Current Moment</p>
-    <p class="s-oneliner">Where is AI-assisted evidence synthesis heading, and what remains irreducibly human?</p>
+    <p class="s-oneliner">Where is AI-assisted evidence synthesis heading — and what remains irreducibly human at the intersection of health economics, equity, and power?</p>
   </div>
 
-  
+  <div class="session-content">
+
+    <h2>What you have built across fifteen sessions</h2>
+
+    <div class="recap">
+      <div class="recap-level">
+        <div class="recap-badge l1">Level 1<br>Foundations</div>
+        <div class="recap-body">
+          <div class="recap-title">The evidence production pipeline</div>
+          <div class="recap-sessions">You diagnosed your own bottlenecks, mapped the tool landscape by job rather than name, replaced PICO with PECO-F calibrated for health economics and UHC, built a reproducible Boolean search protocol with a grey literature checklist, and produced a WHO India–formatted evidence brief from raw findings — including a live AI brief generator with a structured system prompt that enforces the six-section template.</div>
+        </div>
+      </div>
+      <div class="recap-level">
+        <div class="recap-badge l2">Level 2<br>Exploration</div>
+        <div class="recap-body">
+          <div class="recap-title">The critical appraisal layer</div>
+          <div class="recap-sessions">You learned to detect the five structural biases in AI literature tools, run iterative five-prompt sequences that converge rather than sprawl, appraise economic studies against ten questions — with three critical India-specific flags — judge when statistical pooling is legitimate using I² and clinical homogeneity gates, and build a tiered surveillance system calibrated to India's health policy calendar.</div>
+        </div>
+      </div>
+      <div class="recap-level">
+        <div class="recap-badge l3">Level 3<br>Integration</div>
+        <div class="recap-body">
+          <div class="recap-title">The institutional and ethical frame</div>
+          <div class="recap-sessions">You audited your AI use against WHO's six ethical principles and five red lines, generated a handover-ready SOP for institutional durability, ran a time-boxed 48-hour rapid review protocol with explicit non-negotiables, stress-tested global findings against India's six friction points, and now: named what comes next — and what stays yours.</div>
+        </div>
+      </div>
+    </div>
+
+    <h2>Where AI-assisted evidence synthesis is heading</h2>
+    <p>The tools available today — Elicit, Claude, Consensus, Humata — are primitive relative to what will exist in three years. The trajectory is not speculative: the capabilities being deployed in research settings now will be in production tools within the policy cycle you are currently working in. Understanding the direction matters because it determines what skills remain essential and what will be automated.</p>
+
+    <div class="horizon">
+      <div class="hz-row">
+        <div class="hz-time">Now<span>2024–2025</span></div>
+        <div class="hz-body">
+          <div class="hz-title">AI as retrieval and drafting assistant</div>
+          <div class="hz-desc">Abstract screening, data extraction, first-draft synthesis, protocol generation. Human judgment required for every quality decision. This is the entire skill set built in Levels 1 and 2: the tools accelerate mechanical steps, but framing, appraisal, equity analysis, and recommendation remain human.</div>
+          <div class="hz-india">India status: This is where WHO India operates now. The skills in this curriculum are the current production capability.</div>
+        </div>
+      </div>
+      <div class="hz-row">
+        <div class="hz-time">Near<span>2026–2027</span></div>
+        <div class="hz-body">
+          <div class="hz-title">AI as persistent research agent</div>
+          <div class="hz-desc">Multi-step autonomous agents that run full search protocols, retrieve full-text papers, cross-reference findings, update surveillance plans, and flag threshold-crossing signals without being prompted each time. The human role shifts from operating the tools to designing the protocols the agents run — and auditing their outputs.</div>
+          <div class="hz-india">India implication: The SOPs and protocol templates built in this curriculum will become the instruction sets for these agents. Protocol quality matters more, not less, as automation increases.</div>
+        </div>
+      </div>
+      <div class="hz-row">
+        <div class="hz-time">Medium<span>2028–2030</span></div>
+        <div class="hz-body">
+          <div class="hz-title">Living systematic reviews and policy-linked evidence streams</div>
+          <div class="hz-desc">Evidence bases that update automatically as new publications are indexed, with AI-maintained synthesis layers that flag when new evidence changes existing conclusions. Some are already operational in oncology. Health financing applications will follow — HTAIn and WHO are both exploring this architecture.</div>
+          <div class="hz-india">India implication: The National Health Authority's PM-JAY data pipeline and HTAIn's assessment cycle are natural candidates for living review infrastructure. The surveillance skills from Level 2 are precursors to this system.</div>
+        </div>
+      </div>
+      <div class="hz-row">
+        <div class="hz-time">Horizon<span>2030+</span></div>
+        <div class="hz-body">
+          <div class="hz-title">Federated evidence twins</div>
+          <div class="hz-desc">Multiple domain-specific evidence systems — clinical, epidemiological, health financing, demographic — interoperating through shared data standards, with gradient propagation across scales from individual patient to national policy. This is the architecture Ukubona is building for Uganda CKD; the same principles apply to India UHC at national scale.</div>
+          <div class="hz-india">India implication: India's size, data infrastructure, and domestic technical capacity make it one of the few LMICs capable of operationalising this at national scale. The evidence systems built now are the foundation.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pull-quote">
+      The question is not whether AI will transform health evidence production. It already has. The question is whether the transformation serves the populations most at risk of being left out of the evidence it generates.
+    </div>
+
+    <h2>What remains irreducibly human</h2>
+    <p>As the automation horizon advances, five capacities remain beyond the reach of any current or foreseeable AI system — not because the technology is immature, but because they require the kind of judgment that is grounded in institutional relationship, moral responsibility, and contextual knowledge that no model trained on published text can replicate.</p>
+
+    <div class="human-grid">
+      <div class="hm-card">
+        <div class="hm-icon">🎯</div>
+        <div class="hm-title">Asking the right question</div>
+        <div class="hm-desc">Deciding which policy question matters — which intervention to evaluate, whose financial protection to prioritise, which trade-off to surface — requires political judgment, knowledge of India's specific equity commitments, and understanding of what a Ministry can act on. AI can refine a question; it cannot originate the question that matters.</div>
+      </div>
+      <div class="hm-card">
+        <div class="hm-icon">⚖️</div>
+        <div class="hm-title">Carrying the equity obligation</div>
+        <div class="hm-desc">The decision to disaggregate by income quintile, to name the populations missing from the evidence base, to flag when an aggregate recommendation harms the most marginalised — these are moral choices, not analytical ones. An AI can be instructed to look for equity outcomes. It cannot feel the weight of being accountable for whether they are found.</div>
+      </div>
+      <div class="hm-card">
+        <div class="hm-icon">🏛️</div>
+        <div class="hm-title">Navigating institutional reality</div>
+        <div class="hm-desc">Knowing which MoHFW counterpart will champion a recommendation and which will block it, which evidence a Joint Secretary will find politically usable, which state health secretary needs a different framing than the national brief — this is contextual intelligence built from years of institutional relationship. It cannot be prompted.</div>
+      </div>
+      <div class="hm-card">
+        <div class="hm-icon">🔥</div>
+        <div class="hm-title">Accepting accountability</div>
+        <div class="hm-desc">When a brief's recommendation is challenged — in a meeting, in a government corridor, in a public health crisis — a human being must be able to defend it. "The AI recommended this" is not a defence. The name on the brief carries the accountability. That accountability is what gives WHO's evidence its authority.</div>
+      </div>
+      <div class="hm-card">
+        <div class="hm-icon">🌱</div>
+        <div class="hm-title">Seeing what the data cannot show</div>
+        <div class="hm-desc">The evidence that never reaches a database — the community health worker's account of why families do not seek care, the district official's knowledge of which ASHA networks are functional, the pattern in qualitative data that no meta-analysis captures — this is the evidence that only a WHO practitioner embedded in India's health system can hold. It is not in PubMed. It is in the room.</div>
+      </div>
+    </div>
+
+    <h2>The Integrator's commitment</h2>
+    <p>The Integrator — the concept that runs through the Ukubona framework, through the Architecture-00 design philosophy, and implicitly through every session in this curriculum — is not a technical role. It is a stance. The Integrator does not just retrieve evidence; they hold the system view that asks what the evidence is for, who it serves, and what it misses.</p>
+    <p>Grace Kabaniha's research trajectory describes this precisely: from MD to health economics to a PhD that fused cost-effectiveness methodology with ethical theory and stakeholder acceptability — because she understood that the technical answer was only part of the answer, and that the other part required a different kind of rigour. That is the Integrator's stance.</p>
+    <p>This curriculum has given you fifteen sessions of technical capability. What you do with them — whose financial protection you fight to disaggregate, which global findings you refuse to extrapolate without caveats, whose evidence gap you name rather than leave silent — is not in any session. It is yours.</p>
+
+    <div class="commitment-box">
+      <h3>🔥 Your commitment — three things</h3>
+      <p style="font-family:'Inter',sans-serif;font-size:.82rem;font-weight:300;line-height:1.65;color:var(--text-secondary);margin-bottom:1.25rem;">Write three things: one technical practice you will change immediately, one equity commitment you will protect regardless of time pressure, and one thing you will never delegate to AI. These are yours — not assessed, not shared.</p>
+
+      <div class="commit-row">
+        <span class="commit-label">One technical practice I will change immediately</span>
+        <textarea class="commit-input" id="c1" rows="2" placeholder="e.g. I will run the PECO-F reframe on every research question before opening any search tool…"></textarea>
+      </div>
+      <div class="commit-row">
+        <span class="commit-label">One equity commitment I will protect regardless of time pressure</span>
+        <textarea class="commit-input" id="c2" rows="2" placeholder="e.g. I will always name the populations absent from the evidence base, even in a 48-hour brief…"></textarea>
+      </div>
+      <div class="commit-row">
+        <span class="commit-label">One thing I will never delegate to AI</span>
+        <textarea class="commit-input" id="c3" rows="2" placeholder="e.g. The recommendation. I will always write it myself, in full knowledge of what it will mean for the people it affects…"></textarea>
+      </div>
+      <button class="commit-btn" onclick="saveCommitment()">Record my commitment →</button>
+      <div class="commit-output" id="commit-output"></div>
+    </div>
+
+    <div class="closing-banner">
+      <span class="closing-eyebrow">✅ Curriculum complete — all 15 sessions</span>
+      <div class="closing-title">You have reached the Integrator's Horizon.</div>
+      <div class="closing-body">
+        Fifteen sessions. Three levels. One arc: from diagnosing a pipeline bottleneck to carrying the ethical weight of a recommendation that affects a billion people's access to financial protection. The tools will keep changing. The evidence base will keep growing. India's health financing system will keep evolving. <strong>The irreducibly human part — the judgment, the equity commitment, the accountability — is what you bring to all of it.</strong>
+        <br><br>
+        The search protocol log you built in Session 4 is already the methodology appendix of a brief that has not been written yet. The SOP from Session 2 of Level 3 is already the onboarding document for a colleague who has not yet joined the team. The surveillance plan from Level 2 Session 5 is already watching the literature for the finding that will change a recommendation.
+        <br><br>
+        The loop is running. <em>θ → L(θ) → ∇L → −η∇L → θ′.</em> Each brief you produce is the prior for the next. The evidence base converges. The work continues.
+      </div>
+    </div>
+
+  </div><!-- /session-content -->
 
   <nav class="s-nav" aria-label="Session navigation">
-    <a class='s-nav-btn' href='session4.html'>← Previous</a>
-    
+    <a class="s-nav-btn" href="session4.html">← Previous</a>
+    <a class="s-nav-btn" href="../../../" style="margin-left:auto;">Return to home →</a>
   </nav>
 </div>
 
@@ -97,6 +318,25 @@
     const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
     spine.style.height = Math.min(pct, 100) + '%';
   }, { passive: true });
+
+  function saveCommitment() {
+    const c1 = document.getElementById('c1').value.trim();
+    const c2 = document.getElementById('c2').value.trim();
+    const c3 = document.getElementById('c3').value.trim();
+    if (!c1 && !c2 && !c3) { alert('Write at least one commitment before recording.'); return; }
+
+    const out = document.getElementById('commit-output');
+    const lines = [];
+    if (c1) lines.push(`I will ${c1.replace(/^I will /i, '')}`);
+    if (c2) lines.push(`I will always ${c2.replace(/^I will (always )?/i, '')}`);
+    if (c3) lines.push(`I will never delegate to AI: ${c3.replace(/^I will never delegate to AI[:.— ]*/i, '')}`);
+
+    out.innerHTML = lines.map(l => `<div style="margin-bottom:.6rem;">— ${l}</div>`).join('');
+    out.classList.add('visible');
+
+    // gentle scroll
+    setTimeout(() => out.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+  }
 </script>
 </body>
 </html>
