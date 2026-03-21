@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>🌊 Global Evidence Ecosystems · Level 3 Session 4</title>
-  <meta name="description" content="How do LMIC contexts fit into, and challenge, global evidence hierarchies?">
+  <meta name="description" content="How do LMIC contexts fit into global evidence hierarchies — and when does global evidence break on contact with India's specific realities?">
   <meta name="color-scheme" content="dark light">
   <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-dark.ico" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-light.ico" media="(prefers-color-scheme: light)">
@@ -25,7 +25,7 @@
     }
     body { font-family: var(--ff-body); font-weight: 300; }
     .spine { position: fixed; left: 0; top: 0; width: 3px; height: 0%; background: var(--session-accent); z-index: 200; transition: height .1s linear; }
-    .s-page { padding-top: calc(var(--header-h) + 3rem); padding-bottom: 6rem; max-width: 780px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
+    .s-page { padding-top: calc(var(--header-h) + 3rem); padding-bottom: 6rem; max-width: 860px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
     .s-crumb { font-family: 'Inter', sans-serif; font-size: .6rem; letter-spacing: .3em; text-transform: uppercase; color: var(--text-secondary); opacity: .5; margin-bottom: 2.5rem; display: flex; gap: .75rem; align-items: center; }
     .s-crumb span { color: var(--session-accent); opacity: 1; }
     .s-hero { margin-bottom: 3.5rem; }
@@ -39,27 +39,82 @@
     .s-nav-btn:hover { border-color: var(--session-accent); color: var(--session-accent); }
     .s-nav-next { margin-left: auto; }
     @media (max-width: 600px) { .s-page { padding-left: 1.25rem; padding-right: 1.25rem; } }
-    
-    .s-section { margin-bottom: 3rem; padding-bottom: 3rem; border-bottom: 1px solid var(--border); }
-    .s-section:last-of-type { border-bottom: none; }
-    .s-section h2 {
-      font-family: var(--ff-display); font-size: 1.3rem; font-weight: 600;
-      color: var(--text); margin-bottom: 1.25rem;
-      padding-left: 1rem; border-left: 3px solid var(--session-accent);
+
+    /* ── content ── */
+    .session-content { margin-top: 2rem; line-height: 1.8; color: var(--text-secondary); }
+    .session-content p { margin-bottom: 1.25rem; font-size: clamp(.95rem, 2vw, 1.05rem); }
+    .session-content h2 { font-family: var(--ff-display); font-size: clamp(1.4rem, 3.5vw, 2rem); font-weight: 800; color: var(--text); margin: 3rem 0 1rem; letter-spacing: -.02em; }
+    .session-content h3 { font-family: 'Inter', sans-serif; font-size: .65rem; letter-spacing: .3em; text-transform: uppercase; color: var(--session-accent); margin: 2rem 0 .75rem; font-weight: 700; }
+    .session-content strong { color: var(--text); font-weight: 600; }
+
+    /* ── hierarchy diagram ── */
+    .hierarchy {
+      display: flex; flex-direction: column; gap: 0;
+      margin: 1.75rem 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
     }
-    .s-section ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: .6rem; }
-    .s-section li {
-      padding: .7rem 1rem .7rem 1.25rem; background: var(--glass);
-      border: 1px solid var(--border); border-radius: 8px;
-      font-size: .95rem; color: var(--text-secondary); line-height: 1.65; transition: var(--transition);
+    .hier-level { display: flex; align-items: stretch; border-bottom: 1px solid var(--border); }
+    .hier-level:last-child { border-bottom: none; }
+    .hier-rank {
+      min-width: 52px; display: flex; align-items: center; justify-content: center;
+      background: color-mix(in srgb, var(--session-accent) 9%, transparent);
+      border-right: 1px solid var(--border);
+      font-family: 'Inter', sans-serif; font-size: .65rem; font-weight: 800;
+      color: var(--session-accent); writing-mode: horizontal-tb;
     }
-    .s-section li::before { content: "▸"; color: var(--session-accent); margin-right: .6rem; font-size: .75rem; }
-    .s-section li:hover {
-      background: color-mix(in srgb, var(--session-accent) 5%, var(--glass));
-      border-color: var(--session-accent); color: var(--text);
-    }
-    .s-section li strong { color: var(--text); font-weight: 600; }
-    .s-section li em { color: var(--session-accent); font-style: italic; }
+    .hier-body { padding: .9rem 1.3rem; background: var(--glass); flex: 1; }
+    .hier-name { font-family: var(--ff-display); font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: .2rem; }
+    .hier-desc { font-family: 'Inter', sans-serif; font-size: .74rem; font-weight: 300; line-height: 1.6; color: var(--text-secondary); }
+    .hier-india { font-family: 'Inter', sans-serif; font-size: .68rem; font-weight: 500; color: var(--session-accent); margin-top: .3rem; line-height: 1.5; }
+
+    /* ── India friction points ── */
+    .friction-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(260px,100%), 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin: 1.75rem 0; }
+    .fr-card { background: var(--glass); padding: 1.2rem 1.4rem; display: flex; flex-direction: column; gap: .4rem; }
+    .fr-tag { font-family: 'Inter', sans-serif; font-size: .52rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--session-accent); opacity: .7; }
+    .fr-title { font-family: var(--ff-display); font-size: 1rem; font-weight: 700; color: var(--text); line-height: 1.2; }
+    .fr-desc { font-family: 'Inter', sans-serif; font-size: .73rem; font-weight: 300; line-height: 1.6; color: var(--text-secondary); }
+    .fr-signal { font-family: 'Inter', sans-serif; font-size: .68rem; font-weight: 500; color: var(--session-accent); margin-top: .2rem; line-height: 1.5; }
+
+    /* ── transferability matrix ── */
+    .transfer-table { width: 100%; border-collapse: collapse; margin: 1.75rem 0; font-size: .82rem; }
+    .transfer-table th { background: color-mix(in srgb, var(--session-accent) 12%, transparent); color: var(--text); font-family: 'Inter', sans-serif; font-size: .57rem; letter-spacing: .15em; text-transform: uppercase; font-weight: 700; padding: .7rem 1rem; text-align: left; border-bottom: 1px solid var(--session-accent); }
+    .transfer-table td { padding: .8rem 1rem; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; line-height: 1.55; font-family: 'Inter', sans-serif; font-size: .78rem; }
+    .transfer-table tr:last-child td { border-bottom: none; }
+    .transfer-table td:first-child { color: var(--text); font-weight: 500; }
+    .transfer-table tr:hover td { background: color-mix(in srgb, var(--session-accent) 4%, transparent); }
+    .tag-hi { display: inline-block; font-family: 'Inter', sans-serif; font-size: .5rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: .15rem .5rem; border-radius: 3px; background: color-mix(in srgb, #a9e6b4 15%, transparent); color: #a9e6b4; }
+    .tag-lo { display: inline-block; font-family: 'Inter', sans-serif; font-size: .5rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: .15rem .5rem; border-radius: 3px; background: color-mix(in srgb, #ef9a9a 12%, transparent); color: #ef9a9a; }
+    .tag-med { display: inline-block; font-family: 'Inter', sans-serif; font-size: .5rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: .15rem .5rem; border-radius: 3px; background: color-mix(in srgb, #ffcc80 12%, transparent); color: #ffcc80; }
+
+    /* ── stress test ── */
+    .exercise-box { background: color-mix(in srgb, var(--session-accent) 5%, var(--glass)); border: 1px dashed color-mix(in srgb, var(--session-accent) 40%, transparent); padding: 2rem 2rem 1.75rem; border-radius: 14px; margin: 2.5rem 0; }
+    .exercise-box h3 { margin-top: 0; }
+    .ex-fields { display: flex; flex-direction: column; gap: .85rem; margin-bottom: 1.1rem; }
+    .ex-row { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+    @media (max-width: 540px) { .ex-row { grid-template-columns: 1fr; } }
+    .ex-field { display: flex; flex-direction: column; gap: .3rem; }
+    .ex-label { font-family: 'Inter', sans-serif; font-size: .58rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--session-accent); }
+    .ex-sub { font-family: 'Inter', sans-serif; font-size: .62rem; color: var(--text-secondary); }
+    .ex-input { background: var(--glass); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-family: var(--ff-body); font-size: .85rem; padding: .55rem .85rem; transition: border-color .2s; }
+    .ex-input:focus { outline: none; border-color: var(--session-accent); }
+    .ex-input::placeholder { color: color-mix(in srgb, var(--text-secondary) 45%, transparent); font-style: italic; font-size: .8rem; }
+    .ex-textarea { width: 100%; box-sizing: border-box; background: var(--glass); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-family: var(--ff-body); font-size: .88rem; padding: .7rem .9rem; resize: vertical; min-height: 100px; transition: border-color .2s; }
+    .ex-textarea:focus { outline: none; border-color: var(--session-accent); }
+    .ex-textarea::placeholder { color: color-mix(in srgb, var(--text-secondary) 45%, transparent); font-style: italic; }
+    .run-btn { font-family: 'Inter', sans-serif; font-size: .65rem; letter-spacing: .15em; text-transform: uppercase; font-weight: 700; padding: .7rem 1.8rem; border-radius: 8px; border: 1px solid var(--session-accent); background: color-mix(in srgb, var(--session-accent) 12%, transparent); color: var(--session-accent); cursor: pointer; transition: all .15s; }
+    .run-btn:hover:not(:disabled) { background: color-mix(in srgb, var(--session-accent) 22%, transparent); }
+    .run-btn:disabled { opacity: .4; cursor: not-allowed; }
+    .stress-output { margin-top: 1.5rem; display: none; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .stress-output.visible { display: block; }
+    .so-header { padding: .7rem 1.2rem; background: color-mix(in srgb, var(--session-accent) 10%, transparent); border-bottom: 1px solid var(--border); font-family: 'Inter', sans-serif; font-size: .55rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--session-accent); display: flex; justify-content: space-between; align-items: center; }
+    .copy-btn { font-family: 'Inter', sans-serif; font-size: .52rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 600; padding: .3rem .75rem; border-radius: 4px; border: 1px solid var(--border); background: transparent; color: var(--text-secondary); cursor: pointer; transition: all .15s; }
+    .copy-btn:hover { border-color: var(--session-accent); color: var(--session-accent); }
+    .copy-btn.copied { color: #a5d6a7; border-color: #a5d6a7; }
+    .so-body { padding: 1.25rem 1.5rem; background: var(--glass); font-family: 'Inter', sans-serif; font-size: .84rem; line-height: 1.75; color: var(--text-secondary); white-space: pre-wrap; max-height: 560px; overflow-y: auto; }
+
+    /* ── takeaway ── */
+    .takeaway { margin-top: 3rem; padding: 1.5rem 2rem; border-radius: 12px; border: 1px solid color-mix(in srgb, var(--session-accent) 30%, transparent); background: color-mix(in srgb, var(--session-accent) 5%, transparent); }
+    .takeaway h3 { margin-top: 0; }
+    .takeaway p { margin-bottom: 0; font-size: .95rem; }
   </style>
 </head>
 <body>
@@ -72,19 +127,198 @@
   <div class="s-crumb">
     <a href="../../" style="color:inherit;text-decoration:none;">Home</a> · Level 3 · <span>Session 4</span>
   </div>
+
   <div class="s-hero">
     <div class="s-badge">🌊 Level 3 of 3 · Session 4 of 5</div>
     <p class="s-label">Level 3 · Integration</p>
     <h1 class="s-title">Global Evidence Ecosystems</h1>
     <p class="s-subtitle">Navigating International Data Hierarchies</p>
-    <p class="s-oneliner">How do LMIC contexts fit into, and challenge, global evidence hierarchies?</p>
+    <p class="s-oneliner">How do LMIC contexts fit into global evidence hierarchies — and when does a globally endorsed finding break on contact with India's specific political, fiscal, and demographic realities?</p>
   </div>
 
-  
+  <div class="session-content">
+
+    <h2>India is not an average LMIC</h2>
+    <p>Global evidence hierarchies — WHO guidelines, Cochrane reviews, GBD estimates, World Bank benchmarks — are produced at a scale of aggregation that is useful for setting global direction and deeply insufficient for informing a specific Indian state's health financing decision. India is simultaneously: the world's most populous country, a federal system with 28 states that function as near-independent health economies, the home of a 90% informal sector, a middle-income country by GNI per capita that contains the world's largest concentration of absolute poverty, and a country producing an increasingly sophisticated domestic health economics evidence base through HTAIn, NHA, and NSSO that rivals any LMIC in methodological rigour.</p>
+    <p>Understanding where India sits in global evidence hierarchies — and where it appropriately challenges them — is not academic. It determines which global findings can be cited in a WHO India brief, which require explicit India-specific caveats, and which must be replaced by domestic evidence entirely.</p>
+
+    <h2>The global evidence hierarchy — and where India fits</h2>
+
+    <div class="hierarchy">
+      <div class="hier-level">
+        <div class="hier-rank">L1</div>
+        <div class="hier-body">
+          <div class="hier-name">Global systematic reviews and meta-analyses</div>
+          <div class="hier-desc">Cochrane, Campbell, Lancet commissions, WHO guidelines. Highest methodological rigour but lowest India-specificity. Typically use 10% household consumption as the catastrophic expenditure threshold — which WHO India should apply cautiously given India's specific consumption distribution.</div>
+          <div class="hier-india">India use: Cite for direction of effect and existence of evidence. Never cite aggregate pooled estimates as India-specific without checking whether India data is in the pool and what it shows separately.</div>
+        </div>
+      </div>
+      <div class="hier-level">
+        <div class="hier-rank">L2</div>
+        <div class="hier-body">
+          <div class="hier-name">LMIC comparative studies and regional evidence</div>
+          <div class="hier-desc">World Bank working papers, regional WHO analyses, LMIC-focused journals (Health Policy and Planning, BMJ Global Health). More contextually relevant but still often aggregate across diverse health systems with little in common beyond income classification.</div>
+          <div class="hier-india">India use: Cite when India is explicitly included in the sample. Flag when evidence is from sub-Saharan Africa or South-East Asia only — comparable in income classification but not in federal structure, insurance landscape, or informal economy scale.</div>
+        </div>
+      </div>
+      <div class="hier-level">
+        <div class="hier-rank">L3</div>
+        <div class="hier-body">
+          <div class="hier-name">India national evidence</div>
+          <div class="hier-desc">NSSO/NSO surveys, NHA, NFHS, HMIS, HTAIn assessments, peer-reviewed India-specific studies. Highest India-relevance; methodological quality varies. HTAIn assessments use a defined reference case with standardised methods — treat these as gold standard for cost-effectiveness evidence in India.</div>
+          <div class="hier-india">India use: Always prefer over LMIC extrapolation when available. Note the year of data collection — NSSO rounds and NHA releases may be 2–4 years old by the time a brief is written.</div>
+        </div>
+      </div>
+      <div class="hier-level">
+        <div class="hier-rank">L4</div>
+        <div class="hier-body">
+          <div class="hier-name">State-level evidence</div>
+          <div class="hier-desc">State NHA accounts, state health department reports, state-specific PM-JAY evaluations, academic studies on specific states. Highest granularity but most variable in quality and rarely peer-reviewed. Kerala, Tamil Nadu, and Maharashtra have more developed state health information systems than most other states.</div>
+          <div class="hier-india">India use: Essential for state-specific briefs. When national-level evidence and state-level evidence diverge, the divergence is the finding — it signals state heterogeneity that a national policy recommendation must account for.</div>
+        </div>
+      </div>
+      <div class="hier-level">
+        <div class="hier-rank">L5</div>
+        <div class="hier-body">
+          <div class="hier-name">Expert opinion and programme data</div>
+          <div class="hier-desc">Key informant interviews, programme monitoring data, WHO country office assessments, MoHFW internal reports. Lowest in formal evidence hierarchy but often the most current and most politically contextualised. Programme data from the NHA is an exception — methodologically robust and regularly updated.</div>
+          <div class="hier-india">India use: Valuable for triangulation and political feasibility assessment. Never cite as the primary evidence base for a cost-effectiveness or financial protection finding.</div>
+        </div>
+      </div>
+    </div>
+
+    <h2>Six places where global evidence breaks on India</h2>
+    <p>These are the structural mismatches between global health financing evidence and India's reality that recur most frequently in WHO India briefs. Each one requires explicit acknowledgment when global evidence is cited:</p>
+
+    <div class="friction-grid">
+      <div class="fr-card">
+        <span class="fr-tag">Federal structure</span>
+        <div class="fr-title">Health is a state subject</div>
+        <div class="fr-desc">India's constitution makes health primarily a state responsibility. A national-level intervention finding cannot be extrapolated to a specific state without accounting for that state's fiscal space, infrastructure, and political economy. A finding true for Kerala may be false for Bihar.</div>
+        <div class="fr-signal">→ Always ask: which states does this apply to, and what explains the variation?</div>
+      </div>
+      <div class="fr-card">
+        <span class="fr-tag">Informal economy scale</span>
+        <div class="fr-title">90% informal workforce</div>
+        <div class="fr-desc">Most global health insurance evidence assumes some formal employment link for enrolment and premium collection. India's 90% informal sector means that employer-linked insurance models and formal payroll-based schemes are inapplicable to the vast majority of the target population for UHC expansion.</div>
+        <div class="fr-signal">→ Any insurance evidence must specify whether enrolment mechanism is compatible with informal workers.</div>
+      </div>
+      <div class="fr-card">
+        <span class="fr-tag">Fragmented coverage</span>
+        <div class="fr-title">Not zero vs. covered</div>
+        <div class="fr-desc">Global evidence often compares insured vs. uninsured. India's counterfactual is not "no coverage" — it is a complex mix of ESIS, CGHS, state government schemes, PM-JAY, and out-of-pocket care. Incremental benefit estimates from global studies overstate PM-JAY's marginal impact.</div>
+        <div class="fr-signal">→ The correct comparator for any India brief is the existing coverage mix, not zero coverage.</div>
+      </div>
+      <div class="fr-card">
+        <span class="fr-tag">Provider landscape</span>
+        <div class="fr-title">Private sector dominance</div>
+        <div class="fr-desc">Over 70% of outpatient care and 60% of inpatient care in India is provided by private facilities. Most global health insurance models assume public provision as the default. India's private-dominant landscape creates moral hazard, adverse selection, and claims fraud dynamics that most global models do not capture.</div>
+        <div class="fr-signal">→ Evidence on insurance from countries with public-dominant provider landscapes does not transfer cleanly.</div>
+      </div>
+      <div class="fr-card">
+        <span class="fr-tag">Expenditure measurement</span>
+        <div class="fr-title">OOP definitions diverge</div>
+        <div class="fr-desc">Global studies use diverse thresholds for catastrophic expenditure — 10% of household consumption, 25%, 40% of non-food expenditure. India's NHA uses its own methodology. Comparing a globally-pooled 28% OOP reduction figure to India's NHA-measured baseline requires explicit threshold reconciliation.</div>
+        <div class="fr-signal">→ Always check whether global studies and India data use the same OOP definition before comparing.</div>
+      </div>
+      <div class="fr-card">
+        <span class="fr-tag">Demographic scale</span>
+        <div class="fr-title">India's internal diversity exceeds many regions</div>
+        <div class="fr-desc">The health financing gap between India's highest- and lowest-performing states (Kerala vs. Uttar Pradesh) is larger than the gap between many pairs of separate countries. A finding true for "India" may describe neither high-performing nor low-performing states accurately.</div>
+        <div class="fr-signal">→ National aggregate findings require explicit statement of the state-level variance they conceal.</div>
+      </div>
+    </div>
+
+    <h2>When global evidence is and is not usable for India</h2>
+
+    <table class="transfer-table">
+      <thead><tr><th>Evidence type</th><th>Transferability to India</th><th>Conditions for use</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>RCT on insurance scheme in comparable LMIC (Kenya, Rwanda)</td>
+          <td><span class="tag-med">Conditional</span></td>
+          <td>Usable for direction of effect if intervention design is comparable. Not usable for effect size without adjustment. Must note differences in provider landscape, informal economy, and existing coverage.</td>
+        </tr>
+        <tr>
+          <td>Global meta-analysis on community health insurance</td>
+          <td><span class="tag-lo">Low</span></td>
+          <td>Usable only if India studies are in the pool and reported separately. Check whether pooled estimate is driven by sub-Saharan African schemes structurally incompatible with India's context.</td>
+        </tr>
+        <tr>
+          <td>WHO or World Bank global policy recommendation</td>
+          <td><span class="tag-med">Conditional</span></td>
+          <td>Usable as normative framing. Not usable as cost-effectiveness evidence without India-specific data. Global recommendations are produced at a level of generality that explicitly requires national adaptation.</td>
+        </tr>
+        <tr>
+          <td>HTAIn cost-effectiveness assessment</td>
+          <td><span class="tag-hi">High</span></td>
+          <td>Designed specifically for India. Produced using the India reference case. Preferred over any LMIC extrapolation for cost-effectiveness findings. Check publication year — assessment may predate current PM-JAY scale.</td>
+        </tr>
+        <tr>
+          <td>India NHA or NSSO financial protection data</td>
+          <td><span class="tag-hi">High</span></td>
+          <td>Gold standard for India OOP and financial protection baseline. Check round year — NSSO rounds are periodic and NHA releases lag by 2–3 years. Use latest available round explicitly dated.</td>
+        </tr>
+        <tr>
+          <td>Global GBD disease burden estimate</td>
+          <td><span class="tag-med">Conditional</span></td>
+          <td>Usable for burden framing. IHME India estimates are increasingly granular to state level. Prefer India NFHS and HMIS for specific disease burden claims where available — GBD uses modelling that may diverge from India's own surveillance data.</td>
+        </tr>
+        <tr>
+          <td>High-income country insurance model (Germany, Netherlands, South Korea)</td>
+          <td><span class="tag-lo">Low</span></td>
+          <td>Not transferable for cost or effect estimates. Potentially useful as a structural model for universal coverage architecture — but the implementation pathway through India's informal economy, federal structure, and private provider landscape requires complete redesign.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Stress-test a finding for India transferability</h2>
+
+    <div class="exercise-box">
+      <h3>🌊 India transferability stress-test</h3>
+      <p style="font-size:.85rem;margin-bottom:1.1rem;">Paste a finding from any global or LMIC health financing study you are considering citing in a WHO India brief. Describe where it came from. The stress-test will assess transferability against India's six friction points and return a structured verdict on how it can and cannot be used.</p>
+
+      <div class="ex-fields">
+        <div class="ex-field">
+          <span class="ex-label">The finding you want to cite</span>
+          <span class="ex-sub">State it exactly as you plan to use it in the brief</span>
+          <textarea class="ex-textarea" id="st-finding" placeholder="e.g. Community-based health insurance reduces catastrophic health expenditure by 30–45% among enrolled households in low- and middle-income countries (pooled estimate from 8 studies, 2015–2022)."></textarea>
+        </div>
+        <div class="ex-row">
+          <div class="ex-field">
+            <span class="ex-label">Source countries / settings</span>
+            <span class="ex-sub">Where was this evidence produced?</span>
+            <input class="ex-input" id="st-source" type="text" placeholder="e.g. Ghana, Rwanda, Kenya, Indonesia — no India studies included">
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">How you plan to use it</span>
+            <span class="ex-sub">In which section and for what purpose?</span>
+            <input class="ex-input" id="st-use" type="text" placeholder="e.g. As evidence base for recommending PM-JAY outpatient expansion in UP">
+          </div>
+        </div>
+      </div>
+
+      <button class="run-btn" id="run-btn" onclick="runStressTest()">Run transferability stress-test →</button>
+
+      <div class="stress-output" id="stress-output">
+        <div class="so-header">
+          <span>🌊 India transferability verdict</span>
+          <button class="copy-btn" id="copy-st" onclick="copyST(this)">Copy</button>
+        </div>
+        <div class="so-body" id="so-body"></div>
+      </div>
+    </div>
+
+    <div class="takeaway">
+      <h3>🎯 Key takeaway</h3>
+      <p>Global evidence is the starting point, not the destination. For WHO India health financing briefs, the journey from a globally endorsed finding to a citable India recommendation requires passing through six friction points: federal structure, informal economy scale, fragmented existing coverage, private provider dominance, expenditure measurement divergence, and India's internal demographic heterogeneity. HTAIn assessments and NHA data are the India gold standard and should always be preferred over LMIC extrapolation when they exist. When they do not exist, global evidence can be cited — with explicit acknowledgment of the transferability assumptions being made. The stress-test in this session is the last quality gate before a global finding enters a WHO India brief. Session 5 closes the curriculum by asking the largest question: what does it mean to be an integrator of health evidence at this scale?</p>
+    </div>
+
+  </div>
 
   <nav class="s-nav" aria-label="Session navigation">
-    <a class='s-nav-btn' href='session3.html'>← Previous</a>
-    <a class='s-nav-btn s-nav-next' href='session5.html'>Next →</a>
+    <a class="s-nav-btn" href="session3.html">← Previous</a>
+    <a class="s-nav-btn s-nav-next" href="session5.html">Next →</a>
   </nav>
 </div>
 
@@ -97,6 +331,97 @@
     const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
     spine.style.height = Math.min(pct, 100) + '%';
   }, { passive: true });
+
+  async function runStressTest() {
+    const finding = document.getElementById('st-finding').value.trim();
+    const source  = document.getElementById('st-source').value.trim();
+    const use     = document.getElementById('st-use').value.trim();
+    if (!finding) { alert('Please enter a finding before running the stress-test.'); return; }
+
+    const btn  = document.getElementById('run-btn');
+    const out  = document.getElementById('stress-output');
+    const body = document.getElementById('so-body');
+    btn.disabled = true; btn.textContent = 'Stress-testing…';
+    out.classList.remove('visible');
+
+    const system = `You are a senior WHO India health economics advisor. Assess whether a global or LMIC health financing finding is transferable to India for use in a WHO India policy brief.
+
+Evaluate the finding against six India-specific friction points. For each, give a verdict: TRANSFERS / PARTIAL / DOES NOT TRANSFER. Follow with one specific observation about this finding and friction point. End with an overall transferability verdict and exact language for citing this finding appropriately in a WHO India brief.
+
+Use exactly this format:
+
+FRICTION POINT 1 — Federal structure
+Verdict: [TRANSFERS / PARTIAL / DOES NOT TRANSFER]
+Observation: [one sentence specific to this finding]
+
+FRICTION POINT 2 — Informal economy (90% of workforce)
+Verdict: [...]
+Observation: [...]
+
+FRICTION POINT 3 — Fragmented existing coverage (not zero vs. covered)
+Verdict: [...]
+Observation: [...]
+
+FRICTION POINT 4 — Private provider dominance (70% outpatient)
+Verdict: [...]
+Observation: [...]
+
+FRICTION POINT 5 — OOP expenditure measurement divergence
+Verdict: [...]
+Observation: [...]
+
+FRICTION POINT 6 — India's internal demographic heterogeneity
+Verdict: [...]
+Observation: [...]
+
+OVERALL TRANSFERABILITY
+Rating: [HIGH / CONDITIONAL / LOW]
+Rationale: [two sentences]
+
+HOW TO CITE THIS FINDING IN A WHO INDIA BRIEF
+[Ready-to-use citation language — either the finding as-is if it transfers, or a modified version with appropriate caveats that make it honest and defensible for India use. Include the specific India data or source that should accompany it if available.]
+
+WHAT THIS FINDING CANNOT SUPPORT IN A WHO INDIA BRIEF
+[One sentence: what claim this finding should not be used to make in an India context]
+
+Be direct. Do not soften verdicts where genuine transferability problems exist.`;
+
+    const msg = `Finding: ${finding}
+Source countries/settings: ${source || 'not specified'}
+Planned use in brief: ${use || 'not specified'}`;
+
+    try {
+      const resp = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          system,
+          messages: [{ role: 'user', content: msg }]
+        })
+      });
+      const data = await resp.json();
+      const result = data?.content?.[0]?.text || 'No response received.';
+      body.textContent = result;
+      out.classList.add('visible');
+      out.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } catch (err) {
+      body.textContent = 'Could not reach the AI service. Check your connection and try again.';
+      out.classList.add('visible');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Run transferability stress-test →';
+    }
+  }
+
+  function copyST(btn) {
+    const text = document.getElementById('so-body').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied ✓'; btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
 </script>
 </body>
 </html>
