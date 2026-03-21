@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>🌐 Bias in the Machine · Level 2 Session 1</title>
-  <meta name="description" content="How does training data bias affect AI literature tools?">
+  <meta name="description" content="How does training data bias affect AI literature tools — and how do you catch it before it reaches a policy brief?">
   <meta name="color-scheme" content="dark light">
   <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-dark.ico" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-light.ico" media="(prefers-color-scheme: light)">
@@ -25,7 +25,7 @@
     }
     body { font-family: var(--ff-body); font-weight: 300; }
     .spine { position: fixed; left: 0; top: 0; width: 3px; height: 0%; background: var(--session-accent); z-index: 200; transition: height .1s linear; }
-    .s-page { padding-top: calc(var(--header-h) + 3rem); padding-bottom: 6rem; max-width: 780px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
+    .s-page { padding-top: calc(var(--header-h) + 3rem); padding-bottom: 6rem; max-width: 860px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
     .s-crumb { font-family: 'Inter', sans-serif; font-size: .6rem; letter-spacing: .3em; text-transform: uppercase; color: var(--text-secondary); opacity: .5; margin-bottom: 2.5rem; display: flex; gap: .75rem; align-items: center; }
     .s-crumb span { color: var(--session-accent); opacity: 1; }
     .s-hero { margin-bottom: 3.5rem; }
@@ -39,27 +39,133 @@
     .s-nav-btn:hover { border-color: var(--session-accent); color: var(--session-accent); }
     .s-nav-next { margin-left: auto; }
     @media (max-width: 600px) { .s-page { padding-left: 1.25rem; padding-right: 1.25rem; } }
-    
-    .s-section { margin-bottom: 3rem; padding-bottom: 3rem; border-bottom: 1px solid var(--border); }
-    .s-section:last-of-type { border-bottom: none; }
-    .s-section h2 {
-      font-family: var(--ff-display); font-size: 1.3rem; font-weight: 600;
-      color: var(--text); margin-bottom: 1.25rem;
-      padding-left: 1rem; border-left: 3px solid var(--session-accent);
+
+    /* ── Session content ── */
+    .session-content { margin-top: 2rem; line-height: 1.8; color: var(--text-secondary); }
+    .session-content p { margin-bottom: 1.25rem; font-size: clamp(.95rem, 2vw, 1.05rem); }
+    .session-content h2 { font-family: var(--ff-display); font-size: clamp(1.4rem, 3.5vw, 2rem); font-weight: 800; color: var(--text); margin: 3rem 0 1rem; letter-spacing: -.02em; }
+    .session-content h3 { font-family: 'Inter', sans-serif; font-size: .65rem; letter-spacing: .3em; text-transform: uppercase; color: var(--session-accent); margin: 2rem 0 .75rem; font-weight: 700; }
+    .session-content strong { color: var(--text); font-weight: 600; }
+    .session-content ul { padding-left: 1.5rem; margin-bottom: 1.25rem; }
+    .session-content ul li { margin-bottom: .5rem; font-size: clamp(.95rem, 2vw, 1.05rem); }
+
+    /* ── Bias taxonomy cards ── */
+    .bias-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin: 1.75rem 0;
     }
-    .s-section ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: .6rem; }
-    .s-section li {
-      padding: .7rem 1rem .7rem 1.25rem; background: var(--glass);
-      border: 1px solid var(--border); border-radius: 8px;
-      font-size: .95rem; color: var(--text-secondary); line-height: 1.65; transition: var(--transition);
+    .bias-card { background: var(--glass); padding: 1.25rem 1.4rem; display: flex; flex-direction: column; gap: .45rem; }
+    .bias-tag {
+      font-family: 'Inter', sans-serif; font-size: .52rem; font-weight: 700;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: var(--session-accent); opacity: .75;
     }
-    .s-section li::before { content: "▸"; color: var(--session-accent); margin-right: .6rem; font-size: .75rem; }
-    .s-section li:hover {
+    .bias-title { font-family: var(--ff-display); font-size: 1.05rem; font-weight: 700; color: var(--text); line-height: 1.2; }
+    .bias-desc { font-family: 'Inter', sans-serif; font-size: .74rem; font-weight: 300; line-height: 1.6; color: var(--text-secondary); }
+    .bias-signal {
+      font-family: 'Inter', sans-serif; font-size: .68rem; font-weight: 500;
+      color: var(--session-accent); margin-top: .2rem; line-height: 1.5;
+    }
+
+    /* ── Before/after example ── */
+    .compare-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin: 1.75rem 0; }
+    @media (max-width: 580px) { .compare-wrap { grid-template-columns: 1fr; } }
+    .compare-cell { background: var(--glass); padding: 1.2rem 1.4rem; display: flex; flex-direction: column; gap: .5rem; }
+    .compare-cell.bad { background: color-mix(in srgb, #ef5350 6%, var(--glass)); }
+    .compare-cell.good { background: color-mix(in srgb, var(--session-accent) 6%, var(--glass)); }
+    .compare-label {
+      font-family: 'Inter', sans-serif; font-size: .55rem; font-weight: 700;
+      letter-spacing: .2em; text-transform: uppercase;
+    }
+    .compare-cell.bad .compare-label { color: #ef9a9a; }
+    .compare-cell.good .compare-label { color: var(--session-accent); }
+    .compare-text { font-family: 'Inter', sans-serif; font-size: .8rem; font-weight: 300; line-height: 1.65; color: var(--text-secondary); font-style: italic; }
+    .compare-note { font-family: 'Inter', sans-serif; font-size: .7rem; font-weight: 500; color: var(--text); line-height: 1.5; }
+
+    /* ── Checklist ── */
+    .checklist { display: flex; flex-direction: column; gap: .5rem; margin: 1.5rem 0; }
+    .check-item {
+      display: flex; align-items: flex-start; gap: .9rem;
+      padding: .8rem 1rem; border-radius: 8px;
+      border: 1px solid var(--border); background: var(--glass);
+      cursor: pointer; transition: all .15s; user-select: none;
+    }
+    .check-item:hover { border-color: var(--session-accent); }
+    .check-item.checked {
+      border-color: color-mix(in srgb, var(--session-accent) 50%, transparent);
+      background: color-mix(in srgb, var(--session-accent) 6%, var(--glass));
+    }
+    .check-box {
+      width: 16px; height: 16px; border-radius: 3px; flex-shrink: 0;
+      border: 1.5px solid var(--border); margin-top: .15rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .65rem; transition: all .15s;
+    }
+    .check-item.checked .check-box {
+      background: var(--session-accent); border-color: var(--session-accent); color: #000;
+    }
+    .check-text { font-family: 'Inter', sans-serif; font-size: .8rem; font-weight: 300; line-height: 1.6; color: var(--text-secondary); }
+    .check-item.checked .check-text { color: var(--text); }
+    .check-progress {
+      font-family: 'Inter', sans-serif; font-size: .6rem; font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase; color: var(--session-accent);
+      margin-top: .75rem; opacity: 0; transition: opacity .2s;
+    }
+    .check-progress.visible { opacity: 1; }
+
+    /* ── Bias detector ── */
+    .exercise-box {
       background: color-mix(in srgb, var(--session-accent) 5%, var(--glass));
-      border-color: var(--session-accent); color: var(--text);
+      border: 1px dashed color-mix(in srgb, var(--session-accent) 45%, transparent);
+      padding: 2rem 2rem 1.75rem; border-radius: 14px; margin: 2.5rem 0;
     }
-    .s-section li strong { color: var(--text); font-weight: 600; }
-    .s-section li em { color: var(--session-accent); font-style: italic; }
+    .exercise-box h3 { margin-top: 0; }
+    .exercise-box textarea {
+      width: 100%; box-sizing: border-box;
+      background: var(--glass); border: 1px solid var(--border); border-radius: 8px;
+      color: var(--text); font-family: var(--ff-body); font-size: .88rem;
+      padding: .8rem 1rem; resize: vertical; min-height: 130px; margin: .75rem 0 1rem;
+      transition: border-color .2s;
+    }
+    .exercise-box textarea:focus { outline: none; border-color: var(--session-accent); }
+    .exercise-box textarea::placeholder { color: color-mix(in srgb, var(--text-secondary) 45%, transparent); font-style: italic; }
+    .run-btn {
+      font-family: 'Inter', sans-serif; font-size: .65rem; letter-spacing: .15em;
+      text-transform: uppercase; font-weight: 700; padding: .7rem 1.8rem;
+      border-radius: 8px; border: 1px solid var(--session-accent);
+      background: color-mix(in srgb, var(--session-accent) 12%, transparent);
+      color: var(--session-accent); cursor: pointer; transition: all .15s;
+    }
+    .run-btn:hover:not(:disabled) { background: color-mix(in srgb, var(--session-accent) 22%, transparent); }
+    .run-btn:disabled { opacity: .4; cursor: not-allowed; }
+    .detector-output {
+      margin-top: 1.5rem; display: none;
+      border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+    }
+    .detector-output.visible { display: block; }
+    .detector-header {
+      padding: .7rem 1.2rem;
+      background: color-mix(in srgb, var(--session-accent) 10%, transparent);
+      border-bottom: 1px solid var(--border);
+      font-family: 'Inter', sans-serif; font-size: .55rem; font-weight: 700;
+      letter-spacing: .2em; text-transform: uppercase; color: var(--session-accent);
+    }
+    .detector-body {
+      padding: 1.25rem 1.5rem; background: var(--glass);
+      font-family: 'Inter', sans-serif; font-size: .85rem;
+      line-height: 1.75; color: var(--text-secondary); white-space: pre-wrap;
+    }
+
+    /* ── Takeaway ── */
+    .takeaway {
+      margin-top: 3rem; padding: 1.5rem 2rem; border-radius: 12px;
+      border: 1px solid color-mix(in srgb, var(--session-accent) 30%, transparent);
+      background: color-mix(in srgb, var(--session-accent) 5%, transparent);
+    }
+    .takeaway h3 { margin-top: 0; }
+    .takeaway p { margin-bottom: 0; font-size: .95rem; }
   </style>
 </head>
 <body>
@@ -72,19 +178,134 @@
   <div class="s-crumb">
     <a href="../../" style="color:inherit;text-decoration:none;">Home</a> · Level 2 · <span>Session 1</span>
   </div>
+
   <div class="s-hero">
     <div class="s-badge">🌐 Level 2 of 3 · Session 1 of 5</div>
     <p class="s-label">Level 2 · Exploration</p>
     <h1 class="s-title">Bias in the Machine</h1>
     <p class="s-subtitle">When AI Mirrors Our Blindspots</p>
-    <p class="s-oneliner">How does training data bias affect AI literature tools?</p>
+    <p class="s-oneliner">How does training data bias affect AI literature tools — and how do you catch it before it reaches a policy brief?</p>
   </div>
 
-  
+  <div class="session-content">
+
+    <h2>Welcome to Level 2</h2>
+    <p>Level 1 gave you the foundations: how to frame a question, choose a tool, build a search protocol, and structure a brief. Level 2 assumes you can do all of that — and asks the harder question: how do you know whether what the AI returned is actually representative of the evidence that exists?</p>
+    <p>The answer begins with understanding how AI literature tools are biased — not occasionally, not accidentally, but structurally. The bias is in the data they were trained on and the corpora they search. For health economics and financing work in India, these biases are not abstract. They shape what evidence reaches a policy brief and what never gets considered.</p>
+
+    <h2>Five structural biases in AI literature tools</h2>
+    <p>These are not bugs. They are features of how these systems were built — which means they will not be fixed by the next product update. They require active countermeasures in your workflow.</p>
+
+    <div class="bias-grid">
+      <div class="bias-card">
+        <span class="bias-tag">Geographic bias</span>
+        <div class="bias-title">WEIRD skew</div>
+        <div class="bias-desc">AI tools index the journals that have been indexed longest and most comprehensively — which means Western, Educated, Industrialised, Rich, Democratic country health systems dominate. A search on community health insurance and financial protection returns the Netherlands, Canada, and South Korea before Kerala or Rwanda.</div>
+        <div class="bias-signal">→ Signal: your results list more OECD countries than South Asian states. Fix: explicit LMIC / India / South Asia filters on every search.</div>
+      </div>
+      <div class="bias-card">
+        <span class="bias-tag">Publication bias</span>
+        <div class="bias-title">Positive results only</div>
+        <div class="bias-desc">Studies showing that an intervention works are published more often than studies showing it does not. AI tools trained on published literature inherit this skew. A synthesised finding that "health insurance improves financial protection" may reflect publication bias as much as genuine effect.</div>
+        <div class="bias-signal">→ Signal: every retrieved study shows benefit; no null or negative results appear. Fix: search for grey literature, government evaluations, and working papers that are less subject to this filter.</div>
+      </div>
+      <div class="bias-card">
+        <span class="bias-tag">Language bias</span>
+        <div class="bias-title">English-language dominance</div>
+        <div class="bias-desc">The majority of AI literature tools index English-language publications almost exclusively. Significant health financing research from India, Bangladesh, and South-East Asia is published in regional journals or government reports in Hindi, regional languages, or Portuguese/French (for comparable LMIC contexts).</div>
+        <div class="bias-signal">→ Signal: no non-English sources in results despite searching a multilingual evidence base. Fix: supplement with WHO IRIS, which has broader language coverage.</div>
+      </div>
+      <div class="bias-card">
+        <span class="bias-tag">Recency bias</span>
+        <div class="bias-title">Indexing lag</div>
+        <div class="bias-desc">AI tools have indexing lags of weeks to months. A PM-JAY state evaluation published last quarter, the latest NHA report, or a new HTAIn assessment will not yet appear in Elicit or Consensus. This matters most in fast-moving policy contexts where the most recent evidence is also the most relevant.</div>
+        <div class="bias-signal">→ Signal: no results from the last 6 months on a topic you know has recent publications. Fix: direct PubMed and Google Scholar searches with a publication date filter for recent work.</div>
+      </div>
+      <div class="bias-card">
+        <span class="bias-tag">Outcome bias</span>
+        <div class="bias-title">Clinical outcomes over economic ones</div>
+        <div class="bias-desc">Most AI literature tools were built primarily for biomedical research. Their relevance algorithms weight clinical outcomes — mortality, morbidity, disease incidence — over economic outcomes like catastrophic expenditure, financial risk protection, or cost-effectiveness ratios. A vague query on health insurance in India will return disease burden studies before financing evaluations.</div>
+        <div class="bias-signal">→ Signal: results are dominated by clinical endpoints with no financial protection measures. Fix: PECO-F framing (Session 3) with explicit economic outcome terms.</div>
+      </div>
+      <div class="bias-card">
+        <span class="bias-tag">Hallucination risk</span>
+        <div class="bias-title">Confident confabulation</div>
+        <div class="bias-desc">Generative AI tools — Claude, GPT, Gemini — can produce plausible-sounding citations, statistics, and findings that do not exist. The risk is highest when the actual evidence is sparse, as it often is for specific India sub-state contexts. The tool fills the gap with inference presented as fact.</div>
+        <div class="bias-signal">→ Signal: a specific statistic with no clear source, or a citation you cannot locate. Fix: verify every specific number against a primary source before including in a brief.</div>
+      </div>
+    </div>
+
+    <h2>What biased output looks like in practice</h2>
+    <p>The difference between a biased and a well-checked AI summary is not always obvious. Here is the same query — <em>"Does health insurance reduce financial hardship for poor households?"</em> — returned from a tool with no bias countermeasures versus one run with active filters and PECO-F framing:</p>
+
+    <div class="compare-wrap">
+      <div class="compare-cell bad">
+        <span class="compare-label">❌ Biased output — no countermeasures</span>
+        <div class="compare-text">"Multiple studies demonstrate that health insurance significantly reduces out-of-pocket health expenditure. A 2019 systematic review found an average reduction of 42% in catastrophic health payments among insured households. Evidence from Germany, the Netherlands, and South Korea consistently supports the effectiveness of social health insurance in protecting household finances."</div>
+        <div class="compare-note">Problems: OECD-only evidence, one unverifiable statistic, no LMIC context, no equity disaggregation, no India mention.</div>
+      </div>
+      <div class="compare-cell good">
+        <span class="compare-label">✓ Filtered output — PECO-F + explicit LMIC filter</span>
+        <div class="compare-text">"Evidence from LMIC contexts is mixed. Three systematic reviews of community-based health insurance in South Asia and sub-Saharan Africa (2016–2023) found reductions in catastrophic expenditure ranging from 12–38%, with effects concentrated in non-poorest quintiles of enrolled populations. Evidence specifically on PM-JAY's financial protection impact remains limited, with two state-level evaluations showing modest inpatient OOP reductions but no change in outpatient expenditure."</div>
+        <div class="compare-note">Better: LMIC-specific, honest about heterogeneity, flags the India-specific evidence gap, disaggregates by income quintile.</div>
+      </div>
+    </div>
+
+    <h2>The pre-brief bias checklist</h2>
+    <p>Before any AI-generated literature summary enters a policy brief, run it through these six checks. Work through each one now to internalise the habit.</p>
+
+    <div class="checklist" id="checklist">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-text"><strong>Geographic representativeness:</strong> Do the retrieved studies include evidence from India, South Asia, or comparable LMICs — or is the result set dominated by OECD countries?</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-text"><strong>Publication balance:</strong> Are null results and negative findings represented, or does every study show benefit? A uniformly positive result set is a warning sign.</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-text"><strong>Outcome alignment:</strong> Are the reported outcomes economic — catastrophic expenditure, financial risk protection, utilisation equity — or have clinical outcomes been substituted?</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-text"><strong>Equity disaggregation:</strong> Does the evidence report outcomes by income quintile, gender, caste, or geography — or are all findings aggregated across the full population?</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-text"><strong>Recency:</strong> Is the evidence current? Have you checked whether there are relevant publications from the last 6 months that the tool's indexing lag may have missed?</div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-text"><strong>Hallucination check:</strong> Can every specific statistic and citation in the summary be traced to a real, locatable source? Any unverifiable number should be removed before the brief is circulated.</div>
+      </div>
+    </div>
+    <div class="check-progress" id="check-progress"></div>
+
+    <h2>Run the bias detector</h2>
+
+    <div class="exercise-box">
+      <h3>🌐 Bias detector — paste any AI-generated summary</h3>
+      <p style="font-size:.85rem;margin-bottom:.5rem;">Paste an AI-generated literature summary from any tool — Elicit, Consensus, Claude, GPT. The detector will analyse it for the five structural biases above and return a structured critique with specific flags and recommended fixes.</p>
+      <textarea id="bias-input" placeholder="Paste an AI-generated literature summary here — a paragraph or more from Elicit, Consensus, Claude, or any other tool you have used for a health financing or UHC search…"></textarea>
+      <button class="run-btn" id="run-btn" onclick="runDetector()">Analyse for bias →</button>
+
+      <div class="detector-output" id="detector-output">
+        <div class="detector-header">🔍 Bias analysis — structured critique</div>
+        <div class="detector-body" id="detector-body"></div>
+      </div>
+    </div>
+
+    <div class="takeaway">
+      <h3>🎯 Key takeaway</h3>
+      <p>Bias in AI literature tools is structural, not accidental — it will not be fixed by switching tools. The five biases (WEIRD skew, publication bias, language dominance, indexing lag, clinical outcome weighting) operate simultaneously in every search. The pre-brief checklist and the bias detector in this session are your countermeasures. Run them on every AI-generated summary before it enters a brief. Session 2 builds on this foundation: once you can spot bias, the next skill is prompting AI to actively work against its own defaults.</p>
+    </div>
+
+  </div><!-- /session-content -->
 
   <nav class="s-nav" aria-label="Session navigation">
-    <a class='s-nav-btn' href='../level1/session5.html'>← Previous</a>
-    <a class='s-nav-btn s-nav-next' href='session2.html'>Next →</a>
+    <a class="s-nav-btn" href="../level1/session5.html">← Previous</a>
+    <a class="s-nav-btn s-nav-next" href="session2.html">Next →</a>
   </nav>
 </div>
 
@@ -92,11 +313,94 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
 <script src="../../js/shared.js"></script>
 <script>
+  /* ── scroll spine ── */
   const spine = document.getElementById('spine');
   window.addEventListener('scroll', () => {
     const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
     spine.style.height = Math.min(pct, 100) + '%';
   }, { passive: true });
+
+  /* ── checklist ── */
+  function toggleCheck(el) {
+    el.classList.toggle('checked');
+    const total   = document.querySelectorAll('.check-item').length;
+    const checked = document.querySelectorAll('.check-item.checked').length;
+    const prog    = document.getElementById('check-progress');
+    prog.textContent = checked === total
+      ? '✅ All six checks complete — this summary is ready for critical appraisal in Session 3.'
+      : `${checked} of ${total} checks completed`;
+    prog.classList.add('visible');
+  }
+
+  /* ── bias detector ── */
+  async function runDetector() {
+    const input = document.getElementById('bias-input').value.trim();
+    if (!input) { alert('Please paste a literature summary before running the analysis.'); return; }
+
+    const btn = document.getElementById('run-btn');
+    const out = document.getElementById('detector-output');
+    const body = document.getElementById('detector-body');
+
+    btn.disabled = true;
+    btn.textContent = 'Analysing…';
+    out.classList.remove('visible');
+
+    const system = `You are a health economics methodology expert supporting WHO India staff. Your task is to analyse AI-generated literature summaries for structural bias relevant to health financing and UHC work in India and LMICs.
+
+Analyse the provided text for the following five biases. For each, give a verdict (PRESENT / PARTIAL / NOT DETECTED) and one concrete, specific observation. Then give two overall recommendations for how to address the most significant biases found.
+
+Use exactly this format — no preamble, no markdown:
+
+GEOGRAPHIC BIAS (WEIRD skew)
+Verdict: [PRESENT / PARTIAL / NOT DETECTED]
+Observation: [one specific sentence about what you found or did not find]
+
+PUBLICATION BIAS (positive results only)
+Verdict: [PRESENT / PARTIAL / NOT DETECTED]
+Observation: [one specific sentence]
+
+LANGUAGE BIAS (English-language dominance)
+Verdict: [PRESENT / PARTIAL / NOT DETECTED]
+Observation: [one specific sentence]
+
+OUTCOME BIAS (clinical over economic)
+Verdict: [PRESENT / PARTIAL / NOT DETECTED]
+Observation: [one specific sentence]
+
+HALLUCINATION RISK (unverifiable claims)
+Verdict: [PRESENT / PARTIAL / NOT DETECTED]
+Observation: [one specific sentence identifying any statistics or citations that should be verified]
+
+OVERALL RECOMMENDATIONS
+1. [Most important fix — specific and actionable for WHO India health financing work]
+2. [Second fix]
+
+Be direct. Do not be reassuring. If bias is present, say so clearly.`;
+
+    try {
+      const resp = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          system,
+          messages: [{ role: 'user', content: input }]
+        })
+      });
+      const data = await resp.json();
+      const text = data?.content?.[0]?.text || 'No response received.';
+      body.textContent = text;
+      out.classList.add('visible');
+      out.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } catch (err) {
+      body.textContent = 'Could not reach the AI service. Check your connection and try again.';
+      out.classList.add('visible');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Analyse for bias →';
+    }
+  }
 </script>
 </body>
 </html>
