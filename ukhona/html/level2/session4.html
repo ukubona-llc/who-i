@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>🩻 Meta-Analysis Basics · Level 2 Session 4</title>
-  <meta name="description" content="When is statistical pooling of evidence appropriate?">
+  <meta name="description" content="When is statistical pooling of health economics evidence appropriate — and when does pooling create false precision?">
   <meta name="color-scheme" content="dark light">
   <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-dark.ico" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-light.ico" media="(prefers-color-scheme: light)">
@@ -25,7 +25,7 @@
     }
     body { font-family: var(--ff-body); font-weight: 300; }
     .spine { position: fixed; left: 0; top: 0; width: 3px; height: 0%; background: var(--session-accent); z-index: 200; transition: height .1s linear; }
-    .s-page { padding-top: calc(var(--header-h) + 3rem); padding-bottom: 6rem; max-width: 780px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
+    .s-page { padding-top: calc(var(--header-h) + 3rem); padding-bottom: 6rem; max-width: 860px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
     .s-crumb { font-family: 'Inter', sans-serif; font-size: .6rem; letter-spacing: .3em; text-transform: uppercase; color: var(--text-secondary); opacity: .5; margin-bottom: 2.5rem; display: flex; gap: .75rem; align-items: center; }
     .s-crumb span { color: var(--session-accent); opacity: 1; }
     .s-hero { margin-bottom: 3.5rem; }
@@ -39,27 +39,112 @@
     .s-nav-btn:hover { border-color: var(--session-accent); color: var(--session-accent); }
     .s-nav-next { margin-left: auto; }
     @media (max-width: 600px) { .s-page { padding-left: 1.25rem; padding-right: 1.25rem; } }
-    
-    .s-section { margin-bottom: 3rem; padding-bottom: 3rem; border-bottom: 1px solid var(--border); }
-    .s-section:last-of-type { border-bottom: none; }
-    .s-section h2 {
-      font-family: var(--ff-display); font-size: 1.3rem; font-weight: 600;
-      color: var(--text); margin-bottom: 1.25rem;
-      padding-left: 1rem; border-left: 3px solid var(--session-accent);
+
+    /* ── content ── */
+    .session-content { margin-top: 2rem; line-height: 1.8; color: var(--text-secondary); }
+    .session-content p { margin-bottom: 1.25rem; font-size: clamp(.95rem, 2vw, 1.05rem); }
+    .session-content h2 { font-family: var(--ff-display); font-size: clamp(1.4rem, 3.5vw, 2rem); font-weight: 800; color: var(--text); margin: 3rem 0 1rem; letter-spacing: -.02em; }
+    .session-content h3 { font-family: 'Inter', sans-serif; font-size: .65rem; letter-spacing: .3em; text-transform: uppercase; color: var(--session-accent); margin: 2rem 0 .75rem; font-weight: 700; }
+    .session-content strong { color: var(--text); font-weight: 600; }
+
+    /* ── fruit salad visual ── */
+    .analogy-box {
+      padding: 1.75rem 2rem; margin: 2rem 0;
+      background: var(--glass); border: 1px solid var(--border); border-radius: 14px;
+      display: grid; grid-template-columns: 1fr auto 1fr; gap: 1.5rem; align-items: center;
     }
-    .s-section ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: .6rem; }
-    .s-section li {
-      padding: .7rem 1rem .7rem 1.25rem; background: var(--glass);
-      border: 1px solid var(--border); border-radius: 8px;
-      font-size: .95rem; color: var(--text-secondary); line-height: 1.65; transition: var(--transition);
+    @media (max-width: 560px) { .analogy-box { grid-template-columns: 1fr; } }
+    .analogy-side { display: flex; flex-direction: column; gap: .5rem; }
+    .analogy-label { font-family: 'Inter', sans-serif; font-size: .55rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+    .analogy-label.bad { color: #ef9a9a; }
+    .analogy-label.good { color: var(--session-accent); }
+    .analogy-title { font-family: var(--ff-display); font-size: 1.1rem; font-weight: 700; color: var(--text); line-height: 1.2; }
+    .analogy-desc { font-family: 'Inter', sans-serif; font-size: .75rem; font-weight: 300; line-height: 1.6; color: var(--text-secondary); }
+    .analogy-sep { font-size: 1.4rem; color: var(--session-accent); opacity: .4; text-align: center; }
+
+    /* ── three gates ── */
+    .gates { display: flex; flex-direction: column; gap: 0; margin: 1.75rem 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .gate { display: flex; gap: 0; border-bottom: 1px solid var(--border); }
+    .gate:last-child { border-bottom: none; }
+    .gate-num {
+      min-width: 52px; display: flex; align-items: flex-start; justify-content: center;
+      padding-top: 1.1rem;
+      background: color-mix(in srgb, var(--session-accent) 9%, transparent);
+      border-right: 1px solid var(--border);
+      font-family: 'Inter', sans-serif; font-size: .65rem; font-weight: 800;
+      color: var(--session-accent);
     }
-    .s-section li::before { content: "▸"; color: var(--session-accent); margin-right: .6rem; font-size: .75rem; }
-    .s-section li:hover {
+    .gate-body { padding: 1rem 1.3rem; background: var(--glass); flex: 1; }
+    .gate-name { font-family: var(--ff-display); font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: .25rem; }
+    .gate-q { font-family: 'Inter', sans-serif; font-size: .78rem; font-weight: 600; color: var(--session-accent); margin-bottom: .3rem; }
+    .gate-desc { font-family: 'Inter', sans-serif; font-size: .76rem; font-weight: 300; line-height: 1.6; color: var(--text-secondary); }
+    .gate-india { font-family: 'Inter', sans-serif; font-size: .7rem; font-weight: 500; color: var(--text); margin-top: .4rem; padding: .4rem .75rem; border-radius: 5px; background: color-mix(in srgb, var(--session-accent) 8%, transparent); border-left: 2px solid var(--session-accent); line-height: 1.5; }
+
+    /* ── heterogeneity visual ── */
+    .forest-mock {
+      background: var(--glass); border: 1px solid var(--border); border-radius: 12px;
+      padding: 1.5rem 1.75rem; margin: 1.75rem 0; font-family: 'Inter', sans-serif;
+    }
+    .forest-title { font-size: .58rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--session-accent); margin-bottom: 1.25rem; }
+    .forest-row { display: flex; align-items: center; gap: .75rem; margin-bottom: .65rem; font-size: .75rem; }
+    .forest-label { min-width: 130px; color: var(--text-secondary); text-align: right; flex-shrink: 0; font-size: .7rem; }
+    .forest-bar-wrap { flex: 1; position: relative; height: 18px; }
+    .forest-line { position: absolute; left: 50%; top: 50%; width: 1px; height: 100%; background: var(--border); transform: translateX(-50%); }
+    .forest-ci { position: absolute; top: 50%; height: 2px; transform: translateY(-50%); border-radius: 1px; }
+    .forest-diamond { position: absolute; top: 50%; transform: translateY(-50%); width: 10px; height: 10px; border-radius: 2px; rotate: 45deg; }
+    .forest-val { min-width: 80px; color: var(--text-secondary); font-size: .68rem; }
+    .forest-divider { border: none; border-top: 1px solid var(--border); margin: .5rem 0; }
+    .forest-caption { font-size: .62rem; color: var(--text-secondary); opacity: .55; margin-top: .75rem; line-height: 1.5; }
+
+    /* ── pooling decision table ── */
+    .decision-table { width: 100%; border-collapse: collapse; margin: 1.75rem 0; font-size: .82rem; }
+    .decision-table th { background: color-mix(in srgb, var(--session-accent) 12%, transparent); color: var(--text); font-family: 'Inter', sans-serif; font-size: .57rem; letter-spacing: .15em; text-transform: uppercase; font-weight: 700; padding: .7rem 1rem; text-align: left; border-bottom: 1px solid var(--session-accent); }
+    .decision-table td { padding: .8rem 1rem; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; line-height: 1.55; }
+    .decision-table tr:last-child td { border-bottom: none; }
+    .decision-table td:first-child { color: var(--text); font-weight: 500; font-family: 'Inter', sans-serif; white-space: nowrap; }
+    .tag { display: inline-block; font-family: 'Inter', sans-serif; font-size: .5rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: .15rem .5rem; border-radius: 3px; }
+    .tag-pool { background: color-mix(in srgb, var(--session-accent) 15%, transparent); color: #a9e6b4; }
+    .tag-no { background: color-mix(in srgb, #ef5350 12%, transparent); color: #ef9a9a; }
+    .tag-narr { background: color-mix(in srgb, #ffa726 15%, transparent); color: #ffcc80; }
+
+    /* ── exercise ── */
+    .exercise-box {
       background: color-mix(in srgb, var(--session-accent) 5%, var(--glass));
-      border-color: var(--session-accent); color: var(--text);
+      border: 1px dashed color-mix(in srgb, var(--session-accent) 45%, transparent);
+      padding: 2rem 2rem 1.75rem; border-radius: 14px; margin: 2.5rem 0;
     }
-    .s-section li strong { color: var(--text); font-weight: 600; }
-    .s-section li em { color: var(--session-accent); font-style: italic; }
+    .exercise-box h3 { margin-top: 0; }
+    .exercise-box textarea {
+      width: 100%; box-sizing: border-box;
+      background: var(--glass); border: 1px solid var(--border); border-radius: 8px;
+      color: var(--text); font-family: var(--ff-body); font-size: .88rem;
+      padding: .8rem 1rem; resize: vertical; min-height: 160px;
+      margin: .75rem 0 .5rem; transition: border-color .2s;
+    }
+    .exercise-box textarea:focus { outline: none; border-color: var(--session-accent); }
+    .exercise-box textarea::placeholder { color: color-mix(in srgb, var(--text-secondary) 45%, transparent); font-style: italic; }
+    .ex-row { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-bottom: .85rem; }
+    @media (max-width: 540px) { .ex-row { grid-template-columns: 1fr; } }
+    .ex-field { display: flex; flex-direction: column; gap: .3rem; }
+    .ex-label { font-family: 'Inter', sans-serif; font-size: .58rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--session-accent); }
+    .ex-input { background: var(--glass); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-family: var(--ff-body); font-size: .85rem; padding: .55rem .85rem; transition: border-color .2s; }
+    .ex-input:focus { outline: none; border-color: var(--session-accent); }
+    .ex-input::placeholder { color: color-mix(in srgb, var(--text-secondary) 45%, transparent); font-style: italic; font-size: .8rem; }
+    .run-btn { font-family: 'Inter', sans-serif; font-size: .65rem; letter-spacing: .15em; text-transform: uppercase; font-weight: 700; padding: .7rem 1.8rem; border-radius: 8px; border: 1px solid var(--session-accent); background: color-mix(in srgb, var(--session-accent) 12%, transparent); color: var(--session-accent); cursor: pointer; transition: all .15s; }
+    .run-btn:hover:not(:disabled) { background: color-mix(in srgb, var(--session-accent) 22%, transparent); }
+    .run-btn:disabled { opacity: .4; cursor: not-allowed; }
+    .pool-output { margin-top: 1.5rem; display: none; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .pool-output.visible { display: block; }
+    .po-header { padding: .7rem 1.2rem; background: color-mix(in srgb, var(--session-accent) 10%, transparent); border-bottom: 1px solid var(--border); font-family: 'Inter', sans-serif; font-size: .55rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--session-accent); display: flex; justify-content: space-between; align-items: center; }
+    .copy-btn { font-family: 'Inter', sans-serif; font-size: .52rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 600; padding: .3rem .75rem; border-radius: 4px; border: 1px solid var(--border); background: transparent; color: var(--text-secondary); cursor: pointer; transition: all .15s; }
+    .copy-btn:hover { border-color: var(--session-accent); color: var(--session-accent); }
+    .copy-btn.copied { color: #a5d6a7; border-color: #a5d6a7; }
+    .po-body { padding: 1.25rem 1.5rem; background: var(--glass); font-family: 'Inter', sans-serif; font-size: .84rem; line-height: 1.75; color: var(--text-secondary); white-space: pre-wrap; }
+
+    /* ── takeaway ── */
+    .takeaway { margin-top: 3rem; padding: 1.5rem 2rem; border-radius: 12px; border: 1px solid color-mix(in srgb, var(--session-accent) 30%, transparent); background: color-mix(in srgb, var(--session-accent) 5%, transparent); }
+    .takeaway h3 { margin-top: 0; }
+    .takeaway p { margin-bottom: 0; font-size: .95rem; }
   </style>
 </head>
 <body>
@@ -72,19 +157,199 @@
   <div class="s-crumb">
     <a href="../../" style="color:inherit;text-decoration:none;">Home</a> · Level 2 · <span>Session 4</span>
   </div>
+
   <div class="s-hero">
     <div class="s-badge">🩻 Level 2 of 3 · Session 4 of 5</div>
     <p class="s-label">Level 2 · Exploration</p>
     <h1 class="s-title">Meta-Analysis Basics</h1>
     <p class="s-subtitle">When Numbers Can Be Pooled</p>
-    <p class="s-oneliner">When is statistical pooling of evidence appropriate?</p>
+    <p class="s-oneliner">When is statistical pooling of health economics evidence appropriate — and when does a pooled estimate create false precision that misleads policy?</p>
   </div>
 
-  
+  <div class="session-content">
+
+    <h2>The fruit salad problem</h2>
+    <p>A pooled estimate from a meta-analysis has the appearance of authority: a single number, a confidence interval, a forest plot. It feels more definitive than five separate study findings pointing in different directions. This authority is often warranted. Sometimes it is not — and the damage from pooling studies that should not be pooled is worse than the messiness of acknowledging heterogeneity, because a false pooled estimate enters a brief with a precision it has not earned.</p>
+    <p>The classic objection to inappropriate pooling is the fruit salad problem: combining apples and oranges produces neither a better apple nor a better orange. It produces a meaningless average that describes nothing that actually exists. For health economics evidence on financial risk protection in India, the fruit salad risk is acute: a meta-analysis pooling community-based health insurance studies from Ghana, Rwanda, Kenya, and two Indian states is not evidence about India — it is evidence about the average of four different health systems that share almost nothing except the label "LMIC."</p>
+
+    <div class="analogy-box">
+      <div class="analogy-side">
+        <span class="analogy-label bad">❌ Fruit salad</span>
+        <div class="analogy-title">Pool everything with the same outcome label</div>
+        <div class="analogy-desc">Ghana CBHI + Rwanda mutuelles + Kerala insurance + Delhi PM-JAY → pooled estimate of "insurance reduces OOP by 28% in LMICs." Cited in a brief as evidence for India. Describes no real system anywhere.</div>
+      </div>
+      <div class="analogy-sep">vs</div>
+      <div class="analogy-side">
+        <span class="analogy-label good">✓ Comparable ingredients</span>
+        <div class="analogy-title">Pool studies with genuine clinical and contextual similarity</div>
+        <div class="analogy-desc">Three Indian state-level PM-JAY evaluations with similar design, comparable benefit packages, and the same OOP outcome measure → pooled estimate with clear scope of inference. Describes something real.</div>
+      </div>
+    </div>
+
+    <h2>The three gates before pooling</h2>
+    <p>Before any set of studies can legitimately be pooled, they must pass three gates. Failing any one of them means pooling should not proceed — the appropriate output is a narrative synthesis with explicit statement of why statistical combination is not justified.</p>
+
+    <div class="gates">
+      <div class="gate">
+        <div class="gate-num">01</div>
+        <div class="gate-body">
+          <div class="gate-name">Clinical homogeneity</div>
+          <div class="gate-q">Are the interventions and populations genuinely comparable?</div>
+          <div class="gate-desc">Studies must share the same intervention type (not just the same category label), comparable populations, and a similar delivery context. "Community health insurance" in a formal employer-linked Rwandan scheme and "community health insurance" in a voluntary informal-sector Indian cooperative are not the same intervention despite sharing a name.</div>
+          <div class="gate-india">India test: Would pooling this set produce an estimate that could meaningfully describe the expected effect of PM-JAY or a specific state insurance scheme? If the interventions are too diverse, the answer is no.</div>
+        </div>
+      </div>
+      <div class="gate">
+        <div class="gate-num">02</div>
+        <div class="gate-body">
+          <div class="gate-name">Methodological homogeneity</div>
+          <div class="gate-q">Do the studies measure outcomes the same way?</div>
+          <div class="gate-desc">Catastrophic health expenditure defined as &gt;10% of household consumption is not the same as OOP exceeding 40% of non-food expenditure — even though both are labelled "catastrophic expenditure." Pooling these produces a number that is definitionally incoherent. Study design also matters: pooling RCTs with observational difference-in-differences studies inflates apparent precision.</div>
+          <div class="gate-india">India test: Are all studies using the same expenditure threshold and the same denominator (consumption vs. income vs. non-food expenditure)? If not, do not pool.</div>
+        </div>
+      </div>
+      <div class="gate">
+        <div class="gate-num">03</div>
+        <div class="gate-body">
+          <div class="gate-name">Statistical homogeneity</div>
+          <div class="gate-q">Is the observed variation consistent with sampling error alone?</div>
+          <div class="gate-desc">I² statistic measures the proportion of variability in effect estimates that is due to heterogeneity rather than chance. An I² above 75% means the studies are so different in their findings that a pooled average is largely meaningless — the variation itself is the finding. A high I² is not a problem to be corrected by switching to a random-effects model; it is a signal to investigate why studies differ.</div>
+          <div class="gate-india">India test: If I² &gt; 75% in a pool of LMIC health insurance studies, subgroup by India-only, South Asia-only, or by comparable insurance design. The subgroup result is more useful than the full pool.</div>
+        </div>
+      </div>
+    </div>
+
+    <h2>Reading a forest plot — what AI often gets wrong</h2>
+    <p>When you ask an AI tool to summarise a meta-analysis, it will typically report the pooled estimate and confidence interval — the bottom diamond on the forest plot. It will usually not flag a high I², will not note whether individual study estimates cross the line of no effect while the pooled estimate does not, and will not raise the question of whether the studies should have been pooled at all. These are your jobs.</p>
+
+    <div class="forest-mock">
+      <div class="forest-title">Schematic forest plot — health insurance and catastrophic expenditure (illustrative)</div>
+      <div class="forest-row">
+        <div class="forest-label">Ghana CBHI 2019</div>
+        <div class="forest-bar-wrap">
+          <div class="forest-line"></div>
+          <div class="forest-ci" style="left:28%;width:22%;background:color-mix(in srgb,var(--session-accent) 40%,transparent);"></div>
+          <div class="forest-diamond" style="left:38%;background:var(--session-accent);"></div>
+        </div>
+        <div class="forest-val">−0.38 [−0.54, −0.22]</div>
+      </div>
+      <div class="forest-row">
+        <div class="forest-label">Rwanda mutuelles 2020</div>
+        <div class="forest-bar-wrap">
+          <div class="forest-line"></div>
+          <div class="forest-ci" style="left:35%;width:20%;background:color-mix(in srgb,var(--session-accent) 40%,transparent);"></div>
+          <div class="forest-diamond" style="left:43%;background:var(--session-accent);"></div>
+        </div>
+        <div class="forest-val">−0.18 [−0.28, −0.08]</div>
+      </div>
+      <div class="forest-row">
+        <div class="forest-label">India PM-JAY 2021</div>
+        <div class="forest-bar-wrap">
+          <div class="forest-line"></div>
+          <div class="forest-ci" style="left:42%;width:24%;background:color-mix(in srgb,#ef5350 40%,transparent);"></div>
+          <div class="forest-diamond" style="left:52%;background:#ef9a9a;"></div>
+        </div>
+        <div class="forest-val">−0.06 [−0.18, +0.06]</div>
+      </div>
+      <div class="forest-row">
+        <div class="forest-label">Kenya NHIF 2022</div>
+        <div class="forest-bar-wrap">
+          <div class="forest-line"></div>
+          <div class="forest-ci" style="left:30%;width:18%;background:color-mix(in srgb,var(--session-accent) 40%,transparent);"></div>
+          <div class="forest-diamond" style="left:37%;background:var(--session-accent);"></div>
+        </div>
+        <div class="forest-val">−0.29 [−0.39, −0.19]</div>
+      </div>
+      <hr class="forest-divider">
+      <div class="forest-row">
+        <div class="forest-label" style="color:var(--text);font-weight:600;">Pooled (I²=78%)</div>
+        <div class="forest-bar-wrap">
+          <div class="forest-line"></div>
+          <div class="forest-ci" style="left:34%;width:16%;background:color-mix(in srgb,#ffa726 50%,transparent);"></div>
+          <div class="forest-diamond" style="left:40%;background:#ffa726;width:14px;height:14px;"></div>
+        </div>
+        <div class="forest-val" style="color:#ffcc80;">−0.23 [−0.34, −0.12]</div>
+      </div>
+      <div class="forest-caption">Notice: the India estimate crosses the null (no effect). The pooled estimate — driven by Ghana, Rwanda, and Kenya — does not represent India. I²=78% means 78% of the variation is genuine heterogeneity, not sampling error. An AI summarising this as "insurance reduces catastrophic expenditure by 23% across LMICs" would be accurate and misleading simultaneously.</div>
+    </div>
+
+    <h2>What to do when you cannot pool</h2>
+    <p>A finding of high heterogeneity or incompatible study designs is not a dead end — it is a result. The appropriate response is a <strong>narrative synthesis</strong> that does three things the pooled estimate cannot:</p>
+
+    <table class="decision-table">
+      <thead><tr><th>Situation</th><th>Appropriate synthesis</th><th>What to report</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Studies comparable, I² &lt; 50%</td>
+          <td><span class="tag tag-pool">Pool</span> Fixed or random effects meta-analysis</td>
+          <td>Pooled estimate, CI, I², sensitivity analysis removing outlier studies</td>
+        </tr>
+        <tr>
+          <td>Studies comparable, 50% ≤ I² ≤ 75%</td>
+          <td><span class="tag tag-narr">Caution</span> Pool with subgroup analysis</td>
+          <td>Pooled estimate with explicit I² caveat; subgroup results by region or intervention type; investigation of heterogeneity sources</td>
+        </tr>
+        <tr>
+          <td>High heterogeneity I² &gt; 75%</td>
+          <td><span class="tag tag-no">Don't pool</span> Narrative synthesis</td>
+          <td>Direction and range of effects across studies; explicit statement of why pooling is not appropriate; subgroup by India/South Asia if data allow</td>
+        </tr>
+        <tr>
+          <td>Methodologically incompatible outcomes</td>
+          <td><span class="tag tag-no">Don't pool</span> Narrative synthesis</td>
+          <td>Tabular presentation of each study's effect estimate with outcome definition; note incompatibility explicitly in brief methodology note</td>
+        </tr>
+        <tr>
+          <td>India estimate crosses null, LMIC pool significant</td>
+          <td><span class="tag tag-narr">Disaggregate</span> Report India separately</td>
+          <td>"The pooled LMIC estimate suggests benefit; the single available India study (PM-JAY) shows no significant effect on financial protection [CI crosses null]. India-specific evidence is insufficient to draw a conclusion." This is the most honest and policy-useful summary.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Check whether a pool is legitimate</h2>
+
+    <div class="exercise-box">
+      <h3>🩻 Pooling decision tool — describe your study set</h3>
+      <p style="font-size:.85rem;margin-bottom:.75rem;">Describe the studies you are considering pooling — their countries, intervention types, outcome definitions, and any I² or heterogeneity statistics you have. The tool will assess whether pooling is legitimate and recommend the appropriate synthesis approach.</p>
+
+      <div class="ex-row">
+        <div class="ex-field">
+          <span class="ex-label">Outcome being synthesised</span>
+          <input class="ex-input" id="ex-outcome" type="text" placeholder="e.g. catastrophic health expenditure > 10% consumption">
+        </div>
+        <div class="ex-field">
+          <span class="ex-label">Policy question this serves</span>
+          <input class="ex-input" id="ex-policy" type="text" placeholder="e.g. PM-JAY financial protection impact for WHO India brief">
+        </div>
+      </div>
+
+      <textarea id="pool-input" placeholder="Describe each study you are considering pooling. For each include: country, intervention type, population, outcome definition (exact threshold used), study design (RCT, DiD, cross-sectional), and any reported I² or variance. E.g.:
+Study 1: Ghana, employer-linked CBHI, formal workers, OOP > 40% non-food expenditure, cross-sectional, 2019
+Study 2: India PM-JAY, BPL households, OOP > 10% household consumption, DiD, 2021
+Study 3: Rwanda mutuelles, rural households, OOP > 10% consumption, RCT, 2020
+I² reported in a prior meta-analysis: 74%"></textarea>
+      <button class="run-btn" id="run-btn" onclick="runPoolCheck()">Assess pooling legitimacy →</button>
+
+      <div class="pool-output" id="pool-output">
+        <div class="po-header">
+          <span>🩻 Pooling assessment</span>
+          <button class="copy-btn" id="copy-btn" onclick="copyPool(this)">Copy</button>
+        </div>
+        <div class="po-body" id="po-body"></div>
+      </div>
+    </div>
+
+    <div class="takeaway">
+      <h3>🎯 Key takeaway</h3>
+      <p>A pooled estimate is not automatically more reliable than individual study findings — it is only more reliable if the studies were sufficiently similar to pool. The three gates (clinical, methodological, and statistical homogeneity) are the tests. An I² above 75% is the evidence that the studies are telling different stories, not the same one. For WHO India work, the most common and most consequential error is citing a pooled LMIC estimate as India evidence when the India-specific study in the pool shows no significant effect. Report India separately. The heterogeneity is the finding. Session 5 closes Level 2 with surveillance — how to keep your evidence base current once you have built it.</p>
+    </div>
+
+  </div>
 
   <nav class="s-nav" aria-label="Session navigation">
-    <a class='s-nav-btn' href='session3.html'>← Previous</a>
-    <a class='s-nav-btn s-nav-next' href='session5.html'>Next →</a>
+    <a class="s-nav-btn" href="session3.html">← Previous</a>
+    <a class="s-nav-btn s-nav-next" href="session5.html">Next →</a>
   </nav>
 </div>
 
@@ -97,6 +362,83 @@
     const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
     spine.style.height = Math.min(pct, 100) + '%';
   }, { passive: true });
+
+  async function runPoolCheck() {
+    const studies = document.getElementById('pool-input').value.trim();
+    const outcome = document.getElementById('ex-outcome').value.trim();
+    const policy  = document.getElementById('ex-policy').value.trim();
+    if (!studies) { alert('Please describe at least two studies before assessing pooling.'); return; }
+
+    const btn = document.getElementById('run-btn');
+    const out = document.getElementById('pool-output');
+    const body = document.getElementById('po-body');
+    btn.disabled = true; btn.textContent = 'Assessing…';
+    out.classList.remove('visible');
+
+    const system = `You are a health economics methodology expert supporting WHO India. Assess whether a described set of studies can legitimately be pooled in a meta-analysis for health financing policy purposes.
+
+Evaluate against three gates. For each gate give a verdict: PASS · PARTIAL · FAIL. Then give one specific observation. End with a synthesis recommendation and a one-sentence statement suitable for the methods section of a WHO India policy brief.
+
+Use exactly this format:
+
+GATE 1 — Clinical homogeneity
+Verdict: [PASS / PARTIAL / FAIL]
+Observation: [one sentence — are interventions and populations genuinely comparable?]
+
+GATE 2 — Methodological homogeneity  
+Verdict: [PASS / PARTIAL / FAIL]
+Observation: [one sentence — are outcome definitions and study designs compatible?]
+
+GATE 3 — Statistical homogeneity
+Verdict: [PASS / PARTIAL / FAIL]
+Observation: [one sentence — is I² acceptable, or does it indicate genuine heterogeneity?]
+
+INDIA-SPECIFIC NOTE
+[One sentence: if an India study is included, does it show the same direction and magnitude as the rest of the pool? If not, state this explicitly.]
+
+SYNTHESIS RECOMMENDATION
+[One of: POOL (fixed effects) / POOL WITH CAUTION (random effects + subgroup) / NARRATIVE SYNTHESIS / REPORT INDIA SEPARATELY]
+Rationale: [two sentences explaining the recommendation]
+
+METHODS NOTE FOR BRIEF
+[One sentence suitable for direct use in the methodology section of a WHO India evidence brief — stating what synthesis was done and why, including any limitations]
+
+Be direct. If pooling is not appropriate, say so clearly and explain what to report instead.`;
+
+    const msg = `Outcome: ${outcome || 'not specified'}\nPolicy context: ${policy || 'WHO India health financing brief'}\n\nStudies:\n${studies}`;
+
+    try {
+      const resp = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          system,
+          messages: [{ role: 'user', content: msg }]
+        })
+      });
+      const data = await resp.json();
+      const result = data?.content?.[0]?.text || 'No response received.';
+      body.textContent = result;
+      out.classList.add('visible');
+      out.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } catch (err) {
+      body.textContent = 'Could not reach the AI service. Check your connection and try again.';
+      out.classList.add('visible');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Assess pooling legitimacy →';
+    }
+  }
+
+  function copyPool(btn) {
+    const text = document.getElementById('po-body').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied ✓'; btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
 </script>
 </body>
 </html>
