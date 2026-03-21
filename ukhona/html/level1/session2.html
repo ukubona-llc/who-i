@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>🔬 The Tools Available · Level 1 Session 2</title>
-  <meta name="description" content="Which AI tools exist for literature screening?">
+  <meta name="description" content="Which AI tools exist for health economics literature work — and what can each one not see?">
   <meta name="color-scheme" content="dark light">
   <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-dark.ico" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-light.ico" media="(prefers-color-scheme: light)">
@@ -25,7 +25,7 @@
     }
     body { font-family: var(--ff-body); font-weight: 300; }
     .spine { position: fixed; left: 0; top: 0; width: 3px; height: 0%; background: var(--session-accent); z-index: 200; transition: height .1s linear; }
-    .s-page { padding-top: calc(var(--header-h) + 3rem); padding-bottom: 6rem; max-width: 780px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
+    .s-page { padding-top: calc(var(--header-h) + 3rem); padding-bottom: 6rem; max-width: 860px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
     .s-crumb { font-family: 'Inter', sans-serif; font-size: .6rem; letter-spacing: .3em; text-transform: uppercase; color: var(--text-secondary); opacity: .5; margin-bottom: 2.5rem; display: flex; gap: .75rem; align-items: center; }
     .s-crumb span { color: var(--session-accent); opacity: 1; }
     .s-hero { margin-bottom: 3.5rem; }
@@ -39,60 +39,151 @@
     .s-nav-btn:hover { border-color: var(--session-accent); color: var(--session-accent); }
     .s-nav-next { margin-left: auto; }
     @media (max-width: 600px) { .s-page { padding-left: 1.25rem; padding-right: 1.25rem; } }
-    
-    .s-page { max-width: 860px; }
-    .slide {
-      min-height: 320px; display: flex; flex-direction: column; justify-content: center;
-      padding: 3rem 3.5rem; margin-bottom: 2rem; border-radius: 16px;
-      background: var(--glass); border: 1px solid var(--border);
-      position: relative; overflow: hidden; transition: var(--transition);
+
+    /* ── Session content ── */
+    .session-content { margin-top: 2rem; line-height: 1.8; color: var(--text-secondary); }
+    .session-content p { margin-bottom: 1.25rem; font-size: clamp(.95rem, 2vw, 1.05rem); }
+    .session-content h2 {
+      font-family: var(--ff-display); font-size: clamp(1.4rem, 3.5vw, 2rem);
+      font-weight: 800; color: var(--text); margin: 3rem 0 1rem; letter-spacing: -.02em;
     }
-    .slide::before {
-      content: ""; position: absolute; inset: 0; pointer-events: none;
-      background: linear-gradient(135deg, color-mix(in srgb, var(--session-accent) 4%, transparent), transparent 60%);
+    .session-content h3 {
+      font-family: 'Inter', sans-serif; font-size: .65rem; letter-spacing: .3em;
+      text-transform: uppercase; color: var(--session-accent); margin: 2rem 0 .75rem; font-weight: 700;
     }
-    .slide:hover { border-color: color-mix(in srgb, var(--session-accent) 40%, var(--border)); }
-    .slide-callout {
+    .session-content strong { color: var(--text); font-weight: 600; }
+    .session-content ul { padding-left: 1.5rem; margin-bottom: 1.25rem; }
+    .session-content ul li { margin-bottom: .5rem; font-size: clamp(.95rem, 2vw, 1.05rem); }
+
+    /* ── Two-by-two matrix ── */
+    .matrix-wrap { margin: 2rem 0; }
+    .matrix-label-row {
+      display: grid; grid-template-columns: 80px 1fr 1fr;
+      gap: 1px; margin-bottom: 1px;
+    }
+    .matrix-col-label {
+      font-family: 'Inter', sans-serif; font-size: .58rem; font-weight: 700;
+      letter-spacing: .15em; text-transform: uppercase; color: var(--session-accent);
+      text-align: center; padding: .5rem;
+    }
+    .matrix-grid {
+      display: grid; grid-template-columns: 80px 1fr 1fr;
+      grid-template-rows: auto auto; gap: 1px;
+      background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+    }
+    .matrix-row-label {
+      background: var(--glass); display: flex; align-items: center; justify-content: center;
+      font-family: 'Inter', sans-serif; font-size: .55rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--session-accent); writing-mode: vertical-rl;
+      text-orientation: mixed; transform: rotate(180deg);
+      padding: 1rem .5rem; text-align: center;
+    }
+    .matrix-cell {
+      background: var(--glass); padding: 1.1rem 1.2rem;
+      display: flex; flex-direction: column; gap: .4rem;
+    }
+    .matrix-cell.highlight {
       background: color-mix(in srgb, var(--session-accent) 7%, var(--glass));
-      border-color: color-mix(in srgb, var(--session-accent) 35%, transparent);
     }
-    .slide-num {
-      font-family: "Inter", sans-serif; font-size: .6rem; letter-spacing: .4em;
-      font-weight: 700; color: var(--session-accent); opacity: .6; margin-bottom: 1.5rem;
+    .cell-label {
+      font-family: 'Inter', sans-serif; font-size: .6rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase; color: var(--session-accent);
+      margin-bottom: .2rem;
     }
-    .slide-h {
-      font-family: var(--ff-display); font-size: clamp(1.6rem, 4vw, 2.4rem);
-      font-weight: 800; line-height: 1.1; letter-spacing: -.02em;
-      color: var(--text); margin-bottom: 1.5rem;
+    .cell-tools {
+      font-family: 'Inter', sans-serif; font-size: .78rem; font-weight: 500;
+      color: var(--text); line-height: 1.5;
     }
-    .slide-lead {
-      font-size: clamp(1.05rem, 2.5vw, 1.35rem); line-height: 1.65;
-      color: var(--text-secondary); max-width: 600px;
+    .cell-note {
+      font-family: 'Inter', sans-serif; font-size: .7rem; font-weight: 300;
+      color: var(--text-secondary); line-height: 1.5;
     }
-    .slide-lead em { color: var(--session-accent); font-style: italic; font-weight: 600; }
-    .slide-big {
-      font-family: var(--ff-display); font-size: clamp(1.6rem, 4.5vw, 2.6rem);
-      font-weight: 800; line-height: 1.15; color: var(--text);
-      letter-spacing: -.02em; max-width: 680px;
+
+    /* ── Tool comparison table ── */
+    .tool-table { width: 100%; border-collapse: collapse; margin: 1.75rem 0; font-size: .82rem; }
+    .tool-table th {
+      background: color-mix(in srgb, var(--session-accent) 12%, transparent);
+      color: var(--text); font-family: 'Inter', sans-serif; font-size: .58rem;
+      letter-spacing: .15em; text-transform: uppercase; font-weight: 700;
+      padding: .7rem 1rem; text-align: left;
+      border-bottom: 1px solid var(--session-accent);
     }
-    .slide-big em { color: var(--session-accent); font-style: italic; }
-    .slide-list {
-      list-style: none; padding: 0; margin: 0;
-      display: flex; flex-direction: column; gap: .9rem;
-      counter-reset: slide-counter;
+    .tool-table td {
+      padding: .85rem 1rem; border-bottom: 1px solid var(--border);
+      color: var(--text-secondary); vertical-align: top; line-height: 1.5;
     }
-    .slide-list li {
-      counter-increment: slide-counter; display: flex; align-items: flex-start; gap: 1.2rem;
-      font-size: clamp(1rem, 2vw, 1.15rem); line-height: 1.5; color: var(--text-secondary);
+    .tool-table tr:last-child td { border-bottom: none; }
+    .tool-table td:first-child { color: var(--text); font-weight: 500; white-space: nowrap; }
+    .tool-table tr:hover td { background: color-mix(in srgb, var(--session-accent) 4%, transparent); }
+    .tag {
+      display: inline-block; font-family: 'Inter', sans-serif;
+      font-size: .5rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 700;
+      padding: .15rem .5rem; border-radius: 3px; margin-right: .3rem; margin-bottom: .2rem;
     }
-    .slide-list li::before {
-      content: counter(slide-counter, decimal-leading-zero);
-      font-family: "Inter", sans-serif; font-size: .65rem; font-weight: 700;
-      letter-spacing: .05em; color: var(--session-accent); min-width: 2rem; padding-top: .25em;
+    .tag-yes { background: color-mix(in srgb, #66bb6a 15%, transparent); color: #a5d6a7; }
+    .tag-partial { background: color-mix(in srgb, #ffa726 15%, transparent); color: #ffcc80; }
+    .tag-no { background: color-mix(in srgb, #ef5350 12%, transparent); color: #ef9a9a; }
+
+    /* ── Blind spots ── */
+    .blindspot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+      margin: 1.75rem 0;
     }
-    .slide-list li strong { color: var(--text); font-weight: 600; }
-    .slide-list li em { color: var(--session-accent); font-style: normal; }
-    @media (max-width: 600px) { .slide { padding: 2rem 1.5rem; min-height: 240px; } }
+    .bs-card { background: var(--glass); padding: 1.2rem 1.4rem; display: flex; flex-direction: column; gap: .45rem; }
+    .bs-icon { font-size: 1.1rem; margin-bottom: .1rem; }
+    .bs-title { font-family: var(--ff-display); font-size: 1rem; font-weight: 600; color: var(--text); line-height: 1.2; }
+    .bs-desc { font-family: 'Inter', sans-serif; font-size: .73rem; font-weight: 300; line-height: 1.55; color: var(--text-secondary); }
+    .bs-fix { font-family: 'Inter', sans-serif; font-size: .68rem; font-weight: 500;
+      color: var(--session-accent); margin-top: .3rem; }
+
+    /* ── Scenario chooser ── */
+    .exercise-box {
+      background: color-mix(in srgb, var(--session-accent) 6%, var(--glass));
+      border: 1px dashed color-mix(in srgb, var(--session-accent) 50%, transparent);
+      padding: 2rem 2rem 1.75rem; border-radius: 14px; margin: 2.5rem 0;
+    }
+    .exercise-box h3 { margin-top: 0; }
+    .scenario-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
+      gap: .6rem; margin: 1rem 0 1.25rem;
+    }
+    .scenario-btn {
+      font-family: 'Inter', sans-serif; font-size: .72rem; font-weight: 400;
+      line-height: 1.45; padding: .8rem 1rem; border-radius: 8px;
+      border: 1px solid var(--border); background: var(--glass);
+      color: var(--text-secondary); cursor: pointer; text-align: left;
+      transition: all .15s;
+    }
+    .scenario-btn:hover, .scenario-btn.active {
+      border-color: var(--session-accent); color: var(--text);
+      background: color-mix(in srgb, var(--session-accent) 8%, transparent);
+    }
+    .scenario-result {
+      padding: 1.1rem 1.4rem; border-radius: 10px;
+      background: var(--glass); border: 1px solid var(--border);
+      font-size: .88rem; line-height: 1.7; color: var(--text-secondary);
+      display: none;
+    }
+    .scenario-result.visible { display: block; }
+    .scenario-result .rec-label {
+      font-family: 'Inter', sans-serif; font-size: .55rem; font-weight: 700;
+      letter-spacing: .2em; text-transform: uppercase; color: var(--session-accent);
+      display: block; margin-bottom: .6rem;
+    }
+    .scenario-result strong { color: var(--text); }
+
+    /* ── Takeaway ── */
+    .takeaway {
+      margin-top: 3rem; padding: 1.5rem 2rem; border-radius: 12px;
+      border: 1px solid color-mix(in srgb, var(--session-accent) 30%, transparent);
+      background: color-mix(in srgb, var(--session-accent) 5%, transparent);
+    }
+    .takeaway h3 { margin-top: 0; }
+    .takeaway p { margin-bottom: 0; font-size: .95rem; }
   </style>
 </head>
 <body>
@@ -105,19 +196,172 @@
   <div class="s-crumb">
     <a href="../../" style="color:inherit;text-decoration:none;">Home</a> · Level 1 · <span>Session 2</span>
   </div>
+
   <div class="s-hero">
     <div class="s-badge">🔬 Level 1 of 3 · Session 2 of 5</div>
     <p class="s-label">Level 1 · Foundations</p>
     <h1 class="s-title">The Tools Available</h1>
     <p class="s-subtitle">What AI Can and Cannot See</p>
-    <p class="s-oneliner">Which AI tools exist for literature screening?</p>
+    <p class="s-oneliner">The landing page lists 20 tools. This session tells you which ones to reach for on a health financing brief — and what every AI tool in this space is blind to.</p>
   </div>
 
-  
+  <div class="session-content">
+
+    <h2>The right question is not "which tool?" but "which job?"</h2>
+    <p>The 20 tools catalogued on the home page are not interchangeable. They differ on two dimensions that matter most for health economics and financing work: what corpus they search, and what they do with what they find. Choosing the wrong tool for a job does not just slow you down — it silently shapes what evidence you see and what you miss.</p>
+    <p>Think of the tools in two categories: <strong>retrievers</strong> find and surface papers; <strong>synthesisers</strong> read and summarise them. Some tools do both. Most do one well. The distinction matters because your bottleneck — as you identified in Session 1 — determines which category you need first.</p>
+
+    <h2>A map of the tool landscape</h2>
+    <p>For health economics and financing work, the most useful way to organise the tools is by two questions: does it search grey literature, and does it handle dense PDFs (government reports, HTA assessments, budget documents) rather than just journal abstracts?</p>
+
+    <div class="matrix-wrap">
+      <div class="matrix-label-row">
+        <div></div>
+        <div class="matrix-col-label">Journal-indexed only</div>
+        <div class="matrix-col-label">Handles grey literature / PDFs</div>
+      </div>
+      <div class="matrix-grid">
+
+        <div class="matrix-row-label">Retriever</div>
+        <div class="matrix-cell">
+          <div class="cell-label">Wide but shallow</div>
+          <div class="cell-tools">Semantic Scholar · Dimensions.ai · Connected Papers · Litmaps</div>
+          <div class="cell-note">Good for mapping a field or finding seminal papers. Miss NSSO reports, HTAIn briefs, state NHA accounts, MoHFW working papers entirely.</div>
+        </div>
+        <div class="matrix-cell highlight">
+          <div class="cell-label">Best for WHO India work</div>
+          <div class="cell-tools">Elicit · Research Rabbit + manual grey search · Claude / GPT with uploaded PDFs</div>
+          <div class="cell-note">Elicit excels at structured data extraction from papers. For grey literature, there is no substitute for targeted manual search — but Claude or GPT can then process what you retrieve.</div>
+        </div>
+
+        <div class="matrix-row-label">Synthesiser</div>
+        <div class="matrix-cell">
+          <div class="cell-label">Fast summaries, limited scope</div>
+          <div class="cell-tools">Consensus · Paper Digest · SciSpace</div>
+          <div class="cell-note">Useful for quick orientation in a new topic. Will confidently summarise the published literature while being unaware that the most relevant evidence is in a 2023 HTAIn report sitting outside their index.</div>
+        </div>
+        <div class="matrix-cell highlight">
+          <div class="cell-label">Workhorse for long documents</div>
+          <div class="cell-tools">Humata · Claude (with PDF upload) · NotebookLM</div>
+          <div class="cell-note">Upload a 200-page NSSO survey, a PM-JAY evaluation, or a stack of state health accounts and interrogate them directly. This is where the grey literature gap from Session 1 gets closed.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <h2>The five tools worth knowing in detail</h2>
+    <p>For a WHO India health financing context, five tools do most of the work. Here is an honest assessment of each — including what it cannot do.</p>
+
+    <table class="tool-table">
+      <thead>
+        <tr>
+          <th>Tool</th>
+          <th>Best use case</th>
+          <th>Grey lit?</th>
+          <th>LMIC evidence?</th>
+          <th>Critical limitation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Elicit</td>
+          <td>Structured extraction across many papers — pulling cost-effectiveness ratios, sample sizes, outcome measures into a table</td>
+          <td><span class="tag tag-no">No</span></td>
+          <td><span class="tag tag-partial">Partial</span></td>
+          <td>Only searches Semantic Scholar corpus. Misses grey literature and most government reports. Strongest for CEA and systematic review identification.</td>
+        </tr>
+        <tr>
+          <td>Consensus</td>
+          <td>Quick answer to a focused yes/no question — "does X intervention reduce catastrophic health expenditure?" — with citations</td>
+          <td><span class="tag tag-no">No</span></td>
+          <td><span class="tag tag-partial">Partial</span></td>
+          <td>Optimised for biomedical questions. Health financing and insurance queries return mixed results — watch for clinical outcomes being surfaced instead of economic ones.</td>
+        </tr>
+        <tr>
+          <td>Humata</td>
+          <td>Interrogating a specific large document — an HTAIn assessment, NSSO survey, state PFM report — with targeted questions</td>
+          <td><span class="tag tag-yes">Yes</span></td>
+          <td><span class="tag tag-yes">Yes</span></td>
+          <td>One document at a time in the free tier. Cannot synthesise across multiple uploaded files. Does not search; you must supply the document.</td>
+        </tr>
+        <tr>
+          <td>Semantic Scholar</td>
+          <td>Mapping a field quickly, finding citation networks, identifying the most influential papers in a financing sub-topic</td>
+          <td><span class="tag tag-no">No</span></td>
+          <td><span class="tag tag-partial">Partial</span></td>
+          <td>LMIC health financing literature is under-represented in its index. Strong on volume; weak on the specific literature most relevant to India UHC work.</td>
+        </tr>
+        <tr>
+          <td>Claude / GPT<br><small>(with PDF upload)</small></td>
+          <td>Processing any document you supply — summarising, extracting, comparing, drafting. Also the best tool for PECO-F prompt iteration (Session 3)</td>
+          <td><span class="tag tag-yes">Yes</span></td>
+          <td><span class="tag tag-yes">Yes</span></td>
+          <td>Does not retrieve documents independently. Cannot search databases. Everything depends on what you upload or paste. Hallucination risk for specific citations — always verify.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>What every AI tool in this space cannot see</h2>
+    <p>There are four blind spots shared by virtually all AI literature tools. Knowing them is not pessimism — it is workflow design. Each has a practical workaround.</p>
+
+    <div class="blindspot-grid">
+      <div class="bs-card">
+        <div class="bs-icon">🗂️</div>
+        <div class="bs-title">Grey literature and government data</div>
+        <div class="bs-desc">NSSO surveys, HTAIn assessments, MoHFW circulars, state health accounts, NHA reports, district-level HMIS data. None of it is in any tool's default index.</div>
+        <div class="bs-fix">→ Manual targeted search + upload to Claude/Humata for interrogation</div>
+      </div>
+      <div class="bs-card">
+        <div class="bs-icon">🌍</div>
+        <div class="bs-title">LMIC-specific financing evidence</div>
+        <div class="bs-desc">Indexed literature skews toward high-income country health systems. A search for "community health insurance equity" surfaces the Netherlands before Kerala.</div>
+        <div class="bs-fix">→ Explicit geographic filters in every search; use Dimensions.ai for LMIC filtering</div>
+      </div>
+      <div class="bs-card">
+        <div class="bs-icon">📅</div>
+        <div class="bs-title">Very recent publications</div>
+        <div class="bs-desc">AI tools have indexing lags of weeks to months. A PM-JAY evaluation published last month may not yet be retrievable via Elicit or Consensus.</div>
+        <div class="bs-fix">→ PubMed direct search and Google Scholar for anything from the last 6 months</div>
+      </div>
+      <div class="bs-card">
+        <div class="bs-icon">⚖️</div>
+        <div class="bs-title">Equity and distributional outcomes</div>
+        <div class="bs-desc">Most tools are optimised to return aggregate findings. Disaggregated data on who benefits by income quintile, gender, caste, or geography is rarely surfaced automatically.</div>
+        <div class="bs-fix">→ Explicit equity terms in every prompt; Session 3 builds this into the PECO-F F dimension</div>
+      </div>
+    </div>
+
+    <h2>Choose your tool for the task</h2>
+
+    <div class="exercise-box">
+      <h3>🧪 Scenario matching — pick your situation</h3>
+      <p style="font-size:.85rem;margin-bottom:1rem;">Select the scenario that most closely matches your current task. You will get a specific tool recommendation and a one-line rationale.</p>
+
+      <div class="scenario-grid">
+        <button class="scenario-btn" data-scenario="0">I need to quickly map what's been published on health insurance and catastrophic expenditure in South Asia</button>
+        <button class="scenario-btn" data-scenario="1">I have a 180-page HTAIn assessment I need to extract specific cost-effectiveness findings from</button>
+        <button class="scenario-btn" data-scenario="2">I need to find the 5–8 most influential papers in health financing equity for a senior official briefing</button>
+        <button class="scenario-btn" data-scenario="3">I need to compare three state-level PM-JAY evaluation reports side by side</button>
+        <button class="scenario-btn" data-scenario="4">I need to know if there's any recent evidence that a specific intervention works in an LMIC context</button>
+        <button class="scenario-btn" data-scenario="5">I need to build a structured extraction table of cost-per-DALY across 20+ papers</button>
+      </div>
+
+      <div class="scenario-result" id="scenario-result">
+        <span class="rec-label">Recommended approach</span>
+        <span id="scenario-text"></span>
+      </div>
+    </div>
+
+    <div class="takeaway">
+      <h3>🎯 Key takeaway</h3>
+      <p>No single AI tool covers the full pipeline for health economics and financing work. The practical stack for WHO India is: <strong>Elicit</strong> for structured extraction from indexed literature, <strong>Claude or Humata</strong> for interrogating uploaded grey literature and government reports, <strong>Dimensions.ai</strong> for LMIC-filtered discovery, and <strong>manual targeted search</strong> for anything recent or government-issued. Session 3 shows you how to frame the question that makes all of these more precise.</p>
+    </div>
+
+  </div><!-- /session-content -->
 
   <nav class="s-nav" aria-label="Session navigation">
-    <a class='s-nav-btn' href='session1.html'>← Previous</a>
-    <a class='s-nav-btn s-nav-next' href='session3.html'>Next →</a>
+    <a class="s-nav-btn" href="session1.html">← Previous</a>
+    <a class="s-nav-btn s-nav-next" href="session3.html">Next →</a>
   </nav>
 </div>
 
@@ -125,11 +369,46 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
 <script src="../../js/shared.js"></script>
 <script>
+  /* ── scroll spine ── */
   const spine = document.getElementById('spine');
   window.addEventListener('scroll', () => {
     const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
     spine.style.height = Math.min(pct, 100) + '%';
   }, { passive: true });
+
+  /* ── scenario chooser ── */
+  const scenarios = [
+    {
+      text: `<strong>Start with Semantic Scholar or Dimensions.ai</strong> for a citation-network map, then run the same query through <strong>Elicit</strong> to get structured paper summaries. Set geographic filters to South Asia / LMIC explicitly — neither tool does this by default. Expect to supplement with a manual Google Scholar search filtered to India, Bangladesh, Sri Lanka to catch recent grey literature.`
+    },
+    {
+      text: `<strong>Upload directly to Claude or Humata.</strong> Paste the PDF and ask targeted questions: "What cost-effectiveness ratios are reported for inpatient versus outpatient coverage?" or "Which population subgroups show the lowest financial risk protection scores?" This is faster and more accurate than reading linearly, and you stay in control of which questions get asked.`
+    },
+    {
+      text: `<strong>Semantic Scholar's citation count + Scite</strong> is the right combination here. Use Semantic Scholar to find highly-cited papers in the sub-topic, then run the top 10 through Scite to see which are being challenged, supported, or extended in recent literature. That gives you a defensible "most influential" shortlist rather than just "most cited."`
+    },
+    {
+      text: `<strong>Claude (with all three PDFs uploaded)</strong> is the only tool that can do this directly. Upload each report and ask it to extract comparable variables: coverage rates, utilisation by income quintile, claims settlement ratios, and equity metrics. Then ask it to produce a comparison table. Humata handles one document at a time; Claude handles multiple in the same session.`
+    },
+    {
+      text: `<strong>Consensus</strong> for a fast yes/no orientation, then <strong>Elicit</strong> if you need the underlying papers. For anything published in the last six months, add a direct PubMed search — both tools have indexing lags. If the LMIC signal is weak, try Dimensions.ai with an explicit filter for low- and middle-income countries before concluding the evidence is thin.`
+    },
+    {
+      text: `<strong>Elicit</strong> is the purpose-built tool for this. Set up a structured extraction with your specific columns — intervention, population, comparator, cost per DALY, equity adjustment, study quality — and run your paper set through it. For papers not in Elicit's index, upload PDFs to Claude and ask for extraction in the same column format, then merge the tables manually.`
+    }
+  ];
+
+  document.querySelectorAll('.scenario-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const idx = parseInt(btn.dataset.scenario);
+      document.getElementById('scenario-text').innerHTML = scenarios[idx].text;
+      const result = document.getElementById('scenario-result');
+      result.classList.add('visible');
+      result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  });
 </script>
 </body>
 </html>
