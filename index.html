@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI Tools for Literature Review · Ukubona</title>
-  <meta name="description" content="AI Tools for Literature Review — Ukubona LLC">
+  <title>AI Tools for Literature Review · Ukubona × WHO India</title>
+  <meta name="description" content="AI Tools for Literature Review — Ukubona LLC × WHO India. A practical curriculum for health economists and financing specialists.">
   <meta name="color-scheme" content="dark light">
   <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-dark.ico" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-light.ico" media="(prefers-color-scheme: light)">
@@ -78,6 +78,16 @@
       font-size: clamp(2.4rem, 7.5vw, 5.5rem); font-weight: 300; font-style: normal;
       color: var(--text-secondary, rgba(240,237,230,0.7));
       animation: lrFadeUp 0.9s cubic-bezier(.22,1,.36,1) 0.72s forwards;
+    }
+
+    /* ══ CONTEXT LINE ══ */
+    .lr-context {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(0.85rem, 1.8vw, 1.05rem); font-weight: 300; font-style: italic;
+      color: var(--text-secondary, rgba(240,237,230,0.45));
+      letter-spacing: 0.02em; max-width: 520px;
+      opacity: 0; animation: lrFadeUp 0.9s cubic-bezier(.22,1,.36,1) 0.78s forwards;
+      margin-bottom: 0.5rem; line-height: 1.55;
     }
 
     .lr-rule {
@@ -206,12 +216,103 @@
       color: var(--text-secondary, rgba(240,237,230,0.3));
     }
 
+    /* ══ CURRICULUM STRIP ══ */
+    .curriculum-strip {
+      width: min(740px, 96vw);
+      margin-top: 5rem;
+      opacity: 0; animation: lrFadeUp 0.9s cubic-bezier(.22,1,.36,1) 1.3s forwards;
+    }
+    .curriculum-divider {
+      display: flex; align-items: center; gap: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+    .curriculum-divider span {
+      font-family: 'DM Mono', monospace; font-size: 0.55rem;
+      letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--text-secondary, rgba(240,237,230,0.3));
+      white-space: nowrap;
+    }
+    .curriculum-divider::before,
+    .curriculum-divider::after {
+      content: ''; flex: 1; height: 1px;
+      background: var(--border, rgba(255,255,255,0.06));
+    }
+    .curriculum-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr));
+      gap: 1px;
+      background: var(--border, rgba(255,255,255,0.06));
+      border: 1px solid var(--border, rgba(255,255,255,0.06));
+      border-radius: 3px; overflow: hidden;
+    }
+    .c-card {
+      background: var(--surface, #0e0e0e);
+      padding: 1.4rem 1.3rem 1.3rem;
+      display: flex; flex-direction: column; gap: 0.45rem;
+      text-align: left; text-decoration: none;
+      transition: background 0.15s; position: relative;
+      border-top: 2px solid transparent;
+    }
+    .c-card:nth-child(1) { border-top-color: color-mix(in srgb, var(--primary,#c9b99a) 40%, transparent); }
+    .c-card:nth-child(2) { border-top-color: color-mix(in srgb, var(--primary,#c9b99a) 65%, transparent); }
+    .c-card:nth-child(3) { border-top-color: var(--primary, #c9b99a); }
+    .c-card::after {
+      content: '→'; position: absolute; bottom: 1.2rem; right: 1.2rem;
+      font-size: 0.7rem; color: var(--primary, #c9b99a);
+      opacity: 0; transition: opacity 0.15s, transform 0.15s;
+    }
+    .c-card:hover { background: var(--glass, rgba(255,255,255,0.04)); }
+    .c-card:hover::after { opacity: 0.8; transform: translateX(3px); }
+    .c-level {
+      font-family: 'DM Mono', monospace; font-size: 0.52rem;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--primary, #c9b99a); opacity: 0.55;
+    }
+    .c-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem; font-weight: 400; font-style: italic;
+      color: var(--text, #f0ede6); transition: color 0.15s; line-height: 1.2;
+    }
+    .c-card:hover .c-title { color: var(--primary, #c9b99a); }
+    .c-desc {
+      font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 300;
+      line-height: 1.55; color: var(--text-secondary, rgba(240,237,230,0.45));
+      margin-top: 0.1rem;
+    }
+    .c-sessions {
+      font-family: 'DM Mono', monospace; font-size: 0.5rem;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-secondary, rgba(240,237,230,0.25));
+      margin-top: auto; padding-top: 0.75rem;
+    }
+
+    /* ══ START CTA ══ */
+    .lr-cta {
+      margin-top: 2rem;
+      opacity: 0; animation: lrFadeUp 0.9s cubic-bezier(.22,1,.36,1) 1.45s forwards;
+    }
+    .lr-cta a {
+      font-family: 'DM Mono', monospace; font-size: 0.6rem;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--primary, #c9b99a);
+      border: 1px solid color-mix(in srgb, var(--primary,#c9b99a) 35%, transparent);
+      padding: 0.65rem 1.8rem; border-radius: 2px;
+      text-decoration: none; display: inline-block;
+      background: color-mix(in srgb, var(--primary,#c9b99a) 5%, transparent);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .lr-cta a:hover {
+      background: color-mix(in srgb, var(--primary,#c9b99a) 14%, transparent);
+      border-color: var(--primary, #c9b99a);
+    }
+
     @keyframes lrFadeUp {
       from { opacity: 0; transform: translateY(14px); }
       to   { opacity: 1; transform: translateY(0); }
     }
     @media (prefers-reduced-motion: reduce) {
-      .lr-eyebrow,.lr-line,.lr-rule,.lr-search-wrap,.lr-pills,.lr-results {
+      .lr-eyebrow,.lr-line,.lr-rule,.lr-search-wrap,.lr-pills,.lr-results,
+      .curriculum-strip,.lr-context,.lr-cta {
         animation: none; opacity: 1;
       }
     }
@@ -244,7 +345,7 @@
 
 <main class="landing-stage" aria-label="AI Tools for Literature Review">
 
-  <p class="lr-eyebrow">ukubona · to see · to know</p>
+  <p class="lr-eyebrow">ukubona × who india · health economics & financing</p>
 
   <h1 class="lr-headline" aria-label="AI Tools for Literature Review">
     <span class="lr-line lr-ai">AI</span>
@@ -253,6 +354,8 @@
     <span class="lr-line lr-lit">Literature</span>
     <span class="lr-line lr-review">Review</span>
   </h1>
+
+  <p class="lr-context">A practical curriculum for WHO India health economists and financing specialists — from search strategy to policy brief, in three levels.</p>
 
   <div class="lr-rule" aria-hidden="true"></div>
 
@@ -283,6 +386,41 @@
     <p class="lr-count" id="lr-count"></p>
     <div class="lr-grid" id="lr-grid"></div>
     <p class="lr-empty" id="lr-empty">No tools match — try a different search or filter.</p>
+  </div>
+
+  <!-- ══ CURRICULUM ENTRY STRIP ══ -->
+  <div class="curriculum-strip" aria-label="Curriculum levels">
+    <div class="curriculum-divider">
+      <span>begin the curriculum</span>
+    </div>
+    <div class="curriculum-grid">
+
+      <a class="c-card" href="ukhona/html/level1/session1.html">
+        <span class="c-level">Level 1</span>
+        <span class="c-title">Foundations</span>
+        <span class="c-desc">Establish the health economics lens. Learn to frame financing and priority-setting questions that AI can actually answer — moving from vague queries to structured PECO-F prompts.</span>
+        <span class="c-sessions">5 sessions · existing process → evidence brief</span>
+      </a>
+
+      <a class="c-card" href="ukhona/html/level2/session1.html">
+        <span class="c-level">Level 2</span>
+        <span class="c-title">Exploration</span>
+        <span class="c-desc">Navigate the biases and blind spots in global health literature. Develop critical appraisal skills for cost-effectiveness studies, UHC evidence, and LMIC financing data.</span>
+        <span class="c-sessions">5 sessions · bias → surveillance</span>
+      </a>
+
+      <a class="c-card" href="ukhona/html/level3/session1.html">
+        <span class="c-level">Level 3</span>
+        <span class="c-title">Integration</span>
+        <span class="c-desc">Move from reviewing evidence to shaping decisions. Connect financing research to institutional constraints, equity principles, and India's health system realities.</span>
+        <span class="c-sessions">5 sessions · ethics → integrator's horizon</span>
+      </a>
+
+    </div>
+  </div>
+
+  <div class="lr-cta">
+    <a href="ukhona/html/level1/session1.html">Start with Level 1 →</a>
   </div>
 
 </main>
