@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>🏛️ Institutional Integration · Level 3 Session 2</title>
-  <meta name="description" content="How do you embed AI tools durably into WHO country office workflows?">
+  <meta name="description" content="How do you embed AI tools durably into WHO India country office workflows — so they survive staff turnover, budget cycles, and institutional inertia?">
   <meta name="color-scheme" content="dark light">
   <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-dark.ico" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-light.ico" media="(prefers-color-scheme: light)">
@@ -25,7 +25,7 @@
     }
     body { font-family: var(--ff-body); font-weight: 300; }
     .spine { position: fixed; left: 0; top: 0; width: 3px; height: 0%; background: var(--session-accent); z-index: 200; transition: height .1s linear; }
-    .s-page { padding-top: calc(var(--header-h) + 3rem); padding-bottom: 6rem; max-width: 780px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
+    .s-page { padding-top: calc(var(--header-h) + 3rem); padding-bottom: 6rem; max-width: 860px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
     .s-crumb { font-family: 'Inter', sans-serif; font-size: .6rem; letter-spacing: .3em; text-transform: uppercase; color: var(--text-secondary); opacity: .5; margin-bottom: 2.5rem; display: flex; gap: .75rem; align-items: center; }
     .s-crumb span { color: var(--session-accent); opacity: 1; }
     .s-hero { margin-bottom: 3.5rem; }
@@ -39,27 +39,77 @@
     .s-nav-btn:hover { border-color: var(--session-accent); color: var(--session-accent); }
     .s-nav-next { margin-left: auto; }
     @media (max-width: 600px) { .s-page { padding-left: 1.25rem; padding-right: 1.25rem; } }
-    
-    .s-section { margin-bottom: 3rem; padding-bottom: 3rem; border-bottom: 1px solid var(--border); }
-    .s-section:last-of-type { border-bottom: none; }
-    .s-section h2 {
-      font-family: var(--ff-display); font-size: 1.3rem; font-weight: 600;
-      color: var(--text); margin-bottom: 1.25rem;
-      padding-left: 1rem; border-left: 3px solid var(--session-accent);
+
+    /* ── content ── */
+    .session-content { margin-top: 2rem; line-height: 1.8; color: var(--text-secondary); }
+    .session-content p { margin-bottom: 1.25rem; font-size: clamp(.95rem, 2vw, 1.05rem); }
+    .session-content h2 { font-family: var(--ff-display); font-size: clamp(1.4rem, 3.5vw, 2rem); font-weight: 800; color: var(--text); margin: 3rem 0 1rem; letter-spacing: -.02em; }
+    .session-content h3 { font-family: 'Inter', sans-serif; font-size: .65rem; letter-spacing: .3em; text-transform: uppercase; color: var(--session-accent); margin: 2rem 0 .75rem; font-weight: 700; }
+    .session-content strong { color: var(--text); font-weight: 600; }
+
+    /* ── failure modes ── */
+    .failures { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(250px,100%), 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin: 1.75rem 0; }
+    .fail-card { background: var(--glass); padding: 1.2rem 1.4rem; display: flex; flex-direction: column; gap: .4rem; }
+    .fail-icon { font-size: 1rem; }
+    .fail-title { font-family: var(--ff-display); font-size: 1rem; font-weight: 700; color: var(--text); line-height: 1.2; }
+    .fail-desc { font-family: 'Inter', sans-serif; font-size: .73rem; font-weight: 300; line-height: 1.6; color: var(--text-secondary); }
+    .fail-fix { font-family: 'Inter', sans-serif; font-size: .68rem; font-weight: 500; color: var(--session-accent); margin-top: .2rem; line-height: 1.5; }
+
+    /* ── integration ladder ── */
+    .ladder { display: flex; flex-direction: column; gap: 0; margin: 1.75rem 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .rung { display: flex; border-bottom: 1px solid var(--border); }
+    .rung:last-child { border-bottom: none; }
+    .rung-level {
+      min-width: 52px; display: flex; align-items: flex-start; justify-content: center;
+      padding-top: 1rem; background: color-mix(in srgb, var(--session-accent) 9%, transparent);
+      border-right: 1px solid var(--border);
+      font-family: 'Inter', sans-serif; font-size: .62rem; font-weight: 800;
+      color: var(--session-accent); letter-spacing: .05em;
     }
-    .s-section ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: .6rem; }
-    .s-section li {
-      padding: .7rem 1rem .7rem 1.25rem; background: var(--glass);
-      border: 1px solid var(--border); border-radius: 8px;
-      font-size: .95rem; color: var(--text-secondary); line-height: 1.65; transition: var(--transition);
-    }
-    .s-section li::before { content: "▸"; color: var(--session-accent); margin-right: .6rem; font-size: .75rem; }
-    .s-section li:hover {
-      background: color-mix(in srgb, var(--session-accent) 5%, var(--glass));
-      border-color: var(--session-accent); color: var(--text);
-    }
-    .s-section li strong { color: var(--text); font-weight: 600; }
-    .s-section li em { color: var(--session-accent); font-style: italic; }
+    .rung-body { padding: 1rem 1.3rem; background: var(--glass); flex: 1; }
+    .rung-name { font-family: var(--ff-display); font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: .2rem; }
+    .rung-desc { font-family: 'Inter', sans-serif; font-size: .76rem; font-weight: 300; line-height: 1.6; color: var(--text-secondary); }
+    .rung-signal { font-family: 'Inter', sans-serif; font-size: .7rem; font-weight: 500; color: var(--session-accent); margin-top: .35rem; line-height: 1.5; }
+
+    /* ── India fiscal calendar ── */
+    .calendar { width: 100%; border-collapse: collapse; margin: 1.75rem 0; font-size: .82rem; }
+    .calendar th { background: color-mix(in srgb, var(--session-accent) 12%, transparent); color: var(--text); font-family: 'Inter', sans-serif; font-size: .57rem; letter-spacing: .15em; text-transform: uppercase; font-weight: 700; padding: .7rem 1rem; text-align: left; border-bottom: 1px solid var(--session-accent); }
+    .calendar td { padding: .75rem 1rem; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; line-height: 1.55; font-family: 'Inter', sans-serif; }
+    .calendar tr:last-child td { border-bottom: none; }
+    .calendar td:first-child { color: var(--text); font-weight: 600; white-space: nowrap; }
+    .calendar td:nth-child(2) { color: var(--session-accent); font-weight: 500; }
+    .calendar tr:hover td { background: color-mix(in srgb, var(--session-accent) 4%, transparent); }
+
+    /* ── SOP generator ── */
+    .exercise-box { background: color-mix(in srgb, var(--session-accent) 5%, var(--glass)); border: 1px dashed color-mix(in srgb, var(--session-accent) 40%, transparent); padding: 2rem 2rem 1.75rem; border-radius: 14px; margin: 2.5rem 0; }
+    .exercise-box h3 { margin-top: 0; }
+    .ex-fields { display: flex; flex-direction: column; gap: .85rem; margin-bottom: 1.1rem; }
+    .ex-row { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+    @media (max-width: 540px) { .ex-row { grid-template-columns: 1fr; } }
+    .ex-field { display: flex; flex-direction: column; gap: .3rem; }
+    .ex-label { font-family: 'Inter', sans-serif; font-size: .58rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--session-accent); }
+    .ex-sub { font-family: 'Inter', sans-serif; font-size: .62rem; color: var(--text-secondary); }
+    .ex-input { background: var(--glass); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-family: var(--ff-body); font-size: .85rem; padding: .55rem .85rem; transition: border-color .2s; }
+    .ex-input:focus { outline: none; border-color: var(--session-accent); }
+    .ex-input::placeholder { color: color-mix(in srgb, var(--text-secondary) 45%, transparent); font-style: italic; font-size: .8rem; }
+    .ex-textarea { width: 100%; box-sizing: border-box; background: var(--glass); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-family: var(--ff-body); font-size: .88rem; padding: .7rem .9rem; resize: vertical; min-height: 90px; transition: border-color .2s; }
+    .ex-textarea:focus { outline: none; border-color: var(--session-accent); }
+    .ex-textarea::placeholder { color: color-mix(in srgb, var(--text-secondary) 45%, transparent); font-style: italic; }
+    .run-btn { font-family: 'Inter', sans-serif; font-size: .65rem; letter-spacing: .15em; text-transform: uppercase; font-weight: 700; padding: .7rem 1.8rem; border-radius: 8px; border: 1px solid var(--session-accent); background: color-mix(in srgb, var(--session-accent) 12%, transparent); color: var(--session-accent); cursor: pointer; transition: all .15s; }
+    .run-btn:hover:not(:disabled) { background: color-mix(in srgb, var(--session-accent) 22%, transparent); }
+    .run-btn:disabled { opacity: .4; cursor: not-allowed; }
+    .sop-output { margin-top: 1.5rem; display: none; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .sop-output.visible { display: block; }
+    .so-header { padding: .7rem 1.2rem; background: color-mix(in srgb, var(--session-accent) 10%, transparent); border-bottom: 1px solid var(--border); font-family: 'Inter', sans-serif; font-size: .55rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--session-accent); display: flex; justify-content: space-between; align-items: center; }
+    .copy-btn { font-family: 'Inter', sans-serif; font-size: .52rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 600; padding: .3rem .75rem; border-radius: 4px; border: 1px solid var(--border); background: transparent; color: var(--text-secondary); cursor: pointer; transition: all .15s; }
+    .copy-btn:hover { border-color: var(--session-accent); color: var(--session-accent); }
+    .copy-btn.copied { color: #a5d6a7; border-color: #a5d6a7; }
+    .so-body { padding: 1.25rem 1.5rem; background: var(--glass); font-family: 'Inter', sans-serif; font-size: .84rem; line-height: 1.75; color: var(--text-secondary); white-space: pre-wrap; max-height: 560px; overflow-y: auto; }
+
+    /* ── takeaway ── */
+    .takeaway { margin-top: 3rem; padding: 1.5rem 2rem; border-radius: 12px; border: 1px solid color-mix(in srgb, var(--session-accent) 30%, transparent); background: color-mix(in srgb, var(--session-accent) 5%, transparent); }
+    .takeaway h3 { margin-top: 0; }
+    .takeaway p { margin-bottom: 0; font-size: .95rem; }
   </style>
 </head>
 <body>
@@ -72,19 +122,217 @@
   <div class="s-crumb">
     <a href="../../" style="color:inherit;text-decoration:none;">Home</a> · Level 3 · <span>Session 2</span>
   </div>
+
   <div class="s-hero">
     <div class="s-badge">🏛️ Level 3 of 3 · Session 2 of 5</div>
     <p class="s-label">Level 3 · Integration</p>
     <h1 class="s-title">Institutional Integration</h1>
     <p class="s-subtitle">Making AI Stick</p>
-    <p class="s-oneliner">How do you embed AI tools durably into WHO country office workflows?</p>
+    <p class="s-oneliner">How do you embed AI tools durably into WHO India workflows — so the capability survives staff turnover, budget cycles, and the institutional gravity that pulls everything back to how it was done before?</p>
   </div>
 
-  
+  <div class="session-content">
+
+    <h2>Why good tools disappear</h2>
+    <p>Across global health institutions, the pattern is consistent: a motivated staff member discovers a better way to work with AI tools, produces noticeably stronger outputs, and then leaves — taking the capability with them. What remains is a folder of prompts no one understands, a subscription no one knows how to use, and a team that reverts to the previous workflow within a quarter. The tool did not fail. The integration failed.</p>
+    <p>Durable institutional integration requires three things that most AI adoption efforts skip: documentation that survives personnel change, alignment with the actual decision calendar that governs WHO India's work, and explicit team norms that distribute the capability rather than concentrating it in one person. None of these is technically complex. All of them require deliberate effort that feels like overhead until the key person leaves.</p>
+
+    <h2>Five ways AI integration fails in country offices</h2>
+
+    <div class="failures">
+      <div class="fail-card">
+        <div class="fail-icon">🧠</div>
+        <div class="fail-title">Single-expert dependency</div>
+        <div class="fail-desc">One person holds all the prompts, all the workflow knowledge, and all the tool subscriptions. Their departure ends the capability entirely. The team cannot reconstruct what they did because it was never written down.</div>
+        <div class="fail-fix">→ Fix: every workflow must be documented as a handover-ready SOP before it is used in production. The SOP generator in this session produces that document.</div>
+      </div>
+      <div class="fail-card">
+        <div class="fail-icon">📅</div>
+        <div class="fail-title">Misalignment with decision cycles</div>
+        <div class="fail-desc">AI tools are adopted outside the rhythm of actual work — trained on, then unused until a brief deadline hits. By then, no one remembers the protocol and the team falls back to familiar methods under time pressure.</div>
+        <div class="fail-fix">→ Fix: map every AI workflow to a specific deliverable in the WHO India annual cycle. The tool gets used because the deliverable requires it, not because someone remembers to use it.</div>
+      </div>
+      <div class="fail-card">
+        <div class="fail-icon">💸</div>
+        <div class="fail-title">Subscription cliff</div>
+        <div class="fail-desc">A paid tool is adopted, integrated into workflows, and then the subscription lapses or is not renewed in a budget cycle. The team has built dependencies on a tool that is now unavailable.</div>
+        <div class="fail-fix">→ Fix: build workflows around tools with free tiers or open access wherever possible. When paid tools are essential, document the substitution protocol for when access lapses.</div>
+      </div>
+      <div class="fail-card">
+        <div class="fail-icon">🔒</div>
+        <div class="fail-title">Prompt library lock-in</div>
+        <div class="fail-desc">Effective prompts are treated as personal assets rather than team resources. They live in one person's chat history or personal notes, undocumented and untransferred. The team cannot replicate results without that person.</div>
+        <div class="fail-fix">→ Fix: maintain a shared team prompt library in a shared drive, version-controlled. Each prompt is named, described, and annotated with when and why to use it.</div>
+      </div>
+      <div class="fail-card">
+        <div class="fail-icon">🏛️</div>
+        <div class="fail-title">Institutional resistance</div>
+        <div class="fail-desc">AI-assisted evidence synthesis is perceived as methodologically suspect by senior colleagues or MoHFW counterparts who did not receive this training. Briefs produced with undisclosed AI use are vulnerable; briefs with transparent methods notes are not.</div>
+        <div class="fail-fix">→ Fix: the disclosure note from Session 1 is institutional armour. Transparent AI use that follows WHO's ethical framework is defensible. Concealed AI use is not.</div>
+      </div>
+      <div class="fail-card">
+        <div class="fail-icon">📉</div>
+        <div class="fail-title">No quality benchmark</div>
+        <div class="fail-desc">Without a before/after comparison of brief quality, speed, and equity coverage, there is no institutional evidence that the AI workflow produces better outputs. Adoption without measurement produces advocacy without proof.</div>
+        <div class="fail-fix">→ Fix: for the first three briefs produced with the new workflow, track: time from question to draft, number of sources retrieved, equity disaggregation coverage, and any factual errors found in review. This is your institutional evidence base.</div>
+      </div>
+    </div>
+
+    <h2>The integration ladder</h2>
+    <p>Durable integration happens in stages. Trying to jump from individual use to institutional standard operating procedure in one step produces the resistance and reversion described above. Work through the ladder in sequence:</p>
+
+    <div class="ladder">
+      <div class="rung">
+        <div class="rung-level">L1</div>
+        <div class="rung-body">
+          <div class="rung-name">Individual proficiency</div>
+          <div class="rung-desc">One person can reliably run the full workflow — PECO-F framing, search protocol, AI-assisted screening, critical appraisal, bias check, brief generation — and produce a defensible output. This is what Levels 1 and 2 of this curriculum build.</div>
+          <div class="rung-signal">Signal you are here: you have completed a full brief cycle using AI tools with documented protocol log and disclosure note.</div>
+        </div>
+      </div>
+      <div class="rung">
+        <div class="rung-level">L2</div>
+        <div class="rung-body">
+          <div class="rung-name">Documented workflow</div>
+          <div class="rung-desc">The workflow is written down in enough detail that a new team member could follow it without guidance. Prompts are in a shared library. The SOP covers what to do when a tool is unavailable. This step is the most commonly skipped and the most consequential.</div>
+          <div class="rung-signal">Signal you are here: a colleague who did not attend this training can produce a comparable brief using only the SOP document.</div>
+        </div>
+      </div>
+      <div class="rung">
+        <div class="rung-level">L3</div>
+        <div class="rung-body">
+          <div class="rung-name">Calendar alignment</div>
+          <div class="rung-desc">Each AI workflow is assigned to a specific deliverable in the WHO India annual work plan. The NHA release triggers the surveillance check. The budget cycle window triggers the rapid review protocol. The workflow runs because the calendar demands it.</div>
+          <div class="rung-signal">Signal you are here: AI workflows appear as named steps in at least two WHO India work plan deliverables for the current year.</div>
+        </div>
+      </div>
+      <div class="rung">
+        <div class="rung-level">L4</div>
+        <div class="rung-body">
+          <div class="rung-name">Team distribution</div>
+          <div class="rung-desc">At least two team members can run the full workflow independently. The capability is not hostage to any one person's presence. Onboarding new staff includes the workflow documentation and this curriculum as orientation materials.</div>
+          <div class="rung-signal">Signal you are here: the workflow ran without interruption during a period when the original trained staff member was on leave or travel.</div>
+        </div>
+      </div>
+      <div class="rung">
+        <div class="rung-level">L5</div>
+        <div class="rung-body">
+          <div class="rung-name">Institutional standard</div>
+          <div class="rung-desc">The AI-assisted evidence workflow is referenced in WHO India's country office quality standards, mentioned in donor reporting as a methodological improvement, and adopted by at least one counterpart ministry unit. The capability has propagated beyond the team that built it.</div>
+          <div class="rung-signal">Signal you are here: MoHFW or a state health ministry team has requested a brief produced using the documented workflow — and the methodology note was not challenged.</div>
+        </div>
+      </div>
+    </div>
+
+    <h2>Aligning with India's health policy calendar</h2>
+    <p>The single most effective integration mechanism is mapping AI workflows to the fixed decision points in India's health financing calendar. These windows are predictable, high-stakes, and time-pressured — exactly the conditions where a pre-built workflow produces the most value:</p>
+
+    <table class="calendar">
+      <thead><tr><th>Period</th><th>Event</th><th>Workflow triggered</th><th>Lead time needed</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>January–February</td>
+          <td>Union Budget preparation</td>
+          <td>Rapid evidence review on health financing priorities; surveillance plan update</td>
+          <td>6–8 weeks before Budget Day</td>
+        </tr>
+        <tr>
+          <td>March–April</td>
+          <td>NHA data release (prior year)</td>
+          <td>OOP and financial protection figures update; brief baseline revision</td>
+          <td>Within 2 weeks of release</td>
+        </tr>
+        <tr>
+          <td>April–May</td>
+          <td>HTAIn annual assessment cycle</td>
+          <td>New HTAIn reports screened against active briefs; update triggers assessed</td>
+          <td>Ongoing surveillance — Tier 2</td>
+        </tr>
+        <tr>
+          <td>July–August</td>
+          <td>NHM mid-year review</td>
+          <td>State health financing performance evidence brief; PM-JAY claims data review</td>
+          <td>4–6 weeks before review meeting</td>
+        </tr>
+        <tr>
+          <td>October–November</td>
+          <td>State budget cycles begin</td>
+          <td>State-specific fiscal space analysis; evidence brief for state health financing teams</td>
+          <td>6 weeks before state Budget presentation</td>
+        </tr>
+        <tr>
+          <td>December</td>
+          <td>Annual WHO country programme review</td>
+          <td>Full surveillance check; brief portfolio update; workflow quality benchmark review</td>
+          <td>4 weeks before review</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Generate your team SOP</h2>
+
+    <div class="exercise-box">
+      <h3>🏛️ SOP generator — produce a handover-ready workflow document</h3>
+      <p style="font-size:.85rem;margin-bottom:1.1rem;">Describe a specific evidence workflow your team runs — any step from search to surveillance. The generator will produce a handover-ready Standard Operating Procedure including tool list, step-by-step process, fallback options, quality checks, and disclosure requirements. Ready to save to a shared drive and hand to a new team member.</p>
+
+      <div class="ex-fields">
+        <div class="ex-row">
+          <div class="ex-field">
+            <span class="ex-label">Workflow name</span>
+            <span class="ex-sub">What is this SOP for?</span>
+            <input class="ex-input" id="sop-name" type="text" placeholder="e.g. Rapid health financing evidence brief for MoHFW">
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Calendar trigger</span>
+            <span class="ex-sub">When or why is this workflow run?</span>
+            <input class="ex-input" id="sop-trigger" type="text" placeholder="e.g. 6 weeks before Union Budget; ad hoc MoHFW request">
+          </div>
+        </div>
+        <div class="ex-row">
+          <div class="ex-field">
+            <span class="ex-label">Team size and roles</span>
+            <span class="ex-sub">Who does this work?</span>
+            <input class="ex-input" id="sop-team" type="text" placeholder="e.g. 2 health economists, 1 programme officer">
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Target output</span>
+            <span class="ex-sub">What does this workflow produce?</span>
+            <input class="ex-input" id="sop-output" type="text" placeholder="e.g. 2-page evidence brief for Joint Secretary level">
+          </div>
+        </div>
+        <div class="ex-field">
+          <span class="ex-label">Current workflow steps</span>
+          <span class="ex-sub">Describe what you currently do — as much or as little detail as you have</span>
+          <textarea class="ex-textarea" id="sop-steps" placeholder="e.g. We receive a question from MoHFW, one economist runs a PubMed search and screens abstracts, writes a brief in Word. Currently takes 5–7 days. No formal protocol log. No AI tools used yet but we want to integrate them."></textarea>
+        </div>
+        <div class="ex-field">
+          <span class="ex-label">Known constraints or risks</span>
+          <span class="ex-sub">What has broken this workflow before, or might?</span>
+          <textarea class="ex-textarea" id="sop-risks" placeholder="e.g. Primary economist often on travel; no shared prompt library; MoHFW sometimes needs brief in 48 hours; paid Elicit subscription may not be renewed"></textarea>
+        </div>
+      </div>
+
+      <button class="run-btn" id="run-btn" onclick="generateSOP()">Generate SOP →</button>
+
+      <div class="sop-output" id="sop-output">
+        <div class="so-header">
+          <span>🏛️ Standard Operating Procedure — save to shared drive</span>
+          <button class="copy-btn" id="copy-sop" onclick="copySOP(this)">Copy</button>
+        </div>
+        <div class="so-body" id="so-body"></div>
+      </div>
+    </div>
+
+    <div class="takeaway">
+      <h3>🎯 Key takeaway</h3>
+      <p>A tool that only one person knows how to use is not an institutional capability — it is a personal skill waiting to leave. The SOP is the conversion mechanism: it turns individual proficiency into team infrastructure. The integration ladder gives you the sequence; the calendar alignment gives you the forcing function; the SOP generator gives you the document. All three are needed. The capability that survives a staff rotation is the one that was written down before anyone thought to ask. Session 3 addresses the hardest practical integration challenge: rapid evidence reviews under genuine time pressure.</p>
+    </div>
+
+  </div>
 
   <nav class="s-nav" aria-label="Session navigation">
-    <a class='s-nav-btn' href='session1.html'>← Previous</a>
-    <a class='s-nav-btn s-nav-next' href='session3.html'>Next →</a>
+    <a class="s-nav-btn" href="session1.html">← Previous</a>
+    <a class="s-nav-btn s-nav-next" href="session3.html">Next →</a>
   </nav>
 </div>
 
@@ -97,6 +345,151 @@
     const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
     spine.style.height = Math.min(pct, 100) + '%';
   }, { passive: true });
+
+  async function generateSOP() {
+    const name    = document.getElementById('sop-name').value.trim();
+    const trigger = document.getElementById('sop-trigger').value.trim();
+    const team    = document.getElementById('sop-team').value.trim();
+    const output  = document.getElementById('sop-output-field')?.value.trim() ||
+                    document.getElementById('sop-output').previousElementSibling?.querySelector('#sop-output')?.value.trim() || '';
+    const sopOut  = document.getElementById('so-body');
+
+    // collect output field properly
+    const outputVal = document.getElementById('sop-out-val')?.value.trim() ||
+      (() => {
+        const el = document.querySelector('input#sop-output');
+        return el ? el.value.trim() : '';
+      })();
+
+    const steps   = document.getElementById('sop-steps').value.trim();
+    const risks   = document.getElementById('sop-risks').value.trim();
+
+    if (!name && !steps) { alert('Please fill in at least the workflow name and current steps.'); return; }
+
+    const btn = document.getElementById('run-btn');
+    const outEl = document.getElementById('sop-output');
+    btn.disabled = true; btn.textContent = 'Generating SOP…';
+    outEl.classList.remove('visible');
+
+    const targetOutput = (() => {
+      const el = document.getElementById('sop-output');
+      // find the input with id sop-output — but that's the div, so use a different approach
+      const inputs = document.querySelectorAll('.ex-input');
+      for (const inp of inputs) {
+        if (inp.placeholder && inp.placeholder.includes('2-page')) return inp.value.trim();
+      }
+      return '';
+    })();
+
+    const system = `You are a WHO institutional development advisor with expertise in health economics teams in LMIC country offices. Produce a handover-ready Standard Operating Procedure for an AI-assisted evidence workflow at WHO India.
+
+The SOP must be usable by a new team member with no prior knowledge of the workflow. Write it as a practical working document — not a policy statement. Include concrete tool names, realistic time estimates, fallback options for when tools are unavailable, and explicit quality checkpoints.
+
+Use exactly this structure:
+
+SOP: [workflow name]
+Version: 1.0 | Owner: [team role] | Trigger: [calendar event or request type]
+
+PURPOSE
+[One sentence: what does this workflow produce and for whom?]
+
+TOOLS REQUIRED
+Primary: [list with free/paid status]
+Fallback (if primary unavailable): [list alternatives]
+
+STEP-BY-STEP PROCESS
+Step 1 — [name] ([estimated time])
+[What to do, specifically. Name the tool and the action.]
+
+Step 2 — [name] ([estimated time])
+[continue for all steps — typically 5–8 steps]
+
+QUALITY CHECKPOINTS
+Before circulating the brief, verify:
+☐ [specific check 1]
+☐ [specific check 2]
+☐ [continue for 4–6 checks drawn from the curriculum — bias, equity, hallucination, disclosure]
+
+AI DISCLOSURE NOTE
+[Ready-to-paste disclosure note for this specific workflow — adapted from the WHO standard template]
+
+FALLBACK PROTOCOL
+If [specific risk named by user] occurs: [specific alternative action]
+[Cover the main risks identified]
+
+HANDOVER CHECKLIST
+For a new team member taking over this workflow:
+☐ [what they need access to]
+☐ [what they need to read]
+☐ [what they need to practise before running independently]
+
+TIME ESTIMATE
+Full workflow from question to circulated brief: [realistic estimate]
+Minimum viable version under 48-hour deadline: [compressed version]
+
+Be specific. No generic advice. Every step should name a tool or a human action.`;
+
+    const sopTarget = (() => {
+      const allInputs = document.querySelectorAll('input.ex-input');
+      for (const i of allInputs) {
+        if (i.id === 'sop-output' || (i.placeholder && i.placeholder.includes('2-page'))) {
+          return i.value.trim();
+        }
+      }
+      return '';
+    })();
+
+    const msg = `Workflow name: ${name || 'not specified'}
+Calendar trigger: ${trigger || 'not specified'}
+Team: ${team || 'not specified'}
+Target output: ${sopTarget || 'evidence brief for WHO India'}
+Current steps: ${steps || 'not described'}
+Known constraints and risks: ${risks || 'not specified'}`;
+
+    try {
+      const resp = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          system,
+          messages: [{ role: 'user', content: msg }]
+        })
+      });
+      const data = await resp.json();
+      const result = data?.content?.[0]?.text || 'No response received.';
+      sopOut.textContent = result;
+      outEl.classList.add('visible');
+      outEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } catch (err) {
+      sopOut.textContent = 'Could not reach the AI service. Check your connection and try again.';
+      outEl.classList.add('visible');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Generate SOP →';
+    }
+  }
+
+  function copySOP(btn) {
+    const text = document.getElementById('so-body').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied ✓'; btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+
+  // Fix: capture the sop-output input field value correctly
+  // The select element with id "sop-output" conflicts with the output div
+  // Rename the input to avoid collision
+  document.addEventListener('DOMContentLoaded', () => {
+    const outputInputs = document.querySelectorAll('input.ex-input');
+    outputInputs.forEach(inp => {
+      if (inp.placeholder && inp.placeholder.includes('2-page')) {
+        inp.id = 'sop-out-val';
+      }
+    });
+  });
 </script>
 </body>
 </html>
