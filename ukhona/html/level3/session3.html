@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>⚡ Rapid Evidence Reviews · Level 3 Session 3</title>
-  <meta name="description" content="How fast can a credible evidence review be produced with AI assistance?">
+  <meta name="description" content="How fast can a credible evidence review be produced with AI assistance — without sacrificing the rigour that makes it defensible?">
   <meta name="color-scheme" content="dark light">
   <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-dark.ico" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-light.ico" media="(prefers-color-scheme: light)">
@@ -25,7 +25,7 @@
     }
     body { font-family: var(--ff-body); font-weight: 300; }
     .spine { position: fixed; left: 0; top: 0; width: 3px; height: 0%; background: var(--session-accent); z-index: 200; transition: height .1s linear; }
-    .s-page { padding-top: calc(var(--header-h) + 3rem); padding-bottom: 6rem; max-width: 780px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
+    .s-page { padding-top: calc(var(--header-h) + 3rem); padding-bottom: 6rem; max-width: 860px; margin: 0 auto; padding-left: 2rem; padding-right: 2rem; }
     .s-crumb { font-family: 'Inter', sans-serif; font-size: .6rem; letter-spacing: .3em; text-transform: uppercase; color: var(--text-secondary); opacity: .5; margin-bottom: 2.5rem; display: flex; gap: .75rem; align-items: center; }
     .s-crumb span { color: var(--session-accent); opacity: 1; }
     .s-hero { margin-bottom: 3.5rem; }
@@ -39,27 +39,102 @@
     .s-nav-btn:hover { border-color: var(--session-accent); color: var(--session-accent); }
     .s-nav-next { margin-left: auto; }
     @media (max-width: 600px) { .s-page { padding-left: 1.25rem; padding-right: 1.25rem; } }
-    
-    .s-section { margin-bottom: 3rem; padding-bottom: 3rem; border-bottom: 1px solid var(--border); }
-    .s-section:last-of-type { border-bottom: none; }
-    .s-section h2 {
-      font-family: var(--ff-display); font-size: 1.3rem; font-weight: 600;
-      color: var(--text); margin-bottom: 1.25rem;
-      padding-left: 1rem; border-left: 3px solid var(--session-accent);
+
+    /* ── content ── */
+    .session-content { margin-top: 2rem; line-height: 1.8; color: var(--text-secondary); }
+    .session-content p { margin-bottom: 1.25rem; font-size: clamp(.95rem, 2vw, 1.05rem); }
+    .session-content h2 { font-family: var(--ff-display); font-size: clamp(1.4rem, 3.5vw, 2rem); font-weight: 800; color: var(--text); margin: 3rem 0 1rem; letter-spacing: -.02em; }
+    .session-content h3 { font-family: 'Inter', sans-serif; font-size: .65rem; letter-spacing: .3em; text-transform: uppercase; color: var(--session-accent); margin: 2rem 0 .75rem; font-weight: 700; }
+    .session-content strong { color: var(--text); font-weight: 600; }
+
+    /* ── speed-rigour spectrum ── */
+    .spectrum {
+      padding: 1.75rem 2rem; margin: 2rem 0;
+      background: var(--glass); border: 1px solid var(--border); border-radius: 14px;
     }
-    .s-section ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: .6rem; }
-    .s-section li {
-      padding: .7rem 1rem .7rem 1.25rem; background: var(--glass);
-      border: 1px solid var(--border); border-radius: 8px;
-      font-size: .95rem; color: var(--text-secondary); line-height: 1.65; transition: var(--transition);
+    .spectrum-bar {
+      position: relative; height: 8px; border-radius: 4px;
+      background: linear-gradient(to right,
+        color-mix(in srgb, var(--session-accent) 80%, transparent),
+        color-mix(in srgb, var(--session-accent) 30%, transparent));
+      margin: 1rem 0 .5rem;
     }
-    .s-section li::before { content: "▸"; color: var(--session-accent); margin-right: .6rem; font-size: .75rem; }
-    .s-section li:hover {
-      background: color-mix(in srgb, var(--session-accent) 5%, var(--glass));
-      border-color: var(--session-accent); color: var(--text);
+    .spectrum-labels { display: flex; justify-content: space-between; font-family: 'Inter', sans-serif; font-size: .6rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+    .spectrum-labels span:first-child { color: var(--session-accent); }
+    .spectrum-labels span:last-child { color: var(--text-secondary); opacity: .5; }
+    .spectrum-markers { display: flex; justify-content: space-between; margin-top: .5rem; }
+    .marker { font-family: 'Inter', sans-serif; font-size: .65rem; color: var(--text-secondary); text-align: center; max-width: 100px; line-height: 1.4; }
+    .marker strong { display: block; color: var(--text); }
+
+    /* ── trade-off table ── */
+    .tradeoff-table { width: 100%; border-collapse: collapse; margin: 1.75rem 0; font-size: .82rem; }
+    .tradeoff-table th { background: color-mix(in srgb, var(--session-accent) 12%, transparent); color: var(--text); font-family: 'Inter', sans-serif; font-size: .57rem; letter-spacing: .15em; text-transform: uppercase; font-weight: 700; padding: .7rem 1rem; text-align: left; border-bottom: 1px solid var(--session-accent); }
+    .tradeoff-table td { padding: .8rem 1rem; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; line-height: 1.55; font-family: 'Inter', sans-serif; }
+    .tradeoff-table tr:last-child td { border-bottom: none; }
+    .tradeoff-table td:first-child { color: var(--text); font-weight: 600; white-space: nowrap; }
+    .tradeoff-table tr:hover td { background: color-mix(in srgb, var(--session-accent) 4%, transparent); }
+    .cut { color: #ef9a9a; font-style: italic; }
+    .keep { color: #a9e6b4; }
+
+    /* ── 48h timeline ── */
+    .timeline { display: flex; flex-direction: column; gap: 0; margin: 1.75rem 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .tl-block { display: flex; border-bottom: 1px solid var(--border); }
+    .tl-block:last-child { border-bottom: none; }
+    .tl-time {
+      min-width: 80px; display: flex; flex-direction: column; align-items: center;
+      justify-content: flex-start; padding: 1rem .5rem .75rem;
+      background: color-mix(in srgb, var(--session-accent) 9%, transparent);
+      border-right: 1px solid var(--border);
+      font-family: 'Inter', sans-serif; font-size: .68rem; font-weight: 800;
+      color: var(--session-accent); text-align: center; line-height: 1.3;
     }
-    .s-section li strong { color: var(--text); font-weight: 600; }
-    .s-section li em { color: var(--session-accent); font-style: italic; }
+    .tl-time span { font-size: .52rem; font-weight: 400; color: var(--text-secondary); margin-top: .2rem; }
+    .tl-body { padding: 1rem 1.3rem; background: var(--glass); flex: 1; }
+    .tl-phase { font-family: 'Inter', sans-serif; font-size: .58rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--session-accent); margin-bottom: .25rem; }
+    .tl-action { font-family: var(--ff-display); font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: .25rem; }
+    .tl-desc { font-family: 'Inter', sans-serif; font-size: .75rem; font-weight: 300; line-height: 1.6; color: var(--text-secondary); }
+    .tl-tool { font-family: 'Inter', sans-serif; font-size: .65rem; font-weight: 500; color: var(--session-accent); margin-top: .3rem; }
+    .tl-cut { font-family: 'Inter', sans-serif; font-size: .65rem; font-style: italic; color: #ef9a9a; margin-top: .2rem; }
+
+    /* ── non-negotiables ── */
+    .non-neg { display: flex; flex-direction: column; gap: .5rem; margin: 1.5rem 0; }
+    .nn-item { display: flex; align-items: flex-start; gap: .85rem; padding: .85rem 1.1rem; border-radius: 8px; border: 1px solid color-mix(in srgb, var(--session-accent) 25%, transparent); background: color-mix(in srgb, var(--session-accent) 5%, transparent); }
+    .nn-icon { font-size: .9rem; flex-shrink: 0; padding-top: .05rem; }
+    .nn-text { font-family: 'Inter', sans-serif; font-size: .8rem; font-weight: 300; line-height: 1.6; color: var(--text-secondary); }
+    .nn-text strong { color: var(--text); }
+
+    /* ── protocol generator ── */
+    .exercise-box { background: color-mix(in srgb, var(--session-accent) 5%, var(--glass)); border: 1px dashed color-mix(in srgb, var(--session-accent) 40%, transparent); padding: 2rem 2rem 1.75rem; border-radius: 14px; margin: 2.5rem 0; }
+    .exercise-box h3 { margin-top: 0; }
+    .ex-fields { display: flex; flex-direction: column; gap: .85rem; margin-bottom: 1.1rem; }
+    .ex-row { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+    @media (max-width: 540px) { .ex-row { grid-template-columns: 1fr; } }
+    .ex-field { display: flex; flex-direction: column; gap: .3rem; }
+    .ex-label { font-family: 'Inter', sans-serif; font-size: .58rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--session-accent); }
+    .ex-sub { font-family: 'Inter', sans-serif; font-size: .62rem; color: var(--text-secondary); }
+    .ex-input { background: var(--glass); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-family: var(--ff-body); font-size: .85rem; padding: .55rem .85rem; transition: border-color .2s; }
+    .ex-input:focus { outline: none; border-color: var(--session-accent); }
+    .ex-input::placeholder { color: color-mix(in srgb, var(--text-secondary) 45%, transparent); font-style: italic; font-size: .8rem; }
+    .ex-select { background: var(--glass); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-family: 'Inter', sans-serif; font-size: .85rem; padding: .55rem .85rem; transition: border-color .2s; appearance: none; cursor: pointer; }
+    .ex-select:focus { outline: none; border-color: var(--session-accent); }
+    .ex-textarea { width: 100%; box-sizing: border-box; background: var(--glass); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-family: var(--ff-body); font-size: .88rem; padding: .7rem .9rem; resize: vertical; min-height: 80px; transition: border-color .2s; }
+    .ex-textarea:focus { outline: none; border-color: var(--session-accent); }
+    .ex-textarea::placeholder { color: color-mix(in srgb, var(--text-secondary) 45%, transparent); font-style: italic; }
+    .run-btn { font-family: 'Inter', sans-serif; font-size: .65rem; letter-spacing: .15em; text-transform: uppercase; font-weight: 700; padding: .7rem 1.8rem; border-radius: 8px; border: 1px solid var(--session-accent); background: color-mix(in srgb, var(--session-accent) 12%, transparent); color: var(--session-accent); cursor: pointer; transition: all .15s; }
+    .run-btn:hover:not(:disabled) { background: color-mix(in srgb, var(--session-accent) 22%, transparent); }
+    .run-btn:disabled { opacity: .4; cursor: not-allowed; }
+    .proto-output { margin-top: 1.5rem; display: none; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .proto-output.visible { display: block; }
+    .po-header { padding: .7rem 1.2rem; background: color-mix(in srgb, var(--session-accent) 10%, transparent); border-bottom: 1px solid var(--border); font-family: 'Inter', sans-serif; font-size: .55rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--session-accent); display: flex; justify-content: space-between; align-items: center; }
+    .copy-btn { font-family: 'Inter', sans-serif; font-size: .52rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 600; padding: .3rem .75rem; border-radius: 4px; border: 1px solid var(--border); background: transparent; color: var(--text-secondary); cursor: pointer; transition: all .15s; }
+    .copy-btn:hover { border-color: var(--session-accent); color: var(--session-accent); }
+    .copy-btn.copied { color: #a5d6a7; border-color: #a5d6a7; }
+    .po-body { padding: 1.25rem 1.5rem; background: var(--glass); font-family: 'Inter', sans-serif; font-size: .84rem; line-height: 1.75; color: var(--text-secondary); white-space: pre-wrap; max-height: 560px; overflow-y: auto; }
+
+    /* ── takeaway ── */
+    .takeaway { margin-top: 3rem; padding: 1.5rem 2rem; border-radius: 12px; border: 1px solid color-mix(in srgb, var(--session-accent) 30%, transparent); background: color-mix(in srgb, var(--session-accent) 5%, transparent); }
+    .takeaway h3 { margin-top: 0; }
+    .takeaway p { margin-bottom: 0; font-size: .95rem; }
   </style>
 </head>
 <body>
@@ -72,19 +147,265 @@
   <div class="s-crumb">
     <a href="../../" style="color:inherit;text-decoration:none;">Home</a> · Level 3 · <span>Session 3</span>
   </div>
+
   <div class="s-hero">
     <div class="s-badge">⚡ Level 3 of 3 · Session 3 of 5</div>
     <p class="s-label">Level 3 · Integration</p>
     <h1 class="s-title">Rapid Evidence Reviews</h1>
     <p class="s-subtitle">Speed Without Sacrificing Rigour</p>
-    <p class="s-oneliner">How fast can a credible evidence review be produced with AI assistance?</p>
+    <p class="s-oneliner">How fast can a credible evidence review be produced with AI assistance — and what exactly must you never cut, no matter how little time you have?</p>
   </div>
 
-  
+  <div class="session-content">
+
+    <h2>The 48-hour reality</h2>
+    <p>In a WHO country office operating in India's policy environment, evidence requests do not arrive with comfortable timelines. A Joint Secretary's office requests a brief before a Thursday morning meeting. A state health secretary wants evidence on a financing reform before a budget submission next week. A donor asks for a rapid synthesis before a mission debrief. These are not exceptional circumstances — they are the normal operating tempo of the work.</p>
+    <p>A rapid review produced under these conditions is not a lesser review. It is a different kind of review, with explicit scope limitations and explicit quality commitments. The difference between a rapid review that is credible and one that is not is not the time available — it is whether the team knew in advance what they could and could not cut, and disclosed the limitations honestly.</p>
+    <p>AI tools change the calculus significantly. Tasks that previously took days — abstract screening, data extraction, first-draft synthesis — now take hours. But the ceiling of what is credible does not change: a rapid review is only as defensible as its weakest unacknowledged assumption. Speed bought by hiding limitations is not speed — it is deferred liability.</p>
+
+    <h2>What you can compress — and what you cannot</h2>
+
+    <div class="spectrum">
+      <div class="spectrum-labels">
+        <span>Full systematic review</span>
+        <span>Rapid review (48h)</span>
+      </div>
+      <div class="spectrum-bar"></div>
+      <div class="spectrum-markers">
+        <div class="marker"><strong>3–6 months</strong>Pre-registered, dual screening, full grey lit, GRADE</div>
+        <div class="marker"><strong>2–4 weeks</strong>Structured search, single screener, key grey lit</div>
+        <div class="marker"><strong>1 week</strong>Focused search, AI screening, targeted grey lit</div>
+        <div class="marker"><strong>48 hours</strong>Scoped search, AI-assisted, disclosed limits</div>
+      </div>
+    </div>
+
+    <table class="tradeoff-table">
+      <thead><tr><th>Step</th><th>Full review</th><th>48-hour rapid review</th><th>What is lost</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Question scoping</td>
+          <td>Full PECO-F development with stakeholder input</td>
+          <td class="keep">PECO-F required — no shortcut here</td>
+          <td>None — this step takes 30 minutes with AI and cannot be skipped</td>
+        </tr>
+        <tr>
+          <td>Database search</td>
+          <td>5–7 databases, dual independent searches</td>
+          <td class="cut">PubMed + Dimensions.ai + HTAIn manual check only</td>
+          <td>Lower recall — some relevant studies missed. Must be disclosed.</td>
+        </tr>
+        <tr>
+          <td>Abstract screening</td>
+          <td>Dual independent screening, adjudication</td>
+          <td class="cut">Single screener with AI pre-screening; human reviews all AI flags</td>
+          <td>Higher false-negative risk. Acceptable if AI pre-screening prompt is well-specified.</td>
+        </tr>
+        <tr>
+          <td>Full-text review</td>
+          <td>All included studies read in full</td>
+          <td class="cut">AI-assisted extraction from abstracts + key sections; human verifies top 5</td>
+          <td>Miss methodology details not in abstract. Must be noted in limitations.</td>
+        </tr>
+        <tr>
+          <td>Quality appraisal</td>
+          <td>Full 10-question economic appraisal (Session 3)</td>
+          <td class="cut">Three critical questions only: cost perspective, equity, informal economy</td>
+          <td>Less detail on uncertainty and transferability. Three-question minimum is non-negotiable.</td>
+        </tr>
+        <tr>
+          <td>Equity analysis</td>
+          <td>Full disaggregation by all relevant dimensions</td>
+          <td class="keep">Equity check required — cannot be cut</td>
+          <td>None — a brief without equity analysis is not a WHO brief, regardless of timeline</td>
+        </tr>
+        <tr>
+          <td>Synthesis</td>
+          <td>Full narrative synthesis with meta-analysis if appropriate</td>
+          <td class="cut">Narrative synthesis only; no pooling under time pressure</td>
+          <td>Less precision on effect size. Acceptable — point estimates without pooling are honest.</td>
+        </tr>
+        <tr>
+          <td>Hallucination check</td>
+          <td>All statistics verified against primary sources</td>
+          <td class="keep">All cited statistics verified — cannot be cut</td>
+          <td>None — an unverified statistic in a circulated brief is a liability with no timeline excuse</td>
+        </tr>
+        <tr>
+          <td>Disclosure note</td>
+          <td>Full methods section</td>
+          <td class="keep">Disclosure note required — cannot be cut</td>
+          <td>None — takes 3 minutes; the rapid review's credibility depends on it</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>The 48-hour protocol — hour by hour</h2>
+    <p>This is the compressed workflow for a WHO India health financing rapid review with a 48-hour deadline. Every step is time-boxed. Overrunning any block means the next block must be compressed further — not skipped.</p>
+
+    <div class="timeline">
+      <div class="tl-block">
+        <div class="tl-time">H0–2<span>Hours 0–2</span></div>
+        <div class="tl-body">
+          <div class="tl-phase">Question scoping</div>
+          <div class="tl-action">Lock the PECO-F</div>
+          <div class="tl-desc">Write out all five PECO-F elements. Do not begin searching until the question is precise. If the request is vague, spend 20 minutes clarifying with the requestor — it will save four hours later. Use the PECO-F reframe tool from Session 3 if needed.</div>
+          <div class="tl-tool">Tool: Session 3 PECO-F tool · 30 minutes · human judgment required</div>
+        </div>
+      </div>
+      <div class="tl-block">
+        <div class="tl-time">H2–5<span>Hours 2–5</span></div>
+        <div class="tl-body">
+          <div class="tl-phase">Search & retrieve</div>
+          <div class="tl-action">Run three sources, log immediately</div>
+          <div class="tl-desc">PubMed with Boolean string (Session 4 builder), Dimensions.ai with LMIC filter, HTAIn manual browse. Set a result limit: take the top 50 most relevant from PubMed, all results from HTAIn. Log date, source, result count in the protocol table as you go.</div>
+          <div class="tl-tool">Tool: PubMed · Dimensions.ai · HTAIn · Session 4 string builder</div>
+          <div class="tl-cut">Cut: Embase, Cochrane, WHO IRIS — note as limitation</div>
+        </div>
+      </div>
+      <div class="tl-block">
+        <div class="tl-time">H5–9<span>Hours 5–9</span></div>
+        <div class="tl-body">
+          <div class="tl-phase">AI screening</div>
+          <div class="tl-action">Paste abstracts — AI pre-screens, human reviews flags</div>
+          <div class="tl-desc">Paste all abstracts into Claude with a structured screening prompt specifying your PECO-F inclusion criteria. Ask it to return: Include / Exclude / Uncertain for each, with one-line rationale. Review all "Include" and "Uncertain" yourself. Do not accept "Exclude" without spot-checking 10% of that set.</div>
+          <div class="tl-tool">Tool: Claude with structured screening prompt · human review of flagged abstracts</div>
+        </div>
+      </div>
+      <div class="tl-block">
+        <div class="tl-time">H9–14<span>Hours 9–14</span></div>
+        <div class="tl-body">
+          <div class="tl-phase">Extraction & appraisal</div>
+          <div class="tl-action">Extract key data; apply three-question appraisal</div>
+          <div class="tl-desc">For each included study: extract intervention, population, comparator, outcome, effect direction, and quality note using Elicit or Claude. Then apply the three non-negotiable appraisal questions from Session 3: cost perspective, equity disaggregation, informal economy. Studies failing all three are cited only with explicit caveats.</div>
+          <div class="tl-tool">Tool: Elicit or Claude · Session 3 appraisal prompt</div>
+          <div class="tl-cut">Cut: Full 10-question appraisal — three-question minimum only</div>
+        </div>
+      </div>
+      <div class="tl-block">
+        <div class="tl-time">H14–20<span>Hours 14–20</span></div>
+        <div class="tl-body">
+          <div class="tl-phase">Synthesis & brief draft</div>
+          <div class="tl-action">Generate first draft; run equity check</div>
+          <div class="tl-desc">Use the Session 5 brief generator with your extracted findings. Before accepting the draft, run the equity check: are findings disaggregated? Is the India-specific gap named? Then run the bias detector from Session 1 on the AI's synthesis. Revise the draft based on flags before proceeding.</div>
+          <div class="tl-tool">Tool: Session 5 brief generator · Session 1 bias detector</div>
+          <div class="tl-cut">Cut: No statistical pooling — narrative synthesis only</div>
+        </div>
+      </div>
+      <div class="tl-block">
+        <div class="tl-time">H20–26<span>Hours 20–26</span></div>
+        <div class="tl-body">
+          <div class="tl-phase">Verification</div>
+          <div class="tl-action">Verify every cited statistic — no exceptions</div>
+          <div class="tl-desc">For each specific number in the draft brief, find the primary source and confirm it. This step cannot be compressed. A hallucinated statistic in a brief that reaches MoHFW is not a methodological limitation — it is a credibility crisis. Remove any number you cannot locate in a primary source within 10 minutes of looking.</div>
+          <div class="tl-tool">Human verification only · no AI shortcut here</div>
+        </div>
+      </div>
+      <div class="tl-block">
+        <div class="tl-time">H26–30<span>Hours 26–30</span></div>
+        <div class="tl-body">
+          <div class="tl-phase">Review & disclosure</div>
+          <div class="tl-action">Senior review; add disclosure note; finalize limitations</div>
+          <div class="tl-desc">A second person reads the brief with fresh eyes — not for content expertise but for logical coherence, undisclosed assumptions, and anything that reads as more certain than the evidence supports. Attach the disclosure note from Session 1, adapted for this rapid review. State the search limitations explicitly in the methods note.</div>
+          <div class="tl-tool">Human peer review · Session 1 disclosure template</div>
+        </div>
+      </div>
+      <div class="tl-block">
+        <div class="tl-time">H30–48<span>Hours 30–48</span></div>
+        <div class="tl-body">
+          <div class="tl-phase">Buffer</div>
+          <div class="tl-action">Contingency, formatting, delivery</div>
+          <div class="tl-desc">Eighteen hours of buffer. Use it for requestor clarifications, formatting to WHO India house style, senior sign-off, and translation needs. Do not use it to run a more comprehensive search than disclosed — that changes the methods note and creates inconsistency. The rapid review is what it is; the limitations note makes it honest.</div>
+          <div class="tl-tool">Buffer is structural — protect it, do not borrow against it</div>
+        </div>
+      </div>
+    </div>
+
+    <h2>Four things you never cut — at any speed</h2>
+
+    <div class="non-neg">
+      <div class="nn-item">
+        <div class="nn-icon">⚡</div>
+        <div class="nn-text"><strong>PECO-F scoping.</strong> A rapid review without a locked question is not faster — it is uncontrolled. It produces a longer search, more irrelevant results, and a brief that cannot be defended because no one agreed on what it was answering. Thirty minutes upfront saves six hours of rework.</div>
+      </div>
+      <div class="nn-item">
+        <div class="nn-icon">⚖️</div>
+        <div class="nn-text"><strong>Equity check.</strong> "We didn't have time to disaggregate" is not an acceptable WHO India brief limitation. A brief that aggregates across income quintiles, gender, and geography and presents the result as evidence for policy affecting India's most marginalised populations has violated its institutional mandate regardless of how fast it was produced.</div>
+      </div>
+      <div class="nn-item">
+        <div class="nn-icon">🔍</div>
+        <div class="nn-text"><strong>Hallucination verification.</strong> Every specific statistic, every cited cost-effectiveness ratio, every named coverage figure must be traceable to a primary source. There is no time pressure that justifies an unverified number in a brief that will be used in a government meeting. If you cannot verify it in ten minutes, remove it.</div>
+      </div>
+      <div class="nn-item">
+        <div class="nn-icon">📋</div>
+        <div class="nn-text"><strong>Disclosure note.</strong> The rapid review's limitations — databases not searched, studies not appraised in full, pooling not conducted — must be named in the methods note. A brief without a disclosure note is not a rapid review; it is an undisclosed incomplete review. The disclosure is what makes the speed defensible.</div>
+      </div>
+    </div>
+
+    <h2>Generate your rapid review protocol</h2>
+
+    <div class="exercise-box">
+      <h3>⚡ Rapid review protocol generator</h3>
+      <p style="font-size:.85rem;margin-bottom:1.1rem;">Enter your policy question, deadline, and available resources. The generator will produce a time-boxed, step-by-step protocol for your specific rapid review — including what to cut, what to keep, and the disclosure language for your limitations note.</p>
+
+      <div class="ex-fields">
+        <div class="ex-field">
+          <span class="ex-label">Policy question</span>
+          <span class="ex-sub">In plain language — will be converted to PECO-F in the protocol</span>
+          <textarea class="ex-textarea" id="rr-question" placeholder="e.g. Does expanding PM-JAY outpatient coverage reduce catastrophic health expenditure among BPL households in high-burden Indian states?"></textarea>
+        </div>
+        <div class="ex-row">
+          <div class="ex-field">
+            <span class="ex-label">Deadline</span>
+            <span class="ex-sub">How much time do you have?</span>
+            <select class="ex-select" id="rr-deadline">
+              <option value="">Select…</option>
+              <option value="24 hours">24 hours</option>
+              <option value="48 hours">48 hours</option>
+              <option value="72 hours">72 hours</option>
+              <option value="1 week">1 week</option>
+            </select>
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Team available</span>
+            <span class="ex-sub">Who can work on this?</span>
+            <input class="ex-input" id="rr-team" type="text" placeholder="e.g. 1 health economist, part-time programme officer">
+          </div>
+        </div>
+        <div class="ex-row">
+          <div class="ex-field">
+            <span class="ex-label">Audience</span>
+            <span class="ex-sub">Who receives this brief?</span>
+            <input class="ex-input" id="rr-audience" type="text" placeholder="e.g. Joint Secretary MoHFW, WHO India Country Rep">
+          </div>
+          <div class="ex-field">
+            <span class="ex-label">Existing evidence</span>
+            <span class="ex-sub">What do you already have on this topic?</span>
+            <input class="ex-input" id="rr-existing" type="text" placeholder="e.g. 2 PM-JAY evaluations from 2021, one HTAIn report">
+          </div>
+        </div>
+      </div>
+
+      <button class="run-btn" id="run-btn" onclick="generateProtocol()">Generate rapid review protocol →</button>
+
+      <div class="proto-output" id="proto-output">
+        <div class="po-header">
+          <span>⚡ Rapid review protocol — time-boxed and ready to run</span>
+          <button class="copy-btn" id="copy-proto" onclick="copyProto(this)">Copy</button>
+        </div>
+        <div class="po-body" id="po-body"></div>
+      </div>
+    </div>
+
+    <div class="takeaway">
+      <h3>🎯 Key takeaway</h3>
+      <p>A rapid review is not a compromised review — it is a scoped review with transparent limitations. AI compresses abstract screening, data extraction, and first-draft synthesis from days to hours. The four non-negotiables — PECO-F scoping, equity check, hallucination verification, and disclosure note — cannot be traded for speed at any deadline. What can be compressed is database breadth, appraisal depth, and synthesis format. Every compression must be named in the limitations note. A rapid review with honest scope limitations is more useful to a decision-maker than a full review that arrives after the decision has been made. Session 4 addresses the hardest challenge: stress-testing a polished recommendation against India's specific contextual realities before it circulates.</p>
+    </div>
+
+  </div>
 
   <nav class="s-nav" aria-label="Session navigation">
-    <a class='s-nav-btn' href='session2.html'>← Previous</a>
-    <a class='s-nav-btn s-nav-next' href='session4.html'>Next →</a>
+    <a class="s-nav-btn" href="session2.html">← Previous</a>
+    <a class="s-nav-btn s-nav-next" href="session4.html">Next →</a>
   </nav>
 </div>
 
@@ -97,6 +418,87 @@
     const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
     spine.style.height = Math.min(pct, 100) + '%';
   }, { passive: true });
+
+  async function generateProtocol() {
+    const question = document.getElementById('rr-question').value.trim();
+    const deadline = document.getElementById('rr-deadline').value;
+    const team     = document.getElementById('rr-team').value.trim();
+    const audience = document.getElementById('rr-audience').value.trim();
+    const existing = document.getElementById('rr-existing').value.trim();
+
+    if (!question) { alert('Please enter a policy question before generating.'); return; }
+
+    const btn  = document.getElementById('run-btn');
+    const out  = document.getElementById('proto-output');
+    const body = document.getElementById('po-body');
+    btn.disabled = true; btn.textContent = 'Generating protocol…';
+    out.classList.remove('visible');
+
+    const system = `You are a senior WHO health economics advisor expert in rapid evidence reviews for LMIC health financing policy. Generate a time-boxed rapid review protocol calibrated to the specific deadline, team, and question provided.
+
+The protocol must be immediately actionable — specific tools, specific time allocations, specific prompts to use. State explicitly at each step what is being cut relative to a full review, and why that cut is acceptable or what limitation must be disclosed.
+
+Use exactly this format:
+
+RAPID REVIEW PROTOCOL
+Question: [restate as PECO-F in one sentence]
+Deadline: [stated deadline]
+Team: [who does what]
+Output: [what the brief will and will not contain]
+
+WHAT THIS REVIEW WILL AND WILL NOT COVER
+Will cover: [3 bullet points — scope confirmed]
+Will not cover: [3 bullet points — explicit scope limitations to disclose]
+
+TIME-BOXED STEPS
+[For each step: STEP NAME (time allocation) — tool — what to do — what to cut — what limitation to disclose. Use the 48h protocol as the template but adapt timing to the stated deadline.]
+
+NON-NEGOTIABLES CONFIRMED
+[Confirm that PECO-F scoping, equity check, hallucination verification, and disclosure note are included regardless of deadline]
+
+DISCLOSURE NOTE FOR THIS REVIEW
+[Ready-to-paste limitations note adapted to this specific rapid review — naming the databases not searched, the appraisal steps compressed, and the pooling not conducted]
+
+Be specific. Name India-relevant sources (HTAIn, NHA, PM-JAY data). Every step must have a named tool and a time allocation.`;
+
+    const msg = `Policy question: ${question}
+Deadline: ${deadline || 'not specified'}
+Team: ${team || 'not specified'}
+Audience: ${audience || 'WHO India / MoHFW'}
+Existing evidence: ${existing || 'none specified'}`;
+
+    try {
+      const resp = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          system,
+          messages: [{ role: 'user', content: msg }]
+        })
+      });
+      const data = await resp.json();
+      const result = data?.content?.[0]?.text || 'No response received.';
+      body.textContent = result;
+      out.classList.add('visible');
+      out.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } catch (err) {
+      body.textContent = 'Could not reach the AI service. Check your connection and try again.';
+      out.classList.add('visible');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Generate rapid review protocol →';
+    }
+  }
+
+  function copyProto(btn) {
+    const text = document.getElementById('po-body').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied ✓'; btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
 </script>
 </body>
 </html>
